@@ -1,18 +1,16 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {routerMiddleware} from 'react-router-redux';
 import {createLogger} from 'redux-logger';
 import {Map, fromJS} from 'immutable';
 
 import Ducks from './ducks/root';
 import Sagas from './sagas/root';
 
-const store = browserHistory => {
+const store = () => {
 	const initialState = Map();
-	const history = routerMiddleware(browserHistory);
 	const sagaMiddleware = createSagaMiddleware();
 
-	const middlewares = [history, sagaMiddleware];
+	const middlewares = [sagaMiddleware];
 
 	let composeEnhancers = compose;
 

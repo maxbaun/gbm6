@@ -3,6 +3,7 @@ import {createSelector} from 'reselect';
 
 import * as utils from '../utils/duckHelpers';
 import {getData} from '../services/cache';
+import {currentMenu} from '../utils/contentfulHelpers';
 
 export const types = {
 	MENUS_UPDATE: 'MENUS_UPDATE',
@@ -26,11 +27,7 @@ export default (state = initialState, action) => {
 };
 
 const getMenus = state => state.get('menus');
-const getMenu = (state, location) => {
-	return state.get('menus').find(menu => {
-		return menu.getIn(['fields', 'location']) === location;
-	});
-};
+const getMenu = (state, location) => currentMenu(state.get('menus'), location);
 
 export const selectors = {
 	getMenus: createSelector([getMenus], menus => menus),

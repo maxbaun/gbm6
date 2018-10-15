@@ -4,6 +4,7 @@ import {getMenus} from '../services/api';
 import {types as menuTypes, selectors as menuSelectors} from '../ducks/menus';
 import {types as pageTypes} from '../ducks/pages';
 import {types as cacheTypes} from '../ducks/cache';
+import {shouldCache} from '../constants';
 
 export function * watchMenus() {
 	yield takeEvery(menuTypes.MENUS_GET, onMenusGet);
@@ -13,7 +14,7 @@ export function * watchMenus() {
 function * onMenusGet({payload}) {
 	const menu = yield select(menuSelectors.getMenu, payload.location);
 
-	if (menu) {
+	if (menu && shouldCache) {
 		return;
 	}
 

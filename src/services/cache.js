@@ -1,6 +1,6 @@
 import {fromJS, Map} from 'immutable';
 
-const isDev = process.env.NODE_ENV !== 'production';
+import {shouldCache} from '../constants';
 
 const storageKey = 'gbm6';
 const timestampKey = 'gbm6timestamp';
@@ -23,7 +23,7 @@ export function getData(key) {
 
 export function getCache() {
 	// If local storage is not defined or we are in development mode, then return an empty cache
-	if (!window.localStorage || isDev) {
+	if (!window.localStorage || !shouldCache) {
 		return Map();
 	}
 
