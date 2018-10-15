@@ -1,0 +1,9 @@
+$z-index: body, header, searchTakeover;
+
+@function z-index($key) {
+	@return index($z-index, $key);
+}
+
+@mixin zIndex($key) {
+	z-index: z-index($key);
+}

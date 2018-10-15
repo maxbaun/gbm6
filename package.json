@@ -9,6 +9,7 @@
     "qhistory": "^1.0.2",
     "qs": "^6.5.2",
     "react": "^16.5.2",
+    "react-click-outside": "^3.0.1",
     "react-dom": "^16.5.2",
     "react-immutable-proptypes": "^2.1.0",
     "react-redux": "^5.0.7",

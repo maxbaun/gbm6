@@ -1,0 +1,43 @@
+@import '../../css/utils/utils';
+
+.takeover {
+	@include zIndex(searchTakeover);
+	height: 100%;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	visibility: hidden;
+	top: 0;
+	transition: all 0.3s ease-in-out, visibility 0s 0.3s;
+	width: 0;
+}
+
+.takeoverActive {
+	visibility: visible;
+	transition: all 0.3s ease-in-out;
+	width: 100%;
+}
+
+.form {
+	align-items: center;
+	background: transparent;
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+
+input[type='text'].input {
+	@include fontSize(18, 22);
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid $grey;
+	color: $white;
+	outline: none;
+	padding: 18px 11px 18px 32px;
+	width: 100%;
+
+	&:focus {
+		background-color: transparent;
+		outline: none;
+	}
+}

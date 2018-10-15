@@ -1,0 +1,48 @@
+@import './responsive.scss';
+
+@mixin noList {
+	list-style: none;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+@mixin absoluteFull {
+	bottom: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+}
+
+@mixin flexCenter {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+$browser-context: 16; // Default
+
+@function em($pixels, $context: $browser-context) {
+	@return #{$pixels/$context}em;
+}
+
+@function rem($size) {
+	$remSize: $size / $browser-context;
+	@return #{$remSize}rem;
+}
+
+@mixin fontSize($sizeValue: 1.6, $line: $sizeValue * 1.5) {
+	font-size: $sizeValue * 1 + px !important;
+	line-height: $line * 1 + px !important;
+	font-size: $sizeValue / 16 + rem !important;
+	line-height: $line / 16 + rem !important;
+}
+
+@mixin faIcon($icon) {
+	content: $icon;
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+}

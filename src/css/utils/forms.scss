@@ -1,0 +1,12 @@
+@import './utils.scss';
+
+input[type='text'],
+input[type='email'],
+textarea {
+	background-color: rgba($white, 0.14);
+	transition: all 0.15s ease-in-out;
+
+	&:focus {
+		background-color: rgba($white, 0.4);
+	}
+}
