@@ -3,9 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "contentful": "^7.0.4",
+    "history": "^4.7.2",
+    "immutable": "^3.8.2",
+    "qhistory": "^1.0.2",
+    "qs": "^6.5.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.0.5"
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.0.5",
+    "redux": "^4.0.1",
+    "redux-immutable": "^4.0.0",
+    "redux-saga": "^0.16.2",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,5 +32,16 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-config-xo": "^0.25.0",
+    "eslint-config-xo-react": "^0.17.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.25.0",
+    "eslint-plugin-react": "^7.11.1",
+    "node-sass": "^4.9.3",
+    "redux-logger": "^3.0.6",
+    "stylelint": "^9.6.0"
+  }
 }

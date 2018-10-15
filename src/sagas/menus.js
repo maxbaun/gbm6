@@ -1,0 +1,44 @@
+import {takeEvery, all, call, put, select} from 'redux-saga/effects';
+
+import {getMenus} from '../services/api';
+import {types as menuTypes, selectors as menuSelectors} from '../ducks/menus';
+import {types as pageTypes} from '../ducks/pages';
+import {types as cacheTypes} from '../ducks/cache';
+
+export function * watchMenus() {
+	yield takeEvery(menuTypes.MENUS_GET, onMenusGet);
+	yield takeEvery(menuTypes.MENUS_UPDATE, onMenusUpdate);
+}
+
+function * onMenusGet({payload}) {
+	const menu = yield select(menuSelectors.getMenu, payload.location);
+
+	if (menu) {
+		return;
+	}
+
+	const query = {
+		'fields.location[eq]': payload.location
+	};
+
+	const res = yield call(getMenus, {query});
+
+	return yield all([
+		put({
+			type: menuTypes.MENUS_UPDATE,
+			payload: res
+		}),
+		put({
+			type: pageTypes.PAGES_UPDATE,
+			payload: res.map(menu => menu.fields.links)
+		})
+	]);
+}
+
+function * onMenusUpdate() {
+	return yield all([
+		put({
+			type: cacheTypes.CACHE_MENUS_SET
+		})
+	]);
+}

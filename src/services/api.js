@@ -1,0 +1,52 @@
+import * as contentful from 'contentful';
+
+import Constants from '../constants';
+
+const ContenfulClient = contentful.createClient({
+	space: Constants.spaceId,
+	accessToken: Constants.accessToken
+});
+
+export async function getPages({query = {}}) {
+	try {
+		const res = await ContenfulClient.getEntries({
+			content_type: 'page', // eslint-disable-line camelcase
+			...query
+		});
+
+		// @TODO: Cache pages
+
+		return res.items;
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function getMenus() {
+	try {
+		const res = await ContenfulClient.getEntries({
+			content_type: 'menu' // eslint-disable-line camelcase
+		});
+
+		// @TODO: Cache menus here
+
+		return res.items;
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function getVideos({query = {}}) {
+	try {
+		const res = await ContenfulClient.getEntries({
+			content_type: 'portfolio', // eslint-disable-line camelcase
+			...query
+		});
+
+		// @TODO: Cache portfolio items here
+
+		return res.items;
+	} catch (error) {
+		return error;
+	}
+}
