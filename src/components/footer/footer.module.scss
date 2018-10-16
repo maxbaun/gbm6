@@ -6,6 +6,7 @@
 	height: $footerHeight;
 	position: absolute;
 	width: 100%;
+	@include zIndex(footer);
 }
 
 .inner {
