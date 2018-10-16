@@ -2,6 +2,7 @@ import {createSelector} from 'reselect';
 import {fromJS} from 'immutable';
 
 import * as utils from '../utils/duckHelpers';
+import {responsive} from '../constants';
 
 export const types = {
 	OFFMENU_TOGGLE: 'OFFMENU_TOGGLE',
@@ -28,13 +29,14 @@ export const initialState = utils.initialState({
 	windowSize: {
 		width: window.innerWidth,
 		height: window.innerHeight
-	}
+	},
+	isCollapsed: window.innerWidth < responsive.collapse
 });
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case types.WINDOW_RESIZE:
-			return state.set('windowSize', fromJS({...action.payload}));
+			return state.set('windowSize', fromJS({...action.payload})).set('isCollapsed', action.payload.width < responsive.collapse);
 		case types.OFFMENU_TOGGLE:
 			return state.withMutations(s => {
 				let currentState = s.get('offmenu');

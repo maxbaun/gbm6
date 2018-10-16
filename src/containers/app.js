@@ -51,11 +51,11 @@ class App extends Component {
 		window.addEventListener('resize', this.handleWindowResize);
 		this.handleWindowResize();
 
-		this.props.actions.menusGet({
-			payload: {
-				location: 'Top'
-			}
-		});
+		// This.props.actions.menusGet({
+		// 	payload: {
+		// 		location: 'Top'
+		// 	}
+		// });
 	}
 
 	componentWillUnmount() {
