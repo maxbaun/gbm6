@@ -1,0 +1,195 @@
+@import '../../css/utils/utils.scss';
+
+$offmenuWidth: 473px;
+
+.offmenu {
+	font-family: $fontBase;
+	width: 0;
+	height: 0;
+	left: 0;
+	top: 0;
+	@include zIndex(offmenu);
+}
+
+.megaMenu {
+	@extend .offmenu;
+
+	.inner {
+		background-color: rgba($blue, 0.9);
+	}
+
+	.close {
+		color: $white;
+	}
+}
+
+.fog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	opacity: 0;
+	visibility: hidden;
+	transition: all 100ms ease-in, visibility 0s 100ms ease-in;
+	@include zIndex(offmenuFog);
+}
+
+.fogActive {
+	@extend .fog;
+	opacity: 1;
+	transition: all 100ms ease-in;
+	visibility: visible;
+}
+
+.wrap {
+	position: fixed;
+	top: 0;
+	width: $offmenuWidth;
+	max-width: 100%;
+	height: 100%;
+	transition: transform 0.15s ease-in-out;
+	@include zIndex(offmenuWrap);
+
+	&[data-position='left'] {
+		left: 0;
+
+		transform: translate3d($offmenuWidth * -1, 0, 0);
+	}
+
+	&[data-position='right'] {
+		right: 0;
+
+		transform: translate3d($offmenuWidth, 0, 0);
+	}
+
+	&[data-position='top'] {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+
+		transform: translate3d(0, 100px, 0);
+
+		.inner {
+			min-height: 33px;
+		}
+	}
+}
+
+.active {
+	transition: transform 0.15s ease-in-out;
+
+	&[data-position='left'] {
+		transform: translate3d(0, 0, 0);
+
+		.inner {
+			box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	&[data-position='right'] {
+		transform: translate3d(0, 0, 0);
+
+		.inner {
+			box-shadow: -20px 0 24px 0 rgba(0, 0, 0, 0.5);
+		}
+	}
+
+	&[data-position='top'] {
+		transform: translate3d(0, 0, 0);
+
+		.inner {
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+	}
+}
+
+.inactive {
+	transition: transform 0.1s ease-in-out;
+
+	&[data-position='left'] {
+		transform: translate3d($offmenuWidth * -1, 0, 0);
+	}
+
+	&[data-position='right'] {
+		transform: translate3d($offmenuWidth, 0, 0);
+	}
+
+	&[data-position='top'] {
+		transform: translate3d(0, -100px, 0);
+	}
+}
+
+.inner {
+	position: relative;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	background-color: rgba(255, 255, 255, 0.9);
+	color: $black;
+}
+
+.header {
+	height: 75px;
+	position: relative;
+
+	@include collapseUp {
+		height: 130px;
+	}
+}
+
+.content {
+	height: calc(100% - 75px);
+	position: relative;
+	overflow: hidden;
+
+	@include collapseUp {
+		height: calc(100% - 130px);
+	}
+}
+
+.close {
+	cursor: pointer;
+	position: absolute;
+	right: 30px;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+	transition: all 0.15s ease-in-out;
+	@include fontSize(25, 25);
+	@include zIndex(fogClose);
+
+	&:hover {
+		opacity: 0.7;
+	}
+
+	@include collapseUp {
+		@include fontSize(30, 30);
+		right: 44px;
+		width: 30px;
+		height: 30px;
+	}
+
+	&[data-position='top'] {
+		top: 30px;
+
+		@include collapseUp {
+			top: 44px;
+		}
+	}
+
+	&[data-position='center'] {
+		top: 50%;
+		margin-top: -8px;
+	}
+
+	button {
+		font-size: 1.333rem;
+		opacity: 0.5;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}

@@ -4,6 +4,8 @@ import * as ImmutablePropTypes from 'react-immutable-proptypes';
 
 import CSS from './header.module.scss';
 import SearchTakeover from '../searchTakeover/searchTakeover';
+import Hamburg from '../hamburg/hamburg';
+import MegaMenu from '../menu/megaMenu';
 import {click} from '../../utils/componentHelpers';
 
 export default class Header extends Component {
@@ -32,6 +34,7 @@ export default class Header extends Component {
 	}
 
 	render() {
+		const megaMenuOpen = this.props.state.getIn(['offmenu', 'megaMenu']);
 		return (
 			<header className={CSS.header}>
 				<div className={CSS.inner}>
@@ -44,8 +47,11 @@ export default class Header extends Component {
 						<div className={CSS.logo}>logo</div>
 						<div className={CSS.menuRight}>menuRight</div>
 					</div>
-					<div className={CSS.hamburg}>hamburg</div>
+					<div className={CSS.hamburg}>
+						<Hamburg active={megaMenuOpen} onClick={click(this.props.actions.offmenuToggle, 'megaMenu')}/>
+					</div>
 				</div>
+				<MegaMenu active={megaMenuOpen} actions={this.props.actions}/>
 			</header>
 		);
 	}

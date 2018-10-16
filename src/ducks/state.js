@@ -22,7 +22,8 @@ export const actions = {
 export const initialState = utils.initialState({
 	offmenu: {
 		menu: false,
-		search: false
+		search: false,
+		megaMenu: false
 	},
 	windowSize: {
 		width: window.innerWidth,

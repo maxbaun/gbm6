@@ -1,0 +1,8 @@
+.menu {
+	box-sizing: content-box;
+	height: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+	padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+	width: 100%;
+}

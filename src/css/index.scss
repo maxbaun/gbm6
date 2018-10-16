@@ -4,6 +4,12 @@
 @import './utils/fonts.scss';
 @import './utils/forms.scss';
 
+html,
+body {
+	overflow-x: hidden;
+	width: 100%;
+}
+
 body {
 	@include fontSize(18, 22);
 	margin: 0;
