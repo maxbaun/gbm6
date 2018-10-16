@@ -63,6 +63,9 @@ class SearchTakover extends Component {
 		return (
 			<div className={wrapCss.join(' ')}>
 				<form className={CSS.form} onSubmit={clickPrevent(this.props.onSubmit, this.state.query)}>
+					<div className={CSS.icon}>
+						<span className="fa fa-search" onClick={this.handleClickOutside}/>
+					</div>
 					<input
 						ref={ref.call(this, 'input')}
 						className={CSS.input}

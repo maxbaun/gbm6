@@ -210,3 +210,7 @@ export function easeInOutQuad(t, b, c, d) {
 
 	return (-c / 2) * (t * (t - 2) - 1) + b;
 }
+
+export function innerHtml(html) {
+	return {__html: html};
+}

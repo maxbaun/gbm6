@@ -32,6 +32,11 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+	min-height: calc(100vh - #{$footerHeight});
+	padding-bottom: $footerHeight;
+}
+
 h1,
 h2,
 h3,

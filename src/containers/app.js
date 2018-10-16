@@ -11,6 +11,7 @@ import {selectors as stateSelectors, actions as stateActions} from '../ducks/sta
 import {noop} from '../utils/componentHelpers';
 
 import Header from '../components/header/header';
+import Footer from '../components/footer/footer';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -74,6 +75,7 @@ class App extends Component {
 			<Fragment>
 				<Header menus={this.props.menus} actions={this.props.actions} state={this.props.state} history={this.props.history}/>
 				<div>this is the app component</div>
+				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
 			</Fragment>
 		);
 	}

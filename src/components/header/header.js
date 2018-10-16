@@ -28,6 +28,7 @@ export default class Header extends Component {
 	};
 
 	handleSearch(query) {
+		this.props.actions.offmenuHide('search');
 		this.props.history.push(`/search/${query}`);
 	}
 

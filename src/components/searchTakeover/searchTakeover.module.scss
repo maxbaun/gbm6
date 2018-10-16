@@ -20,10 +20,15 @@
 
 .form {
 	align-items: center;
-	background: transparent;
+	background-color: $black;
 	display: flex;
 	height: 100%;
 	width: 100%;
+}
+
+.icon {
+	left: 18px;
+	position: absolute;
 }
 
 input[type='text'].input {
@@ -33,7 +38,7 @@ input[type='text'].input {
 	border-bottom: 1px solid $grey;
 	color: $white;
 	outline: none;
-	padding: 18px 11px 18px 32px;
+	padding: 25px 11px 25px 52px;
 	width: 100%;
 
 	&:focus {
