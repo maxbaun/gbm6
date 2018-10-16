@@ -5,6 +5,7 @@ import {Map} from 'immutable';
 
 import CSS from './hero.module.scss';
 import Markdown from '../common/markdown';
+import ScrollTo from '../common/scrollTo';
 import {toDegrees} from '../../utils/mathHelpers';
 import {ref} from '../../utils/componentHelpers';
 import {responsive} from '../../constants';
@@ -16,6 +17,8 @@ export default class Hero extends Component {
 		this.state = {
 			firstLine: {},
 			secondLine: {},
+			firstScrollLine: {},
+			secondScrollLine: {},
 			imageStyle: {},
 			contentInner: {}
 		};
@@ -27,14 +30,20 @@ export default class Hero extends Component {
 		image: ImmutablePropTypes.map,
 		doubleAngle: PropTypes.bool,
 		state: ImmutablePropTypes.map,
-		content: PropTypes.string
+		content: PropTypes.string,
+		imageCss: PropTypes.object,
+		scrollColor: PropTypes.string,
+		scrollTo: PropTypes.string
 	};
 
 	static defaultProps = {
 		image: Map(),
 		doubleAngle: true,
 		state: Map(),
-		content: null
+		content: null,
+		imageCss: {},
+		scrollColor: '#FFF',
+		scrollTo: null
 	};
 
 	componentDidMount() {
@@ -137,6 +146,12 @@ export default class Hero extends Component {
 				transformOrigin: '100%',
 				...lineStyle
 			},
+			firstScrollLine: {
+				transform: `skew(0deg, ${transform}deg)`
+			},
+			secondScrollLine: {
+				transform: `skew(0deg, ${transform * -1}deg)`
+			},
 			contentInner: {
 				marginBottom: windowWidth < responsive.tablet ? triHeight : 0
 			},
@@ -147,7 +162,7 @@ export default class Hero extends Component {
 	}
 
 	render() {
-		const {doubleAngle} = this.props;
+		const {doubleAngle, scrollColor, scrollTo} = this.props;
 
 		const compileWrapCss = [CSS.hero];
 
@@ -159,9 +174,23 @@ export default class Hero extends Component {
 
 		return (
 			<div ref={ref.call(this, 'elem')} className={compileWrapCss.join(' ')}>
-				<div className={CSS.image} style={this.state.imageStyle}>
-					<img src={this.props.image.get('src')}/>
-				</div>
+				<div
+					className={CSS.image}
+					style={{
+						...this.state.imageStyle,
+						...this.props.imageCss,
+						backgroundImage: `url(${this.props.image.get('src')})`
+					}}
+				/>
+				{scrollTo && scrollTo !== '' ? (
+					<ScrollTo target={scrollTo}>
+						<div className={CSS.scroll}>
+							<div className={CSS.scrollLine} style={{...this.state.firstScrollLine, backgroundColor: scrollColor}}/>
+							<div className={CSS.scrollLine} style={{...this.state.secondScrollLine, backgroundColor: scrollColor}}/>
+						</div>
+					</ScrollTo>
+				) : null}
+
 				<span className={CSS.line} style={this.state.firstLine}/>
 				<span className={CSS.line} style={this.state.secondLine}/>
 				<div className={CSS.content}>

@@ -104,3 +104,46 @@
 		}
 	}
 }
+
+.scroll {
+	bottom: 30px;
+	cursor: pointer;
+	display: none;
+	height: 44px;
+	left: 0;
+	margin: 0 auto;
+	opacity: 0.7;
+	position: absolute;
+	right: 0;
+	transition: opacity 0.2s ease-in-out;
+	width: 169px;
+	@include zIndex(heroScroll);
+
+	@include collapseUp {
+		display: block;
+	}
+
+	&:hover {
+		opacity: 0.9;
+	}
+}
+
+.scrollLine {
+	background-color: $white;
+	box-sizing: content-box;
+	display: block;
+	height: 15px;
+	position: absolute;
+	bottom: 11px;
+	width: 50%;
+}
+
+.scrollLine:first-child {
+	left: 0;
+	width: 50%;
+}
+
+.scrollLine:last-child {
+	left: 50%;
+	width: 50%;
+}

@@ -114,7 +114,7 @@ export function camelCase(str) {
 		.replace(/^(.)/, first => first.toLowerCase());
 }
 
-export class ScrollTo {
+export class ScrollToHelper {
 	constructor(target, {container, offset = 0, duration = 1000, easing = easeInOutQuad, callback = noop}) {
 		this.options = {
 			duration,

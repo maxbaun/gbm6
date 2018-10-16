@@ -17,7 +17,21 @@ const HeroContent = `
 const Page = ({state}) => {
 	return (
 		<div>
-			<Hero doubleAngle image={fromJS({src: HeroImg})} state={state} content={HeroContent}/>
+			<Hero
+				doubleAngle
+				scrollTo="#next"
+				scrollColor="#0091D6"
+				imageCss={{
+					backgroundColor: '#0091D6',
+					backgroundBlendMode: 'luminosity',
+					backgroundSize: 'cover',
+					backgroundPosiition: 'top center'
+				}}
+				image={fromJS({src: HeroImg})}
+				state={state}
+				content={HeroContent}
+			/>
+			<div id="next">next div</div>
 		</div>
 	);
 };
