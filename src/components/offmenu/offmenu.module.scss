@@ -47,7 +47,7 @@ $offmenuWidth: 473px;
 	position: fixed;
 	top: 0;
 	width: $offmenuWidth;
-	max-width: 100%;
+	max-width: calc(100% - 44px);
 	height: 100%;
 	transition: transform 0.15s ease-in-out;
 	@include zIndex(offmenuWrap);

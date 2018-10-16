@@ -1,3 +1,5 @@
+@import '../../css/utils/utils.scss';
+
 .menu {
 	box-sizing: content-box;
 	height: 100%;
@@ -5,4 +7,31 @@
 	overflow-y: auto;
 	padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
 	width: 100%;
+}
+
+.links {
+	@include noList();
+	text-align: center;
+}
+
+.link {
+	@include fontSize(20, 30);
+	color: $white;
+	display: block;
+	font-family: $fontHeading;
+	font-weight: 700;
+	opacity: 1;
+	padding: 15px 0;
+	transition: opacity 0.15s ease-in-out;
+	text-transform: uppercase;
+
+	@include collapseUp {
+		@include fontSize(28, 41);
+		padding: 20px 0;
+	}
+
+	&:hover {
+		color: $white;
+		opacity: 0.7;
+	}
 }

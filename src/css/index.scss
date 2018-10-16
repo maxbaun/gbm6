@@ -6,6 +6,7 @@
 
 html,
 body {
+	min-height: 100vh;
 	overflow-x: hidden;
 	width: 100%;
 }
@@ -14,6 +15,7 @@ body {
 	@include fontSize(18, 22);
 	margin: 0;
 	padding: 0;
+	position: relative;
 	font-family:
 		$fontBase,
  -apple-system,
@@ -30,6 +32,14 @@ body {
 	font-weight: 400;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+body.offmenu-open {
+	overflow: hidden;
+}
+
+* {
+	box-sizing: border-box;
 }
 
 #root {
