@@ -1,0 +1,132 @@
+@import '../../css/utils/utils.scss';
+
+.section {
+	position: relative;
+}
+
+.background {
+	@include absoluteFull();
+	background-size: cover;
+	background-position: center;
+	opacity: 0.23;
+	z-index: -1;
+}
+
+.overlay {
+	@include absoluteFull();
+	background-color: $black;
+	z-index: -1;
+}
+
+.inner {
+	@extend .container;
+}
+
+.heading {
+	@include brandTitle();
+	margin-bottom: 36px;
+}
+
+.row {
+	align-items: center;
+	display: flex;
+}
+
+.col {
+	width: 50%;
+
+	&:first-child {
+		padding-right: 10%;
+	}
+
+	@include desktopUp {
+		&:first-child {
+			padding-right: 131px;
+		}
+	}
+}
+
+.question {
+	cursor: pointer;
+	margin-bottom: 18px;
+
+	span {
+		@include fontSize(18, 26);
+		font-family: $fontHeading;
+		padding-bottom: 10px;
+		position: relative;
+
+		&::after {
+			background-color: $green;
+			bottom: 0;
+			content: ' ';
+			height: 3px;
+			left: 0;
+			position: absolute;
+			transition: width 0.2s ease-in-out;
+			width: 0;
+		}
+
+		@include collapseUp {
+			@include fontSize(22, 32);
+		}
+	}
+}
+
+.answer {
+	@include fontSize(15, 23);
+
+	@include collapseUp {
+		@include fontSize(18, 28);
+	}
+}
+
+.questionActive {
+	span {
+		&::after {
+			width: 75%;
+		}
+	}
+}
+
+.questionList {
+	@include noList();
+}
+
+.accordion {
+}
+
+.accordionList {
+	@include noList();
+}
+
+.accordionItem {
+	&:not(:last-child) {
+		margin-bottom: 28px;
+	}
+
+	.answer {
+		overflow: hidden;
+		max-height: 0;
+		visibility: hidden;
+	}
+}
+
+.accordionItemActive {
+	.answer {
+		max-height: 1000px;
+		visibility: visible;
+	}
+}
+
+.allFaqLink {
+	margin-top: 30px;
+
+	@include collapseUp {
+		margin-top: 50px;
+	}
+}
+
+.allLink {
+	@include arrowLink();
+}
