@@ -1,0 +1,170 @@
+@import '../../css/utils/utils.scss';
+
+.section {
+	background-color: $blueDark;
+}
+
+.inner {
+	padding: 20px 0;
+
+	@include desktopUp {
+		padding: 40px 0 60px;
+	}
+}
+
+.header {
+	@extend .container;
+}
+
+.row {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+
+	@include tabletUp {
+		flex-wrap: initial;
+	}
+}
+
+.col:first-child {
+	margin-bottom: 18px;
+	padding-right: 35px;
+	width: 100%;
+
+	@include tabletUp {
+		margin: 0;
+		width: auto;
+	}
+}
+
+.col:last-child {
+	@include tabletUp {
+		padding-left: 115px;
+	}
+}
+
+.content {
+	margin-bottom: 40px;
+
+	@include collapseUp {
+		margin-bottom: 72px;
+	}
+}
+
+.heading {
+	@include brandTitle();
+}
+
+.allVideosLink {
+	@include arrowLink();
+}
+
+.categories {
+	@include noList();
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+
+	@include collapseUp {
+		margin-bottom: 50px;
+	}
+}
+
+.category {
+	margin: 0 40px 30px 0;
+
+	@include collapseUp {
+		margin-right: 0 70px 30px 0;
+	}
+
+	@include desktopUp {
+		margin-right: 0 112px 30px 0;
+	}
+}
+
+.categoryLink {
+	@include fontSize(22, 32);
+	font-family: $fontHeading;
+	font-weight: 700;
+	opacity: 1;
+	padding: 6px 15px 9px;
+	position: relative;
+	transition: all 0.2s ease-in-out;
+	text-transform: uppercase;
+
+	&::after {
+		background-color: $green;
+		bottom: 0;
+		content: ' ';
+		height: 0;
+		left: 0;
+		position: absolute;
+		transition: all 0.2s ease-in-out;
+		width: 0;
+	}
+
+	&:hover {
+		opacity: 0.7;
+	}
+}
+
+.categoryLinkActive {
+	@extend .categoryLink;
+
+	&::after {
+		height: 3px;
+		width: 100%;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.grid {
+}
+
+.gridItem {
+	padding: 4.5px;
+	width: 100%;
+
+	@include tabletUp {
+		width: calc(100% / 3);
+	}
+
+	@include desktopUp {
+		width: 25%;
+	}
+
+	@include widescreen {
+		width: 20%;
+	}
+}
+
+.loadMoreBtn {
+	padding: 20px 0;
+	text-align: center;
+
+	@extend .gridItem;
+}
+
+.btn {
+	margin: 0 auto;
+	width: 177px;
+
+	> * {
+		display: block;
+		margin: 0 auto;
+	}
+}
+
+.playerWrap {
+	position: relative;
+	padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+}
+
+.player {
+	position: absolute;
+	top: 0;
+	left: 0;
+}

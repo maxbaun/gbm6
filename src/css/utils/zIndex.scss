@@ -1,5 +1,5 @@
 $z-index: body, heroImage, heroOverlay, heroLine, heroContent, heroScroll, footer, header, searchTakeover, offmenu, offmenuFog, offmenuWrap,
-	offmenuClose;
+	offmenuClose, modalFog, modalWrap, modal, modalClose;
 
 @function z-index($key) {
 	@return index($z-index, $key);

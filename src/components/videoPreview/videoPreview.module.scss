@@ -1,0 +1,125 @@
+@import '../../css/utils/utils.scss';
+
+.preview {
+	cursor: pointer;
+	display: block;
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: none;
+	}
+
+	&:hover {
+		.inner {
+			background-color: rgba($black, 0.5);
+		}
+
+		.content {
+			border-color: $green;
+		}
+	}
+}
+
+.overlay {
+}
+
+.inner {
+	background-color: rgba($black, 0.2);
+	background-size: cover;
+	background-blend-mode: multiply;
+	padding: 4px;
+	position: relative;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	user-select: none;
+}
+
+.content {
+	border: 2px solid transparent;
+	transition: all 0.2s ease-in-out;
+}
+
+.contentInner {
+	max-width: 298px;
+	margin: 0 auto;
+	padding: 55px 25px 52px;
+}
+
+.icon {
+	color: $white;
+}
+
+.iconVideo {
+	@extend .icon;
+	@include fontSize(48, 48);
+	cursor: pointer;
+	margin-bottom: 21px;
+
+	transition: color 0.15s ease-in-out;
+
+	&:hover {
+		color: $green;
+	}
+}
+
+.iconPhoto {
+	@extend .icon;
+	@include fontSize(40, 40);
+	margin-bottom: 37px;
+}
+
+.date {
+	@include fontSize(16, 24);
+	color: rgba($white, 0.74);
+	display: block;
+	font-family: $fontHeading;
+	font-weight: 300;
+	letter-spacing: 2px;
+	margin: 0 0 12px;
+}
+
+.title {
+	@include fontSize(28, 32);
+	color: $white;
+	font-family: $fontHeading;
+	font-weight: 700;
+	margin: 0 0 16px;
+	text-transform: uppercase;
+}
+
+.location {
+	@include fontSize(17, 33);
+	display: block;
+	color: rgba($white, 0.74);
+	font-style: italic;
+	margin: 0 0 32px;
+}
+
+.link {
+	@include fontSize(15, 33);
+	font-weight: 300;
+	position: relative;
+	padding-bottom: 17px;
+	white-space: nowrap;
+
+	&::after {
+		content: ' ';
+		background-color: $green;
+		bottom: 0;
+		border-radius: 4px;
+		height: 3px;
+		left: -2.5%;
+		position: absolute;
+		transition: all 0.5s ease-in-out;
+		width: 105%;
+	}
+
+	&:hover {
+		&::after {
+			left: -10%;
+			transition-duration: 0.2s;
+			width: 120%;
+		}
+	}
+}

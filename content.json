@@ -1,0 +1,105 @@
+{
+	"siteSettings": {
+		"logo": "Image",
+		"moreEventsTitle": "Text",
+		"ctaTitle": "Text",
+		"phone": "Text",
+		"email": "Text",
+		"twitter": "Text",
+		"facebook": "Text",
+		"vimeo": "Text",
+		"soundcloud": "Text",
+		"instagram": "Text",
+		"youtube": "Text",
+		"copyright": "Text"
+	},
+	"menu": {
+		"location": "Top, Mega",
+		"links": "Reference (page)"
+	},
+	"team": {
+		"title": "Text",
+		"image": "Image",
+		"activeImage": "Image"
+	},
+	"faq": {
+		"question": "Text",
+		"answer": "MD"
+	},
+	"page": {
+		"title": "Text",
+		"slug": "Text (unique)",
+		"descriptions": "Text",
+		"sections": "Reference (to any section)",
+		"hasCta": "Boolean"
+	},
+	"portfolio": {
+		"title": "Text",
+		"slug": "Slug",
+		"images": "Images (multiple)",
+		"video": "Text",
+		"date": "Text",
+		"location": "Text",
+		"talent": "Text",
+		"text": "MD",
+		"linkTitle": "Text (default: View Details)",
+		"categories": "Reference (video categories)"
+	},
+	"portfolioCategory": {
+		"title": "Text",
+		"slug": "Slug (unique)"
+	},
+	"testimonial": {
+		"name": "Text",
+		"subtitle": "Text",
+		"text": "MD"
+	},
+	"sectionHero": {
+		"image": "Image",
+		"title": "Text",
+		"subtitle": "Text",
+		"doubleAngle": "Boolean",
+		"scrollTo": "Boolean",
+		"scrollColor": "Text",
+		"overlayColor": "Text"
+	},
+	"sectionAbout": {
+		"title": "Text",
+		"text": "MD",
+		"icons": "MD formatted icon : Title on diff lines",
+		"backgrounImage": "Image",
+		"counters": "MD formatted number : symbol : title"
+	},
+	"sectionVideos": {
+		"title": "Text",
+		"allVideosLink": "Reference (page)",
+		"showCategories": "Boolean",
+		"categories": "Reference (video categories)",
+		"categoryAlign": "Left, Center"
+	},
+	"sectionTeam": {
+		"title": "Text",
+		"videoThumbnail": "Image",
+		"videoUrl": "Text",
+		"text": "MD",
+		"teamMembers": "Reference (team)"
+	},
+	"sectionFaq": {
+		"title": "Text",
+		"questions": "Reference (faq)",
+		"allFaqPage": "Reference (page)",
+		"backgroundImage": "Image",
+		"layout": "Vertical Tabs or Accordion",
+		"ctaTitle": "Text",
+		"ctaText": "MD",
+		"ctaLinkUrl": "Reference (page)",
+		"ctaLinkText": "Text"
+	},
+	"sectionFeatured": {
+		"title": "Text",
+		"images": "Images (multiple)"
+	},
+	"sectionTestimonials": {
+		"testimonials": "Reference (testimonial)"
+	}
+}

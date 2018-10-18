@@ -11,7 +11,7 @@ export function * onOffmenuChange({name}) {
 	const offmenuState = yield select(stateSelectors.getOffmenu, name);
 
 	const action = offmenuState ? 'add' : 'remove';
-	document.querySelector('body').classList[action]('offmenu-open');
+	// Document.querySelector('body').classList[action]('offmenu-open');
 }
 
 export function * onWindowResize({payload}) {

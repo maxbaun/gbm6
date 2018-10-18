@@ -1,6 +1,8 @@
 import uuid from 'uuid/v4';
 import {List, Map, fromJS} from 'immutable';
 
+import {responsive} from '../constants';
+
 export function unique() {
 	return uuid();
 }
@@ -213,4 +215,45 @@ export function easeInOutQuad(t, b, c, d) {
 
 export function innerHtml(html) {
 	return {__html: html};
+}
+
+export function windowWidthChange(props1, props2) {
+	const {width: width1} = props1.state.get('windowSize').toJS();
+	const {width: width2} = props2.state.get('windowSize').toJS();
+
+	return width1 !== width2;
+}
+
+export function sectionAngleHeight(state) {
+	const {width: windowWidth} = state.get('windowSize').toJS();
+	if (windowWidth > responsive.desktop) {
+		return 250;
+	}
+
+	if (windowWidth > responsive.collapse) {
+		return 200;
+	}
+
+	if (windowWidth > responsive.mobile) {
+		return 150;
+	}
+
+	return 100;
+}
+
+export function sectionAngle(state) {
+	const {width: windowWidth} = state.get('windowSize').toJS();
+	if (windowWidth > responsive.desktop) {
+		return 20;
+	}
+
+	if (windowWidth > responsive.collapse) {
+		return 15;
+	}
+
+	if (windowWidth > responsive.mobile) {
+		return 10;
+	}
+
+	return 5;
 }

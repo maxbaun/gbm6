@@ -42,8 +42,7 @@ class App extends Component {
 	static propTypes = {
 		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
-		state: ImmutableProptypes.map.isRequired,
-		history: PropTypes.object.isRequired
+		state: ImmutableProptypes.map.isRequired
 	};
 
 	static defaultProps = {
@@ -80,7 +79,8 @@ class App extends Component {
 			<Fragment>
 				<Header menus={this.props.menus} actions={this.props.actions} state={this.props.state} history={this.props.history}/>
 				<Switch>
-					<Route path="*" component={p => <Page {...props} {...p}/>}/>
+					<Route path="/:slug" render={p => <Page {...props} {...p}/>}/>
+					<Route path="*" render={p => <Page {...props} {...p}/>}/>
 				</Switch>
 				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
 			</Fragment>
@@ -88,7 +88,9 @@ class App extends Component {
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(withRouter(App));
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	)(App)
+);

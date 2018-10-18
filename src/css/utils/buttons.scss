@@ -1,0 +1,23 @@
+.btn {
+	@include fontSize(16, 24);
+	cursor: pointer;
+	font-family: $fontHeading;
+	font-weight: 700;
+	max-width: 100%;
+	outline: none !important;
+	padding: 7px 35px;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	white-space: nowrap;
+}
+
+.btn-outline {
+	background-color: transparent;
+	border: 1px solid #979797;
+	color: $white;
+
+	&:hover {
+		border-color: $white;
+		color: $white;
+	}
+}

@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import {Map} from 'immutable';
 
-import CSS from './hero.module.scss';
+import CSS from './sectionHero.module.scss';
 import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
-import {toDegrees} from '../../utils/mathHelpers';
-import {ref} from '../../utils/componentHelpers';
+import {toDegrees, toRadians} from '../../utils/mathHelpers';
+import {ref, noop, windowWidthChange, sectionAngleHeight, sectionAngle} from '../../utils/componentHelpers';
 import {responsive} from '../../constants';
 
-export default class Hero extends Component {
+export default class SectionHero extends Component {
 	constructor(props) {
 		super(props);
 
@@ -23,7 +23,7 @@ export default class Hero extends Component {
 			contentInner: {}
 		};
 
-		this.elem = null;
+		this.image = null;
 	}
 
 	static propTypes = {
@@ -33,7 +33,8 @@ export default class Hero extends Component {
 		content: PropTypes.string,
 		imageCss: PropTypes.object,
 		scrollColor: PropTypes.string,
-		scrollTo: PropTypes.string
+		scrollTo: PropTypes.string,
+		onHeroBleedChange: PropTypes.func
 	};
 
 	static defaultProps = {
@@ -43,10 +44,21 @@ export default class Hero extends Component {
 		content: null,
 		imageCss: {},
 		scrollColor: '#FFF',
-		scrollTo: null
+		scrollTo: null,
+		onHeroBleedChange: noop
 	};
 
 	componentDidMount() {
+		this.initAngle();
+	}
+
+	componentDidUpdate(prevProps) {
+		if (windowWidthChange(this.props, prevProps)) {
+			this.initAngle();
+		}
+	}
+
+	initAngle() {
 		if (this.props.doubleAngle) {
 			this.setAngleLineHyp();
 		} else {
@@ -55,13 +67,13 @@ export default class Hero extends Component {
 	}
 
 	setSingleAngleLines() {
-		if (!this.elem) {
+		if (!this.image) {
 			return;
 		}
 		const {width: windowWidth} = this.props.state.get('windowSize').toJS();
 
-		const width = this.elem.offsetWidth;
-		const height = this.elem.offsetHeight;
+		const width = this.image.offsetWidth;
+		const height = this.image.offsetHeight;
 
 		const imagePercent = windowWidth < responsive.tablet ? 0.6 : 0.5;
 		const clippedHeight = 1 - imagePercent;
@@ -86,6 +98,8 @@ export default class Hero extends Component {
 			width: lineWidth
 		};
 
+		this.props.onHeroBleedChange(triHeight);
+
 		this.setState({
 			firstLine: {
 				marginTop: -20,
@@ -105,20 +119,24 @@ export default class Hero extends Component {
 	}
 
 	setAngleLineHyp() {
-		if (!this.elem) {
+		if (!this.image) {
 			return;
 		}
 		// Const {width, height} = this.props.state.get('windowSize').toJS();
 		const {width: windowWidth} = this.props.state.get('windowSize').toJS();
 
-		const width = this.elem.offsetWidth;
-		const height = this.elem.offsetHeight;
+		const rect = this.image.getBoundingClientRect();
+		const width = rect.width;
+		const height = rect.height;
 
-		const imagePercent = 75;
-		const clippedHeight = (100 - imagePercent) / 100;
+		const triAngle = sectionAngle(this.props.state);
+		const triAngleRad = toRadians(triAngle);
 
-		const triHeight = height * clippedHeight;
+		// Const triHeight = height * clippedHeight;
 		const triWidth = width / 2;
+		const triHeight = Math.sin(triAngleRad) * triWidth;
+
+		const triPercentageBottom = 100 - (triHeight * 100) / height;
 
 		const hypLen = Math.sqrt(Math.pow(triHeight, 2) + Math.pow(triWidth, 2));
 
@@ -129,9 +147,11 @@ export default class Hero extends Component {
 
 		const lineStyle = {
 			position: 'absolute',
-			top: `${imagePercent}%`,
+			top: `${triPercentageBottom}%`,
 			width: lineWidth
 		};
+
+		this.props.onHeroBleedChange(triHeight);
 
 		this.setState({
 			firstLine: {
@@ -156,7 +176,7 @@ export default class Hero extends Component {
 				marginBottom: windowWidth < responsive.tablet ? triHeight : 0
 			},
 			imageStyle: {
-				clipPath: `polygon(50% 0%, 100% 0, 100% ${imagePercent}%, 50% 100%, 50% 100%, 0% ${imagePercent}%, 0 0)`
+				clipPath: `polygon(0 0, 100% 0, 100% ${triPercentageBottom}%, 50% 100%, 0 ${triPercentageBottom}%)`
 			}
 		});
 	}
@@ -173,8 +193,9 @@ export default class Hero extends Component {
 		}
 
 		return (
-			<div ref={ref.call(this, 'elem')} className={compileWrapCss.join(' ')}>
+			<div className={compileWrapCss.join(' ')}>
 				<div
+					ref={ref.call(this, 'image')}
 					className={CSS.image}
 					style={{
 						...this.state.imageStyle,

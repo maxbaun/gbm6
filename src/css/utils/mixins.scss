@@ -46,3 +46,81 @@ $browser-context: 16; // Default
 	font-family: 'Font Awesome 5 Free';
 	font-weight: 900;
 }
+
+@mixin headings() {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@content;
+	}
+}
+
+@mixin brandTitle {
+	@include headings() {
+		@include fontSize(38, 42);
+		color: $white;
+		font-family: $fontHeading;
+		font-weight: 700;
+		margin: 0;
+		text-transform: uppercase;
+
+		@include collapseUp {
+			@include fontSize(48, 58);
+		}
+
+		@include desktopUp {
+			@include fontSize(67, 78);
+		}
+	}
+}
+
+@mixin arrowLink($showArrow: true) {
+	@include fontSize(18, 24);
+	color: $white;
+	display: inline-block;
+	font-family: $fontBase;
+	font-weight: 700;
+	padding: 0 35px 10px 1px;
+	position: relative;
+
+	@if $showArrow == true {
+		&::before {
+			color: $white;
+			content: '\f30b';
+			font-family: 'Font Awesome 5 Free';
+			font-size: 20px;
+			font-weight: 900;
+			position: absolute;
+			right: 3px;
+			top: 0;
+			transition: all 0.1s ease-in-out, right 0.1s ease-in-out;
+		}
+	}
+
+	&::after {
+		background-color: $green;
+		bottom: 0;
+		content: ' ';
+		height: 3px;
+		left: 0;
+		position: absolute;
+		transition: all 0.1s ease-in-out, width 0.1s ease-in-out;
+		width: calc(100% - 35px);
+	}
+
+	&:hover {
+		color: $white;
+
+		// &::before {
+		// 	color: $white;
+		// 	right: 0;
+		// }
+
+		&::after {
+			width: 100%;
+		}
+	}
+}
