@@ -1,0 +1,44 @@
+@import '../../css/utils/utils.scss';
+
+.slierNav {
+	display: block;
+}
+
+.inner {
+	display: flex;
+	flex-wrap: nowrap;
+
+	.button {
+		align-items: center;
+		background-image: none;
+		background-color: rgba($white, 0.17);
+		display: flex;
+		justify-content: center;
+		height: 52px;
+		left: auto;
+		margin: 0;
+		outline: none !important;
+		position: relative;
+		right: auto;
+		transition: all 0.2s ease-in-out;
+		width: 52px;
+
+		&:hover {
+			background-color: rgba($white, 0.5);
+		}
+
+		> span {
+			@include fontSize(22, 22);
+			color: rgba($white, 0.6);
+		}
+	}
+
+	.next,
+	.prev {
+		@extend .button;
+	}
+
+	.prev {
+		margin-right: 2px;
+	}
+}

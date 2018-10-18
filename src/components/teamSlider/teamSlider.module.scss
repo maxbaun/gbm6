@@ -1,0 +1,67 @@
+@import '../../css/utils/utils.scss';
+
+.teamMember {
+	position: relative;
+	height: 300px;
+	width: 300px;
+
+	&:hover {
+		.teamMemberImage {
+			display: none;
+		}
+
+		.teamMemberImageActive {
+			display: block;
+		}
+
+		.teamMemberName {
+			opacity: 1;
+		}
+	}
+}
+
+.teamMemberImage {
+	@include absoluteFull;
+	@include zIndex(teamMemberImage);
+
+	img {
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		width: 100%;
+	}
+}
+
+.teamMemberImageActive {
+	@extend .teamMemberImage;
+	display: none;
+}
+
+.teamMemberName {
+	@include fontSize(22, 32);
+	align-items: center;
+	background-color: rgba($black, 0.75);
+	bottom: 0;
+	display: flex;
+	font-family: $fontHeading;
+	font-weight: 700;
+	height: 39px;
+	justify-content: center;
+	position: absolute;
+	opacity: 0;
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
+	@include zIndex(teamMemberName);
+}
+
+.nav {
+	display: flex;
+	justify-content: flex-end;
+	margin: 26px 0 0 auto;
+	margin-right: 15px;
+
+	@include collapseUp {
+		margin-right: 123px;
+	}
+}

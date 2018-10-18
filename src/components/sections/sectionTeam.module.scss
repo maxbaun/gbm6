@@ -1,0 +1,36 @@
+@import '../../css/utils/utils.scss';
+
+.section {
+	background-color: $blueDark;
+}
+
+.sectionContainer {
+	@extend .container;
+}
+
+.row {
+	@include tabletUp {
+		display: flex;
+	}
+}
+
+.col {
+	padding: 15px 0;
+	width: 100%;
+
+	@include tabletUp {
+		padding: 33px;
+		width: 50%;
+	}
+}
+
+.heading {
+	@include brandTitle();
+	margin-bottom: 36px;
+}
+
+.text,
+.text p {
+	@include fontSize(18, 28);
+	text-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.7);
+}
