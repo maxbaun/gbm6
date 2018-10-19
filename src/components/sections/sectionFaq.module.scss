@@ -7,9 +7,14 @@
 .background {
 	@include absoluteFull();
 	background-size: cover;
+	background-attachment: fixed;
 	background-position: center;
 	opacity: 0.23;
 	z-index: -1;
+
+	@include tabletUp {
+		background-attachment: initial;
+	}
 }
 
 .overlay {
@@ -67,7 +72,7 @@
 			width: 0;
 		}
 
-		@include collapseUp {
+		@include tabletUp {
 			@include fontSize(22, 32);
 		}
 	}
@@ -76,7 +81,7 @@
 .answer {
 	@include fontSize(15, 23);
 
-	@include collapseUp {
+	@include tabletUp {
 		@include fontSize(18, 28);
 	}
 }
@@ -122,7 +127,7 @@
 .allFaqLink {
 	margin-top: 30px;
 
-	@include collapseUp {
+	@include tabletUp {
 		margin-top: 50px;
 	}
 }

@@ -47,6 +47,8 @@ export default class SectionFaq extends Component {
 			backgroundImage: `url(${this.props.backgroundImage.get('src')})`
 		};
 
+		const renderAccordion = windowWidth < responsive.tablet;
+
 		return (
 			<div className={CSS.section}>
 				<div className={CSS.overlay}/>
@@ -55,7 +57,7 @@ export default class SectionFaq extends Component {
 					<div className={CSS.heading}>
 						<HeadingBrand heading={this.props.heading}/>
 					</div>
-					{windowWidth < responsive.collapse ? this.renderAccordionTabs() : this.renderVerticalTabs()}
+					{renderAccordion ? this.renderAccordionTabs() : this.renderVerticalTabs()}
 					<div className={CSS.allFaqLink}>
 						<Link to={this.props.allFaqLink} className={CSS.allLink}>
 							View all questions

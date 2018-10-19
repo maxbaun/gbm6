@@ -1,5 +1,6 @@
 .btn {
 	@include fontSize(16, 24);
+	border: 1px solid transparent;
 	cursor: pointer;
 	font-family: $fontHeading;
 	font-weight: 700;
@@ -19,5 +20,17 @@
 	&:hover {
 		border-color: $white;
 		color: $white;
+	}
+}
+
+.btn-primary {
+	background-color: $blue;
+	border-color: $blue;
+	color: $white;
+
+	&:hover {
+		background-color: transparent;
+		border-color: $blue;
+		color: $blue;
 	}
 }

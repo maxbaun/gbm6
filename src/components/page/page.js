@@ -8,6 +8,7 @@ import SectionAbout from '../sections/sectionAbout';
 import SectionVideos from '../sections/sectionVideos';
 import SectionTeam from '../sections/sectionTeam';
 import SectionFaq from '../sections/sectionFaq';
+import Cta from '../cta/cta';
 
 import HeroImg from '../../img/Hero-bg-1.png';
 import AboutBg from '../../img/About-Bg.jpg';
@@ -445,6 +446,24 @@ const Faqs = fromJS([
 	}
 ]);
 
+const CTAHeading = `# Let's Build
+# <span style="color:#0091D6;">Legendary</span>
+# Together.`;
+
+const SiteSettings = fromJS({
+	ctaTitle: `# Let's Build
+# <span style="color:#0091D6;">Legendary</span>
+# Together.`,
+	facebook: 'https://facebook.com/grooveboston',
+	twitter: 'https://twitter.com/grooveboston',
+	vimeo: 'https://vimeo.com/grooveboston',
+	soundcloud: 'https://soundcloud.com/grooveboston',
+	instagram: 'https://instagram.com/grooveboston',
+	youtube: 'youtube.com/grooveboston',
+	phone: '1.888.815.964',
+	email: 'info@gbm6.com'
+});
+
 export default class Page extends Component {
 	constructor(props) {
 		super(props);
@@ -525,6 +544,7 @@ export default class Page extends Component {
 					team={SectionTeamMembers}
 				/>
 				<SectionFaq backgroundImage={fromJS({src: AboutBg})} heading={FaqHeading} faqs={Faqs} state={this.props.state} allFaqLink="/"/>
+				<Cta siteSettings={SiteSettings} state={this.props.state}/>
 			</div>
 		);
 	}

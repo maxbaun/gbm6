@@ -1,0 +1,185 @@
+@import '../../css/utils/utils.scss';
+
+.section {
+	background-color: $blueDark;
+}
+
+.inner {
+	@extend .container;
+}
+
+.heading {
+	@include brandTitle();
+	margin: 0 0 16px;
+
+	@include collapseUp {
+		margin: 0 0 20px;
+	}
+
+	@include desktopUp {
+		margin: 0 0 16px;
+	}
+}
+
+.row {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.colSocial {
+	order: 2;
+	width: 250px;
+
+	@include desktopUp {
+		order: 1;
+		width: 33%;
+	}
+}
+
+.colContact {
+	order: 3;
+	width: calc(100% - 250px);
+
+	@include desktopUp {
+		order: 2;
+		width: 30%;
+	}
+}
+
+.colHeading {
+	order: 1;
+	width: 100%;
+
+	@include desktopUp {
+		order: 3;
+		width: 37%;
+	}
+}
+
+.header {
+	padding: 0 5px;
+	margin: 0 0 35px;
+
+	@include desktopUp {
+		margin: 0 0 55px;
+	}
+}
+
+.contact {
+	padding: 0 28px;
+}
+
+.contactItems {
+	@include noList();
+}
+
+.contactItem {
+	margin-bottom: 32px;
+
+	@include collapseUp {
+		&:last-child {
+			margin: 0 0 16px;
+		}
+	}
+
+	h3,
+	h5 {
+		@include fontSize(22, 32);
+		font-family: $fontHeading;
+		font-weight: 400;
+		margin: 0;
+		text-transform: uppercase;
+	}
+
+	h3 {
+		color: $blue;
+	}
+
+	h5 {
+		color: $white;
+	}
+}
+
+.social {
+	padding: 0 22px;
+	margin-bottom: 27px;
+
+	@include collapseUp {
+		padding: 0;
+		margin: 0;
+	}
+}
+
+.socialIcons {
+	@include noList();
+	display: flex;
+	flex-wrap: wrap;
+	width: 250px;
+}
+
+.socialIcon {
+	margin: 0 16px 16px 0;
+	width: 66px;
+
+	a {
+		@include fontSize(30, 30);
+		align-items: center;
+		background-color: transparent;
+		border: 2px solid $blue;
+		color: $blue;
+		display: flex;
+		justify-content: center;
+		height: 66px;
+		transition: all 0.2s ease-in-out;
+		width: 66px;
+
+		&:hover {
+			background-color: $blue;
+			color: $white;
+		}
+	}
+}
+
+.form {
+	ul {
+		@include noList();
+		display: flex;
+		flex-wrap: wrap;
+
+		li {
+			margin-bottom: 28px;
+			width: 100%;
+
+			@include collapseUp {
+				padding: 0 5px;
+				width: calc(100% / 3);
+			}
+
+			&.full {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.submitWrap {
+	@include collapseUp {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	> input {
+		@include fontSize(18, 26);
+		display: block;
+		margin: 0 auto;
+		padding: 17px 0;
+		text-transform: uppercase;
+		width: 80%;
+
+		@include collapseUp {
+			margin: 0 0 0 auto;
+			width: 215px;
+		}
+	}
+}

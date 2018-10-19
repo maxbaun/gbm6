@@ -7,6 +7,13 @@
 	margin-right: auto;
 	margin-left: auto;
 	max-width: 1190px;
+
+	&::before,
+	&::after {
+		content: '';
+		display: table;
+		clear: both;
+	}
 }
 
 .clearfix {
