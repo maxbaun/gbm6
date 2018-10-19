@@ -14,6 +14,8 @@ import {noop} from '../utils/componentHelpers';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import Page from '../components/page/page';
+import WatchThis from '../components/page/watchThis';
+import Concerts from '../components/page/concerts';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -79,6 +81,8 @@ class App extends Component {
 			<Fragment>
 				<Header menus={this.props.menus} actions={this.props.actions} state={this.props.state} history={this.props.history}/>
 				<Switch>
+					<Route path="/watch-this" render={p => <WatchThis {...props} {...p}/>}/>
+					<Route path="/concerts" render={p => <Concerts {...props} {...p}/>}/>
 					<Route path="/:slug" render={p => <Page {...props} {...p}/>}/>
 					<Route path="*" render={p => <Page {...props} {...p}/>}/>
 				</Switch>

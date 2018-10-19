@@ -18,12 +18,14 @@ export default class SectionVideos extends Component {
 		super(props);
 
 		this.state = {
-			activeVideo: null
+			activeVideo: null,
+			activeCategory: 0
 		};
 
 		this.getHeadingWidth = this.getHeadingWidth.bind(this);
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.handleVideoOpen = this.handleVideoOpen.bind(this);
+		this.handleCategoryChange = this.handleCategoryChange.bind(this);
 	}
 
 	static propTypes = {
@@ -31,9 +33,11 @@ export default class SectionVideos extends Component {
 		heading: PropTypes.string,
 		videos: ImmutableProptypes.list,
 		videoCategories: ImmutableProptypes.list,
-		activeCategory: PropTypes.string,
 		allVideosLink: PropTypes.string,
-		actions: PropTypes.objectOf(PropTypes.func).isRequired
+		allVideosText: PropTypes.string,
+		actions: PropTypes.objectOf(PropTypes.func).isRequired,
+		categoryAlign: PropTypes.oneOf(['left', 'center']),
+		id: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -41,8 +45,10 @@ export default class SectionVideos extends Component {
 		heading: null,
 		videos: List(),
 		videoCategories: List(),
-		activeCategory: null,
-		allVideosLink: '/'
+		allVideosLink: null,
+		allVideosText: 'All Videos',
+		categoryAlign: 'left',
+		id: null
 	};
 
 	getHeadingWidth() {
@@ -69,11 +75,15 @@ export default class SectionVideos extends Component {
 		this.props.actions.offmenuToggle('videoModal');
 	}
 
+	handleCategoryChange(activeCategory) {
+		this.setState({activeCategory});
+	}
+
 	render() {
-		const {heading, videoCategories, activeCategory, videos, allVideosLink} = this.props;
+		const {id, heading, videoCategories, allVideosText, videos, allVideosLink, categoryAlign} = this.props;
 
 		return (
-			<div className={CSS.section}>
+			<div id={id} className={CSS.section}>
 				<div className={CSS.inner}>
 					<div className={CSS.header}>
 						<div className={CSS.content}>
@@ -86,25 +96,25 @@ export default class SectionVideos extends Component {
 									</div>
 								) : null}
 
-								<div className={CSS.col}>
-									<Link to={allVideosLink} className={CSS.allVideosLink}>
-										All Videos
-									</Link>
-								</div>
+								{allVideosLink ? (
+									<div className={CSS.col}>
+										<Link to={allVideosLink} className={CSS.allVideosLink}>
+											{allVideosText}
+										</Link>
+									</div>
+								) : null}
 							</div>
 						</div>
-						<ul className={CSS.categories}>
-							{videoCategories.map(category => {
+						<ul className={CSS.categories} data-align={categoryAlign}>
+							{videoCategories.map((category, index) => {
 								return (
 									<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
-										<Link
-											className={
-												activeCategory === category.getIn(['fields', 'slug']) ? CSS.categoryLinkActive : CSS.categoryLink
-											}
-											to={`/${category.getIn(['fields', 'slug'])}`}
+										<div
+											className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
+											onClick={click(this.handleCategoryChange, index)}
 										>
 											{category.getIn(['fields', 'title'])}
-										</Link>
+										</div>
 									</li>
 								);
 							})}
@@ -119,14 +129,14 @@ export default class SectionVideos extends Component {
 									</div>
 								);
 							})}
-							<div className={CSS.loadMoreBtn}>
-								<div className={CSS.btn}>
-									<button type="button" className="btn btn-outline">
-										Load more videos
-									</button>
-								</div>
-							</div>
 						</Masonry>
+					</div>
+					<div className={CSS.loadMoreBtn}>
+						<div className={CSS.btn}>
+							<button type="button" className="btn btn-outline">
+								Load more videos
+							</button>
+						</div>
 					</div>
 				</div>
 				<Modal

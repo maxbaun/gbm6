@@ -26,7 +26,8 @@ export default class SectionFaq extends Component {
 		faqs: ImmutableProptypes.list,
 		backgroundImage: ImmutableProptypes.map,
 		state: ImmutableProptypes.map,
-		allFaqLink: PropTypes.string
+		allFaqLink: PropTypes.string,
+		allFaqText: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -34,7 +35,8 @@ export default class SectionFaq extends Component {
 		faqs: List(),
 		backgroundImage: Map(),
 		state: Map(),
-		allFaqLink: '/'
+		allFaqLink: '/',
+		allFaqText: 'View all questions'
 	};
 
 	handleFaqChange(activeIndex) {
@@ -54,15 +56,31 @@ export default class SectionFaq extends Component {
 				<div className={CSS.overlay}/>
 				<div className={CSS.background} style={backgroundStyle}/>
 				<div className={CSS.inner}>
-					<div className={CSS.heading}>
-						<HeadingBrand heading={this.props.heading}/>
+					<div className={CSS.headingRow}>
+						<div className={CSS.headingCol}>
+							<div className={CSS.heading}>
+								<HeadingBrand heading={this.props.heading}/>
+							</div>
+						</div>
+						{renderAccordion === false ? (
+							<div className={CSS.headingCol}>
+								<div className={CSS.allFaqLink}>
+									<Link to={this.props.allFaqLink} className={CSS.allLink}>
+										{this.props.allFaqText}
+									</Link>
+								</div>
+							</div>
+						) : null}
 					</div>
+
 					{renderAccordion ? this.renderAccordionTabs() : this.renderVerticalTabs()}
-					<div className={CSS.allFaqLink}>
-						<Link to={this.props.allFaqLink} className={CSS.allLink}>
-							View all questions
-						</Link>
-					</div>
+					{renderAccordion ? (
+						<div className={CSS.allFaqLink}>
+							<Link to={this.props.allFaqLink} className={CSS.allLink}>
+								{this.props.allFaqText}
+							</Link>
+						</div>
+					) : null}
 				</div>
 			</div>
 		);

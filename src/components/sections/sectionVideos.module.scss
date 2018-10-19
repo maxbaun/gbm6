@@ -65,6 +65,10 @@
 	flex-wrap: wrap;
 	margin-bottom: 10px;
 
+	&[data-align='center'] {
+		justify-content: center;
+	}
+
 	@include collapseUp {
 		margin-bottom: 20px;
 	}
@@ -142,10 +146,8 @@
 }
 
 .loadMoreBtn {
-	padding: 20px 0;
+	padding: 20px 15px;
 	text-align: center;
-
-	@extend .gridItem;
 }
 
 .btn {

@@ -19,21 +19,17 @@ import {Faqs} from '../../data/faqs';
 import {SiteSettings} from '../../data/siteSettings';
 
 const HeroContent = `
-# <span style="color:white;text-shadow:6px 6px 25px rgba(0,145,214,0.7);">18 Years of </span>
-# <span style="color:#C5FC01;text-shadow:6px 6px 25px rgba(0,145,214,0.7);">Making People Happy</span>
-### Legendary **Event Design & Execution**
-`;
+# <span style="color:#F5FF00;">Experience. Music. Together</span>
+### Legendary **Event Design & Execution**`;
 
-const AboutHeading = `
-# <span style="color:white;">We're About</span>
-# <span style="color:#0091D6;">Making People Happy</span>, Through Legendary Events.
-`;
+const AboutHeading = `# <span style="color:#F5FF00;">LEGENDARY EVENTS.</span>
+# DELIVERED FROM
+# CONCEPT TO MIKE
+# DROP.`;
 
-const AboutContent = `
-Shared experiences are ESSENTIAL -- but it’s getting harder to engage people through events when they’ve got unprecedented access to friends, music, and information online.
+const AboutContent = `You don't just need vendors, you need an event producer -- a team that can help figure out what you need, and then source all the right elements to make it happen.  We're not here to just check off the boxes; we're here to help you figure out exactly what the boxes are.
 
-Live events need to evolve to stay competitive. We’re all about creating experiences that are relevant, authentic, emotional, and valuable -- within the landscape of an increasingly capable culture.
-`;
+Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. Hi mindless mortuis soulless creaturas,`;
 
 const AboutIcons = `icon-production-design:Technical Production Design
 icon-management-logistics:Management Logistics
@@ -41,10 +37,6 @@ icon-branding-graphics:Branding / Graphics / Media
 icon-vendor-source:Vendor Sourcing & Mangement
 icon-team:Full-Time Team Support
 icon-checklist:100% Customized Experience`;
-
-const AboutCounters = `95:%:Repeat Bookings
-10::Branded Tours
-300:+:Major Concerts`;
 
 const VideosHeading = `# MASSIVE SCALE.
 # <span style="color:#0091D6;">ZERO LIMITS.</span>
@@ -57,7 +49,7 @@ const SectionTeamVideo = fromJS({
 	}
 });
 
-const SectionTeamHeading = `# <span style="color:#0091D6;">THE TEAM BEHIND</span>
+const SectionTeamHeading = `# <span style="color:#0091D6;">Our TEAM BEHIND</span>
 # THE MISSION`;
 
 const SectionTeamText =
@@ -105,10 +97,10 @@ export default class Page extends Component {
 				<SectionHero
 					doubleAngle
 					scrollTo="#next"
-					scrollColor="#0091D6"
+					scrollColor="#F5FF00"
 					imageCss={{
-						backgroundColor: '#0091D6',
-						backgroundBlendMode: 'luminosity',
+						backgroundColor: 'rgba(0, 0, 0, 0.5)',
+						backgroundBlendMode: 'multiply',
 						backgroundSize: 'cover',
 						backgroundPosiition: 'top center'
 					}}
@@ -126,7 +118,6 @@ export default class Page extends Component {
 					text={AboutContent}
 					state={this.props.state}
 					icons={AboutIcons}
-					counters={AboutCounters}
 					slantDirection="left"
 				/>
 				<SectionVideos
@@ -136,6 +127,7 @@ export default class Page extends Component {
 					state={this.props.state}
 					actions={this.props.actions}
 					allVideosLink="/"
+					allVideosText="Watch All Videos"
 				/>
 				<SectionTeam
 					heading={SectionTeamHeading}

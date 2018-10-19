@@ -27,9 +27,25 @@
 	@extend .container;
 }
 
+.headingRow {
+	align-items: flex-end;
+	display: flex;
+	margin-bottom: 36px;
+}
+
+.headingCol {
+	@include tabletUp {
+		width: 50%;
+
+		&:first-child {
+			margin-right: 5%;
+			width: 45%;
+		}
+	}
+}
+
 .heading {
 	@include brandTitle();
-	margin-bottom: 36px;
 }
 
 .row {

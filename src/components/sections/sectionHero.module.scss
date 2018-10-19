@@ -30,6 +30,14 @@
 		height: 800px;
 	}
 
+	@include desktopUp {
+		height: 900px;
+	}
+
+	@include widescreen {
+		height: 1000px;
+	}
+
 	img {
 		height: 100%;
 		object-fit: cover;
@@ -107,7 +115,7 @@
 }
 
 .scroll {
-	bottom: 30px;
+	bottom: 60px;
 	cursor: pointer;
 	display: none;
 	height: 44px;
