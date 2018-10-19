@@ -16,6 +16,7 @@ import Footer from '../components/footer/footer';
 import Page from '../components/page/page';
 import WatchThis from '../components/page/watchThis';
 import Concerts from '../components/page/concerts';
+import FaqPage from '../components/page/faq';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -83,6 +84,7 @@ class App extends Component {
 				<Switch>
 					<Route path="/watch-this" render={p => <WatchThis {...props} {...p}/>}/>
 					<Route path="/concerts" render={p => <Concerts {...props} {...p}/>}/>
+					<Route path="/faq" render={p => <FaqPage {...props} {...p}/>}/>
 					<Route path="/:slug" render={p => <Page {...props} {...p}/>}/>
 					<Route path="*" render={p => <Page {...props} {...p}/>}/>
 				</Switch>

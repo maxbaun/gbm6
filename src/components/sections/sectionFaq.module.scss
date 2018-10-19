@@ -115,6 +115,8 @@
 }
 
 .accordion {
+	max-width: 710px;
+	margin: 0 auto;
 }
 
 .accordionList {
@@ -150,4 +152,66 @@
 
 .allLink {
 	@include arrowLink();
+}
+
+.cta {
+	margin-top: 60px;
+
+	@include collapseUp {
+		margin-top: 121px;
+	}
+}
+
+.ctaInner {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+
+	@include collapseUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.ctaContent {
+	margin: 0 0 20px;
+	width: 100%;
+
+	@include collapseUp {
+		padding-right: 131px;
+		width: calc(100% - 231px);
+	}
+
+	@include headings() {
+		margin: 0;
+	}
+
+	h1,
+	h2 {
+		@include fontSize(40, 60);
+		margin: 0 0 7px;
+		font-weight: 400;
+	}
+
+	h3,
+	h4,
+	h5,
+	h6 {
+		@include fontSize(27, 37);
+		font-weight: 300;
+
+		strong {
+			font-weight: 700;
+		}
+	}
+}
+
+.ctaButton {
+	margin: 0 0 20px;
+	width: 231px;
+
+	> a {
+		display: block;
+		font-weight: 400;
+		width: 100%;
+	}
 }

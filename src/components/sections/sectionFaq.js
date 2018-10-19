@@ -27,16 +27,24 @@ export default class SectionFaq extends Component {
 		backgroundImage: ImmutableProptypes.map,
 		state: ImmutableProptypes.map,
 		allFaqLink: PropTypes.string,
-		allFaqText: PropTypes.string
+		allFaqText: PropTypes.string,
+		layout: PropTypes.oneOf(['normal', 'accordion']),
+		ctaContent: PropTypes.string,
+		ctaLinkUrl: PropTypes.string,
+		ctaLinkText: PropTypes.string
 	};
 
 	static defaultProps = {
-		heading: '',
+		heading: null,
 		faqs: List(),
 		backgroundImage: Map(),
 		state: Map(),
-		allFaqLink: '/',
-		allFaqText: 'View all questions'
+		allFaqLink: null,
+		allFaqText: 'View all questions',
+		layout: 'normal',
+		ctaContent: null,
+		ctaLinkUrl: null,
+		ctaLinkText: null
 	};
 
 	handleFaqChange(activeIndex) {
@@ -44,41 +52,59 @@ export default class SectionFaq extends Component {
 	}
 
 	render() {
+		const {heading, layout, allFaqLink, allFaqText, ctaContent, ctaLinkUrl, ctaLinkText} = this.props;
+
 		const windowWidth = this.props.state.getIn(['windowSize', 'width']);
 		const backgroundStyle = {
 			backgroundImage: `url(${this.props.backgroundImage.get('src')})`
 		};
 
-		const renderAccordion = windowWidth < responsive.tablet;
+		const renderAccordion = windowWidth < responsive.tablet || layout === 'accordion';
 
 		return (
 			<div className={CSS.section}>
 				<div className={CSS.overlay}/>
 				<div className={CSS.background} style={backgroundStyle}/>
 				<div className={CSS.inner}>
-					<div className={CSS.headingRow}>
-						<div className={CSS.headingCol}>
-							<div className={CSS.heading}>
-								<HeadingBrand heading={this.props.heading}/>
-							</div>
-						</div>
-						{renderAccordion === false ? (
+					{heading ? (
+						<div className={CSS.headingRow}>
 							<div className={CSS.headingCol}>
-								<div className={CSS.allFaqLink}>
-									<Link to={this.props.allFaqLink} className={CSS.allLink}>
-										{this.props.allFaqText}
+								<div className={CSS.heading}>
+									<HeadingBrand heading={heading}/>
+								</div>
+							</div>
+							{renderAccordion === false ? (
+								<div className={CSS.headingCol}>
+									<div className={CSS.allFaqLink}>
+										<Link to={allFaqLink} className={CSS.allLink}>
+											{allFaqText}
+										</Link>
+									</div>
+								</div>
+							) : null}
+						</div>
+					) : null}
+
+					{renderAccordion ? this.renderAccordionTabs() : this.renderVerticalTabs()}
+					{renderAccordion && allFaqLink ? (
+						<div className={CSS.allFaqLink}>
+							<Link to={allFaqLink} className={CSS.allLink}>
+								{allFaqText}
+							</Link>
+						</div>
+					) : null}
+					{ctaContent ? (
+						<div className={CSS.cta}>
+							<div className={CSS.ctaInner}>
+								<div className={CSS.ctaContent}>
+									<Markdown content={ctaContent}/>
+								</div>
+								<div className={CSS.ctaButton}>
+									<Link to={ctaLinkUrl} className="btn btn-primary">
+										{ctaLinkText}
 									</Link>
 								</div>
 							</div>
-						) : null}
-					</div>
-
-					{renderAccordion ? this.renderAccordionTabs() : this.renderVerticalTabs()}
-					{renderAccordion ? (
-						<div className={CSS.allFaqLink}>
-							<Link to={this.props.allFaqLink} className={CSS.allLink}>
-								{this.props.allFaqText}
-							</Link>
 						</div>
 					) : null}
 				</div>
