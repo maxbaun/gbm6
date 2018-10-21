@@ -1,7 +1,7 @@
 @import '../../css/utils/utils.scss';
 
 .section {
-	background-color: $blueDark;
+	background-color: darken($blueDark, 10%);
 }
 
 .sectionContainer {

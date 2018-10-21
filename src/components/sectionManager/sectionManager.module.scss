@@ -1,0 +1,114 @@
+@import '../../css/utils/utils';
+
+$angleHeight: 20vw;
+
+$transform: 21.80140948635181deg;
+
+@mixin allSections() {
+	&[data-even='true'],
+	&[data-odd='true'] {
+		@content;
+	}
+}
+
+@mixin evenSections() {
+	[data-section]:nth-child(even) {
+		@content;
+	}
+}
+
+@mixin oddSections() {
+	[data-section]:nth-child(odd) {
+		@content;
+	}
+}
+
+@mixin targetChild($index) {
+	[data-section]:nth-child(#{$index}) {
+		@content;
+	}
+}
+
+@mixin lastChild() {
+	[data-section]:last-child {
+		@content;
+	}
+}
+
+@mixin hassOddLength() {
+	&[data-odd='true'] {
+		@content;
+	}
+}
+
+@mixin hasEvenLength() {
+	&[data-even='true'] {
+		@content;
+	}
+}
+
+@mixin defaultStyles() {
+	[data-section]:not(:last-child) {
+		padding-bottom: $angleHeight;
+	}
+
+	[data-section]:not(:first-child) {
+		margin-top: $angleHeight * -1;
+		padding-top: $angleHeight;
+	}
+
+	[data-section]:first-child {
+		clip-path: none;
+	}
+}
+
+.sectionManager {
+	&[data-template='chevron'] {
+		@include hassOddLength() {
+			@include evenSections() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+			}
+		}
+
+		@include hasEvenLength() {
+			@include evenSections() {
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+			}
+		}
+
+		@include allSections() {
+			@include defaultStyles();
+
+			@include targetChild(2) {
+				clip-path: polygon(0 0, 50% #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+				position: relative;
+			}
+		}
+	}
+
+	&[data-template='angle'] {
+		@include allSections() {
+			@include evenSections() {
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+			}
+
+			@include lastChild() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+			}
+
+			@include defaultStyles();
+		}
+	}
+}

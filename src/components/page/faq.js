@@ -5,7 +5,7 @@ import {fromJS, List} from 'immutable';
 
 import SectionHero from '../sections/sectionHero';
 import SectionFaq from '../sections/sectionFaq';
-import Cta from '../cta/cta';
+import SectionCta from '../sections/sectionCta';
 
 import HeroImg from '../../img/Hero-bg-1.png';
 
@@ -77,7 +77,7 @@ export default class FaqPage extends Component {
 					ctaLinkUrl="/contact"
 					ctaLinkText="Contact Us Today"
 				/>
-				<Cta siteSettings={SiteSettings} state={this.props.state}/>
+				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
 			</div>
 		);
 	}

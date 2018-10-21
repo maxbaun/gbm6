@@ -73,76 +73,69 @@ export default class SectionAbout extends Component {
 		const counters = this.props.counters.split('\n');
 
 		return (
-			<AngledSection
-				prevSectionBleed={this.props.prevSectionBleed}
-				state={this.props.state}
-				slantDirection={this.props.slantDirection}
-				onAngleChange={this.handleAngleChange}
-			>
-				<div id={this.props.id} className={CSS.section} style={{...this.props.style, paddingBottom: angleBleed}}>
-					<div className={CSS.background}>
-						<img src={this.props.backgroundImage.get('src')}/>
-					</div>
-					<div className={CSS.inner}>
-						<div className={CSS.content}>
-							<div className={CSS.row}>
-								<div className={CSS.col}>
-									<div className={CSS.heading}>
-										<HeadingBrand
-											isMobile={this.props.state.getIn(['windowSize', 'width']) < responsive.collapse}
-											heading={this.props.heading}
-											width={this.getHeadingWidth()}
-										/>
-									</div>
+			<div data-section id={this.props.id} className={CSS.section}>
+				<div className={CSS.background}>
+					<img src={this.props.backgroundImage.get('src')}/>
+				</div>
+				<div className={CSS.inner}>
+					<div className={CSS.content}>
+						<div className={CSS.row}>
+							<div className={CSS.col}>
+								<div className={CSS.heading}>
+									<HeadingBrand
+										isMobile={this.props.state.getIn(['windowSize', 'width']) < responsive.collapse}
+										heading={this.props.heading}
+										width={this.getHeadingWidth()}
+									/>
 								</div>
-								<div className={CSS.col}>
-									<div className={CSS.text}>
-										<Markdown content={this.props.text}/>
-									</div>
+							</div>
+							<div className={CSS.col}>
+								<div className={CSS.text}>
+									<Markdown content={this.props.text}/>
 								</div>
 							</div>
 						</div>
-						{icons && icons.length ? (
-							<ul className={CSS.iconBlocks}>
-								{icons &&
-									icons.map(icon => {
-										const parts = icon.split(':');
-
-										return (
-											<li key={icon} className={CSS.iconBlock}>
-												<div className={CSS.icon}>
-													<span className={parts[0]}/>
-													<p>{parts[1]}</p>
-												</div>
-											</li>
-										);
-									})}
-							</ul>
-						) : null}
-						{counters && counters.length ? (
-							<div className={CSS.counters}>
-								<ul className={CSS.counterBlocks}>
-									{counters.map(counter => {
-										const parts = counter.split(':');
-
-										return (
-											<li key={parts[0] + parts[2]} className={CSS.counterBlock}>
-												<div className={CSS.counter}>
-													<h3>
-														{parts[0]}
-														{parts[1]}
-													</h3>
-													<p>{parts[2]}</p>
-												</div>
-											</li>
-										);
-									})}
-								</ul>
-							</div>
-						) : null}
 					</div>
+					{icons && icons.length ? (
+						<ul className={CSS.iconBlocks}>
+							{icons &&
+								icons.map(icon => {
+									const parts = icon.split(':');
+
+									return (
+										<li key={icon} className={CSS.iconBlock}>
+											<div className={CSS.icon}>
+												<span className={parts[0]}/>
+												<p>{parts[1]}</p>
+											</div>
+										</li>
+									);
+								})}
+						</ul>
+					) : null}
+					{counters && counters.length ? (
+						<div className={CSS.counters}>
+							<ul className={CSS.counterBlocks}>
+								{counters.map(counter => {
+									const parts = counter.split(':');
+
+									return (
+										<li key={parts[0] + parts[2]} className={CSS.counterBlock}>
+											<div className={CSS.counter}>
+												<h3>
+													{parts[0]}
+													{parts[1]}
+												</h3>
+												<p>{parts[2]}</p>
+											</div>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					) : null}
 				</div>
-			</AngledSection>
+			</div>
 		);
 	}
 }

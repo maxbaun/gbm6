@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {Map, fromJS} from 'immutable';
 
-import CSS from './cta.module.scss';
+import CSS from './sectionCta.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
 import {responsive} from '../../constants';
 import {state} from '../../utils/componentHelpers';
 
-export default class CTA extends Component {
+export default class SectionCta extends Component {
 	constructor(props) {
 		super(props);
 
@@ -47,7 +47,7 @@ export default class CTA extends Component {
 		const {siteSettings, state} = this.props;
 		const isMobile = state.getIn(['windowSize', 'width']) < responsive.collapse;
 		return (
-			<div className={CSS.section}>
+			<div data-section className={CSS.section}>
 				<div className={CSS.inner}>
 					{isMobile ? (
 						<div>

@@ -35,7 +35,7 @@ export default class SectionTeam extends Component {
 
 	render() {
 		return (
-			<div className={CSS.section}>
+			<div data-section className={CSS.section}>
 				<div className={CSS.inner}>
 					<div className={CSS.sectionContainer}>
 						<div className={CSS.row}>

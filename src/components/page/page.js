@@ -8,7 +8,8 @@ import SectionAbout from '../sections/sectionAbout';
 import SectionVideos from '../sections/sectionVideos';
 import SectionTeam from '../sections/sectionTeam';
 import SectionFaq from '../sections/sectionFaq';
-import Cta from '../cta/cta';
+import SectionCta from '../sections/sectionCta';
+import SectionManager from '../sectionManager/sectionManager';
 
 import HeroImg from '../../img/Hero-bg-1.png';
 import AboutBg from '../../img/About-Bg.jpg';
@@ -101,7 +102,7 @@ export default class Page extends Component {
 		const {heroBleed} = this.state;
 
 		return (
-			<div>
+			<SectionManager hasCta template="chevron">
 				<SectionHero
 					doubleAngle
 					scrollTo="#next"
@@ -119,7 +120,6 @@ export default class Page extends Component {
 				/>
 				<SectionAbout
 					id="next"
-					style={{marginTop: heroBleed * -1, paddingTop: heroBleed}}
 					prevSectionBleed={heroBleed}
 					backgroundImage={fromJS({src: AboutBg})}
 					heading={AboutHeading}
@@ -146,8 +146,8 @@ export default class Page extends Component {
 					team={Team}
 				/>
 				<SectionFaq backgroundImage={fromJS({src: AboutBg})} heading={FaqHeading} faqs={Faqs} state={this.props.state} allFaqLink="/"/>
-				<Cta siteSettings={SiteSettings} state={this.props.state}/>
-			</div>
+				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
+			</SectionManager>
 		);
 	}
 }

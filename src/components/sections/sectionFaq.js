@@ -62,7 +62,7 @@ export default class SectionFaq extends Component {
 		const renderAccordion = windowWidth < responsive.tablet || layout === 'accordion';
 
 		return (
-			<div className={CSS.section}>
+			<div data-section className={CSS.section}>
 				<div className={CSS.overlay}/>
 				<div className={CSS.background} style={backgroundStyle}/>
 				<div className={CSS.inner}>

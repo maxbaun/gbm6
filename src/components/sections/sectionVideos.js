@@ -83,7 +83,7 @@ export default class SectionVideos extends Component {
 		const {id, heading, videoCategories, allVideosText, videos, allVideosLink, categoryAlign} = this.props;
 
 		return (
-			<div id={id} className={CSS.section}>
+			<div data-section id={id} className={CSS.section}>
 				<div className={CSS.inner}>
 					<div className={CSS.header}>
 						<div className={CSS.content}>

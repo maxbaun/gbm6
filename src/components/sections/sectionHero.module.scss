@@ -1,28 +1,6 @@
 @import '../../css/utils/utils';
 
-.hero {
-	display: block;
-	position: relative;
-	width: 100%;
-}
-
-.heroDoubleAngle {
-	.image {
-		clip-path: polygon(50% 0%, 100% 0, 100% 75%, 50% 100%, 50% 100%, 0% 75%, 0 0);
-	}
-
-	.line {
-		@include zIndex(heroLine);
-	}
-}
-
-.heroSingleAngle {
-	.line {
-		@include zIndex(heroLine);
-	}
-}
-
-.image {
+@mixin heroHeight() {
 	height: 400px;
 	width: 100%;
 
@@ -37,6 +15,23 @@
 	@include widescreen {
 		height: 1000px;
 	}
+}
+
+.hero {
+	@include heroHeight();
+	display: block;
+	position: relative;
+	width: 100%;
+}
+
+.heroSingleAngle {
+	.line {
+		@include zIndex(heroLine);
+	}
+}
+
+.image {
+	@include heroHeight();
 
 	img {
 		height: 100%;

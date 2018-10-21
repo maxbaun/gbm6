@@ -5,7 +5,7 @@ import {fromJS, List} from 'immutable';
 
 import SectionHero from '../sections/sectionHero';
 import SectionVideos from '../sections/sectionVideos';
-import Cta from '../cta/cta';
+import SectionCta from '../sections/sectionCta';
 
 import HeroImg from '../../img/Hero-bg-1.png';
 
@@ -18,7 +18,7 @@ const HeroContent = `
 ### Legendary **Event Design & Execution**
 `;
 
-export default class Page extends Component {
+export default class WatchThis extends Component {
 	constructor(props) {
 		super(props);
 
@@ -78,7 +78,7 @@ export default class Page extends Component {
 					actions={this.props.actions}
 					categoryAlign="center"
 				/>
-				<Cta siteSettings={SiteSettings} state={this.props.state}/>
+				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
 			</div>
 		);
 	}

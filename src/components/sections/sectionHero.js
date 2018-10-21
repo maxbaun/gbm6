@@ -125,6 +125,14 @@ export default class SectionHero extends Component {
 		// Const {width, height} = this.props.state.get('windowSize').toJS();
 		const {width: windowWidth} = this.props.state.get('windowSize').toJS();
 
+		const ww = window.innerWidth;
+
+		const tHeight = (ww / 100) * 20 * window.devicePixelRatio;
+		const an = Math.atan(tHeight / ww);
+
+		console.log(tHeight, ww);
+		console.log(toDegrees(an));
+
 		const rect = this.image.getBoundingClientRect();
 		const width = rect.width;
 		const height = rect.height;
@@ -193,12 +201,12 @@ export default class SectionHero extends Component {
 		}
 
 		return (
-			<div className={compileWrapCss.join(' ')}>
+			<div data-section className={compileWrapCss.join(' ')}>
 				<div
 					ref={ref.call(this, 'image')}
 					className={CSS.image}
 					style={{
-						...this.state.imageStyle,
+						// ...this.state.imageStyle,
 						...this.props.imageCss,
 						backgroundImage: `url(${this.props.image.get('src')})`
 					}}
