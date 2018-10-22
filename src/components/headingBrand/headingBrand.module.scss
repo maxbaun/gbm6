@@ -7,9 +7,3 @@
 .heading {
 	padding: 5px 3px 13px;
 }
-
-.text,
-.text p {
-	@include fontSize(18, 28);
-	text-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.7);
-}

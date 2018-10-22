@@ -5,7 +5,6 @@ import {Map, fromJS} from 'immutable';
 
 import CSS from './sectionCta.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
-import {responsive} from '../../constants';
 import {state} from '../../utils/componentHelpers';
 
 export default class SectionCta extends Component {
@@ -24,13 +23,11 @@ export default class SectionCta extends Component {
 	}
 
 	static propTypes = {
-		siteSettings: ImmutableProptypes.map,
-		state: ImmutableProptypes.map
+		siteSettings: ImmutableProptypes.map
 	};
 
 	static defaultProps = {
-		siteSettings: Map(),
-		state: Map()
+		siteSettings: Map()
 	};
 
 	handleSubmit(e) {
@@ -44,31 +41,20 @@ export default class SectionCta extends Component {
 	}
 
 	render() {
-		const {siteSettings, state} = this.props;
-		const isMobile = state.getIn(['windowSize', 'width']) < responsive.collapse;
 		return (
 			<div data-section className={CSS.section}>
 				<div className={CSS.wrap}>
 					<div className={CSS.inner}>
-						{isMobile ? (
-							<div>
-								{this.renderHeader()}
-								{this.renderContact()}
-								{this.renderSocial()}
-								{this.renderForm()}
-							</div>
-						) : (
-							<Fragment>
-								<div className={CSS.header}>
-									<div className={CSS.row}>
-										<div className={CSS.colSocial}>{this.renderSocial()}</div>
-										<div className={CSS.colContact}>{this.renderContact()}</div>
-										<div className={CSS.colHeading}>{this.renderHeader()}</div>
-									</div>
+						<Fragment>
+							<div className={CSS.header}>
+								<div className={CSS.row}>
+									<div className={CSS.colHeading}>{this.renderHeader()}</div>
+									<div className={CSS.colContact}>{this.renderContact()}</div>
+									<div className={CSS.colSocial}>{this.renderSocial()}</div>
 								</div>
-								<div className={CSS.content}>{this.renderForm()}</div>
-							</Fragment>
-						)}
+							</div>
+							<div className={CSS.content}>{this.renderForm()}</div>
+						</Fragment>
 					</div>
 				</div>
 			</div>

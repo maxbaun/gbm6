@@ -1,9 +1,15 @@
 @import '../../css/utils/utils.scss';
 
 .teamMember {
+	height: 159px;
 	position: relative;
-	height: 300px;
-	width: 300px;
+	width: 159px;
+
+	@include collapseUp {
+		padding: 0;
+		height: 300px;
+		width: 300px;
+	}
 
 	&:hover {
 		.teamMemberImage {

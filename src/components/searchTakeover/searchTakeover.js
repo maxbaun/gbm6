@@ -62,7 +62,7 @@ class SearchTakover extends Component {
 
 		return (
 			<div className={wrapCss.join(' ')}>
-				<form className={CSS.form} onSubmit={clickPrevent(this.props.onSubmit, this.state.query)}>
+				<form className={CSS.form} autoComplete="off" onSubmit={clickPrevent(this.props.onSubmit, this.state.query)}>
 					<div className={CSS.icon}>
 						<span className="fa fa-search" onClick={this.handleClickOutside}/>
 					</div>

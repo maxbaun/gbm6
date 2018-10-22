@@ -20,12 +20,6 @@
 	width: 100%;
 }
 
-.heroSingleAngle {
-	.line {
-		@include zIndex(heroLine);
-	}
-}
-
 .image {
 	@include heroHeight();
 
@@ -35,14 +29,6 @@
 		object-position: top center;
 		width: 100%;
 	}
-}
-
-.line {
-	display: block;
-	background-color: $grey;
-	height: 2px;
-	opacity: 0.5;
-	width: 100%;
 }
 
 .content {

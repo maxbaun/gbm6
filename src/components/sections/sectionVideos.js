@@ -11,7 +11,6 @@ import VideoPreview from '../videoPreview/videoPreview';
 import Masonry from '../masonry/masonry';
 import Modal from '../modals/modal';
 import {click} from '../../utils/componentHelpers';
-import {responsive} from '../../constants';
 
 export default class SectionVideos extends Component {
 	constructor(props) {
@@ -22,7 +21,6 @@ export default class SectionVideos extends Component {
 			activeCategory: 0
 		};
 
-		this.getHeadingWidth = this.getHeadingWidth.bind(this);
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.handleVideoOpen = this.handleVideoOpen.bind(this);
 		this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -53,20 +51,6 @@ export default class SectionVideos extends Component {
 		showCategories: true
 	};
 
-	getHeadingWidth() {
-		const {width} = this.props.state.get('windowSize').toJS();
-
-		if (width > responsive.desktop) {
-			return 554;
-		}
-
-		if (width > responsive.tablet) {
-			return 400;
-		}
-
-		return 320;
-	}
-
 	handleModalClose() {
 		this.setState({activeVideo: null});
 		this.props.actions.offmenuHide('videoModal');
@@ -93,7 +77,7 @@ export default class SectionVideos extends Component {
 								{heading && heading !== '' ? (
 									<div className={CSS.col}>
 										<div className={CSS.heading}>
-											<HeadingBrand isMobile={false} heading={this.props.heading} width={this.getHeadingWidth()}/>
+											<HeadingBrand heading={this.props.heading}/>
 										</div>
 									</div>
 								) : null}
@@ -125,7 +109,7 @@ export default class SectionVideos extends Component {
 						) : null}
 					</div>
 					<div className={CSS.videos}>
-						<Masonry state={this.props.state}>
+						<Masonry>
 							{videos
 								.map(video => {
 									return (

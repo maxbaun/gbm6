@@ -43,6 +43,7 @@ input[type='text'].input {
 
 	&:focus {
 		background-color: transparent;
+		border-color: $grey;
 		outline: none;
 	}
 }

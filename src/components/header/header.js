@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import CSS from './header.module.scss';
 import SearchTakeover from '../searchTakeover/searchTakeover';
@@ -15,10 +15,6 @@ export default class Header extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			search: null
-		};
-
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleOffmenuClose = this.handleOffmenuClose.bind(this);
 		this.getLogoSize = this.getLogoSize.bind(this);
@@ -27,12 +23,13 @@ export default class Header extends Component {
 	static propTypes = {
 		menus: ImmutablePropTypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
-		state: ImmutablePropTypes.map.isRequired
+		state: ImmutablePropTypes.map.isRequired,
+		history: PropTypes.object.isRequired
 	};
 
 	handleSearch(query) {
 		this.props.actions.offmenuHide('search');
-		this.setState({search: query});
+		this.props.history.push(`/search/${query}`);
 	}
 
 	handleOffmenuClose(offmenu) {
@@ -42,7 +39,7 @@ export default class Header extends Component {
 	}
 
 	getLogoSize() {
-		const windowWidth = this.props.state.getIn(['windowSize', 'width']);
+		const windowWidth = window.innerWidth;
 
 		if (windowWidth >= responsive.desktop) {
 			return {
@@ -67,10 +64,6 @@ export default class Header extends Component {
 	render() {
 		const megaMenuOpen = this.props.state.getIn(['offmenu', 'megaMenu']);
 		const logoSize = this.getLogoSize();
-
-		if (this.state.search) {
-			return <Redirect to={`/search/${this.state.search}`}/>;
-		}
 
 		return (
 			<header className={CSS.header}>

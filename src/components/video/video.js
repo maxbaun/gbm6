@@ -6,7 +6,7 @@ import {Map} from 'immutable';
 
 import CSS from './video.module.scss';
 import Modal from '../modals/modal';
-import {click, ref, vimeoId} from '../../utils/componentHelpers';
+import {click, ref, unique} from '../../utils/componentHelpers';
 
 export default class Video extends Component {
 	constructor(props) {
@@ -14,7 +14,8 @@ export default class Video extends Component {
 
 		this.playBtn = null;
 		this.handlePlayClick = this.handlePlayClick.bind(this);
-		this.vimeoId = this.vimeoId.bind(this);
+
+		this.unique = unique();
 	}
 
 	static propTypes = {
@@ -36,17 +37,13 @@ export default class Video extends Component {
 		state: Map()
 	};
 
-	vimeoId() {
-		return vimeoId(this.props.url);
-	}
-
 	handlePlayClick() {
 		this.playBtn.classList.add(CSS.playAnimated);
 		setTimeout(() => {
 			this.playBtn.classList.remove(CSS.playAnimated);
 		}, 2000);
 
-		this.props.actions.offmenuToggle(this.vimeoId());
+		this.props.actions.offmenuToggle(this.unique);
 	}
 
 	render() {
@@ -73,7 +70,7 @@ export default class Video extends Component {
 				</div>
 				<Modal
 					showClose
-					active={this.props.state.getIn(['offmenu', this.vimeoId()])}
+					active={this.props.state.getIn(['offmenu', this.unique])}
 					backgroundColor="transparent"
 					size="medium"
 					windowHeight={this.props.state.getIn(['windowSize', 'height'])}

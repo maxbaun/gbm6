@@ -8,6 +8,7 @@ import Markdown from '../common/markdown';
 import HeadingBrand from '../headingBrand/headingBrand';
 import Video from '../video/video';
 import TeamSlider from '../teamSlider/teamSlider';
+import {responsive} from '../../constants';
 
 export default class SectionTeam extends Component {
 	constructor(props) {
@@ -39,15 +40,19 @@ export default class SectionTeam extends Component {
 				<div className={CSS.inner}>
 					<div className={CSS.sectionContainer}>
 						<div className={CSS.row}>
-							<div className={CSS.col}>
-								<Video
-									url={this.props.video.get('videoUrl')}
-									thumbnail={this.props.video.get('videoThumbnail')}
-									actions={this.props.actions}
-									state={this.props.state}
-									previewWidth={603}
-								/>
-							</div>
+							{window.innerWidth > responsive.desktop ? (
+								<div className={CSS.col}>
+									<div className={CSS.video}>
+										<Video
+											url={this.props.video.get('videoUrl')}
+											thumbnail={this.props.video.get('videoThumbnail')}
+											actions={this.props.actions}
+											state={this.props.state}
+											previewWidth={603}
+										/>
+									</div>
+								</div>
+							) : null}
 							<div className={CSS.col}>
 								<div className={CSS.content}>
 									<div className={CSS.heading}>
@@ -56,12 +61,23 @@ export default class SectionTeam extends Component {
 									<div className={CSS.copy}>
 										<Markdown content={this.props.text}/>
 									</div>
+									{window.innerWidth <= responsive.desktop ? (
+										<div className={CSS.video}>
+											<Video
+												url={this.props.video.get('videoUrl')}
+												thumbnail={this.props.video.get('videoThumbnail')}
+												actions={this.props.actions}
+												state={this.props.state}
+												previewWidth={603}
+											/>
+										</div>
+									) : null}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div className={CSS.slider}>
-						<TeamSlider team={this.props.team} state={this.props.state}/>
+						<TeamSlider team={this.props.team}/>
 					</div>
 				</div>
 			</div>

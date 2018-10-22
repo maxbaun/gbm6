@@ -104,7 +104,6 @@ export default class Page extends Component {
 		return (
 			<SectionManager hasCta template="chevron">
 				<SectionHero
-					doubleAngle
 					scrollTo="#next"
 					scrollColor="#0091D6"
 					imageCss={{
@@ -114,9 +113,7 @@ export default class Page extends Component {
 						backgroundPosition: 'center top'
 					}}
 					image={fromJS({src: HeroImg})}
-					state={this.props.state}
 					content={HeroContent}
-					onHeroBleedChange={this.handleHeroBleedChange}
 				/>
 				<SectionAbout
 					id="next"
@@ -145,7 +142,7 @@ export default class Page extends Component {
 					state={this.props.state}
 					team={Team}
 				/>
-				<SectionFaq backgroundImage={fromJS({src: AboutBg})} heading={FaqHeading} faqs={Faqs} state={this.props.state} allFaqLink="/"/>
+				<SectionFaq backgroundImage={fromJS({src: AboutBg})} heading={FaqHeading} faqs={Faqs} allFaqLink="/"/>
 				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
 			</SectionManager>
 		);

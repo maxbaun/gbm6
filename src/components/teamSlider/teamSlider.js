@@ -10,6 +10,7 @@ import {ref, windowWidthChange, click, debounce} from '../../utils/componentHelp
 import {responsive} from '../../constants';
 
 const TeamSize = 307;
+const TeamSizeMobile = 159;
 const TeamSpacing = 7;
 
 export default class TeamSlider extends Component {
@@ -19,32 +20,25 @@ export default class TeamSlider extends Component {
 		this.swiper = null;
 		this.wrap = null;
 
-		this.state = {
-			activeIndex: 0
-		};
-
-		this.handleSlideChange = this.handleSlideChange.bind(this);
 		this.updateSlider = debounce(this.updateSlider.bind(this), 300);
 	}
 
 	static propTypes = {
-		team: ImmutableProptypes.list,
-		state: ImmutableProptypes.map
+		team: ImmutableProptypes.list
 	};
 
 	static defaultProps = {
-		team: List(),
-		state: Map()
+		team: List()
 	};
 
 	componentDidMount() {
 		this.initSwiper();
+
+		window.addEventListener('resize', this.updateSlider);
 	}
 
-	componentDidUpdate(nextProps) {
-		if (windowWidthChange(this.props, nextProps)) {
-			this.updateSlider();
-		}
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.updateSlider);
 	}
 
 	updateSlider() {
@@ -53,11 +47,13 @@ export default class TeamSlider extends Component {
 
 	initSwiper() {
 		const container = this.wrap.querySelector('.swiper-container');
+		const slideSize = window.innerWidth < responsive.collapse ? TeamSizeMobile : TeamSize;
+
 		const options = {
 			loop: false,
 			direction: 'horizontal',
 			spaceBetween: 7,
-			slidesPerView: this.wrap.offsetWidth / TeamSize,
+			slidesPerView: this.wrap.offsetWidth / slideSize,
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev'
@@ -67,24 +63,7 @@ export default class TeamSlider extends Component {
 		this.swiper = new Swiper(container, options);
 	}
 
-	handleSlideChange(activeIndex) {
-		if (activeIndex > this.props.team.count() - 1) {
-			activeIndex = 0;
-		}
-
-		if (activeIndex < 0) {
-			activeIndex = this.props.team.count() - 1;
-		}
-
-		console.log(activeIndex);
-
-		this.swiper.slideTo(activeIndex);
-		this.setState({activeIndex});
-	}
-
 	render() {
-		const {activeIndex} = this.state;
-
 		return (
 			<div ref={ref.call(this, 'wrap')} className={CSS.wrap}>
 				<div className={CSS.slider}>
