@@ -4,6 +4,7 @@ import {Motion, spring, presets} from 'react-motion';
 
 import CSS from './modal.module.scss';
 import Close from '../close/close';
+import RenderInBody from '../common/renderInBody';
 
 // eslint-disable-next-line react/no-deprecated
 export default class Modal extends Component {
@@ -95,86 +96,88 @@ export default class Modal extends Component {
 		const modalClass = [CSS.modal, size ? CSS[size] : ''];
 
 		return (
-			<div className={wrapClass.join(' ')} style={{visibility}}>
-				<Motion
-					defaultStyle={{
-						opacity: 0,
-						x: 0.8,
-						y: 0.8,
-						top: 4
-					}}
-					style={{
-						opacity: active ? spring(1, presets.stiff) : spring(0, presets.stiff),
-						x: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
-						y: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
-						top: active ? spring(10, presets.stiff) : spring(4, presets.stiff)
-					}}
-					onRest={this.handleRest}
-				>
-					{styles => {
-						const fullHeight = windowHeight - (windowHeight / styles.top) * 2;
+			<RenderInBody>
+				<div className={wrapClass.join(' ')} style={{visibility}}>
+					<Motion
+						defaultStyle={{
+							opacity: 0,
+							x: 0.8,
+							y: 0.8,
+							top: 4
+						}}
+						style={{
+							opacity: active ? spring(1, presets.stiff) : spring(0, presets.stiff),
+							x: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
+							y: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
+							top: active ? spring(10, presets.stiff) : spring(4, presets.stiff)
+						}}
+						onRest={this.handleRest}
+					>
+						{styles => {
+							const fullHeight = windowHeight - (windowHeight / styles.top) * 2;
 
-						const modalStyle = {
-							visibility: visibility,
-							display: display,
-							opacity: styles.opacity,
-							top: `${styles.top}%`,
-							zIndex: active ? 1003 : 1000,
-							backgroundColor: backgroundColor,
-							transform: `scaleX(${styles.x}) scaleY(${styles.y})`
-						};
+							const modalStyle = {
+								visibility: visibility,
+								display: display,
+								opacity: styles.opacity,
+								top: `${styles.top}%`,
+								zIndex: active ? 1003 : 1000,
+								backgroundColor: backgroundColor,
+								transform: `scaleX(${styles.x}) scaleY(${styles.y})`
+							};
 
-						if (size === 'full') {
-							modalStyle.height = fullHeight;
-						}
+							if (size === 'full') {
+								modalStyle.height = fullHeight;
+							}
 
-						if (height > 0) {
-							modalStyle.height = height;
-							modalStyle.overflowY = 'hidden';
-						}
+							if (height > 0) {
+								modalStyle.height = height;
+								modalStyle.overflowY = 'hidden';
+							}
 
-						if (width > 0) {
-							modalStyle.width = width;
-							modalStyle.overflowX = 'hidden';
-						}
+							if (width > 0) {
+								modalStyle.width = width;
+								modalStyle.overflowX = 'hidden';
+							}
 
-						return (
-							<Fragment>
-								{showClose ? (
-									<span style={{opacity: styles.opacity}} className={CSS.close}>
-										<Close backgroundColor="#FAFAFA" size={40} onClick={this.handleClose}/>
-									</span>
-								) : null}
-								<div className={modalClass.join(' ')} style={modalStyle}>
-									{children}
-								</div>
-							</Fragment>
-						);
-					}}
-				</Motion>
-				<Motion
-					defaultStyle={{
-						opacity: 0
-					}}
-					style={{
-						opacity: active ? spring(fogOpacity, presets.stiff) : spring(0, presets.stiff)
-					}}
-				>
-					{styles => {
-						return (
-							<div
-								onClick={this.handleClose}
-								className={CSS.fog}
-								style={{
-									visibility: visibility,
-									opacity: styles.opacity,
-									zIndex: active ? 1002 : 999
-								}}
-							/>
-						);
-					}}
-				</Motion>
-			</div>
+							return (
+								<Fragment>
+									{showClose ? (
+										<span style={{opacity: styles.opacity > 0 ? styles.opacity : 0}} className={CSS.close}>
+											<Close backgroundColor="#FAFAFA" size={40} onClick={this.handleClose}/>
+										</span>
+									) : null}
+									<div className={modalClass.join(' ')} style={modalStyle}>
+										{children}
+									</div>
+								</Fragment>
+							);
+						}}
+					</Motion>
+					<Motion
+						defaultStyle={{
+							opacity: 0
+						}}
+						style={{
+							opacity: active ? spring(fogOpacity, presets.stiff) : spring(0, presets.stiff)
+						}}
+					>
+						{styles => {
+							return (
+								<div
+									onClick={this.handleClose}
+									className={CSS.fog}
+									style={{
+										visibility: visibility,
+										opacity: styles.opacity,
+										zIndex: active ? 1002 : 999
+									}}
+								/>
+							);
+						}}
+					</Motion>
+				</div>
+			</RenderInBody>
 		);
 	}
 }

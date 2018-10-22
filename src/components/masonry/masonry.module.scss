@@ -1,0 +1,15 @@
+.grid {
+	display: grid;
+	grid-auto-rows: 1px;
+	grid-gap: 9px;
+}
+
+.item {
+	display: inline-block;
+}
+
+.itemInner {
+	display: block;
+	position: relative;
+	width: 100%;
+}

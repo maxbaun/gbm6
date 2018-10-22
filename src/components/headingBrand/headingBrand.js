@@ -9,13 +9,13 @@ const HeadingBrand = ({heading, isMobile, width}) => {
 	return (
 		<div className={CSS.headingBrand} style={{maxWidth: '100%', width, margin: isMobile ? '0 auto' : ''}}>
 			<div className={CSS.polygon}>
-				<LogoPolygon width={width}/>
+				<LogoPolygon width={width} height={27}/>
 			</div>
 			<div className={CSS.heading} style={{width: width, maxWidth: '100%'}}>
 				<Markdown content={heading}/>
 			</div>
 			<div className={CSS.polygon}>
-				<LogoPolygon flipped width={width}/>
+				<LogoPolygon flipped width={width} height={27}/>
 			</div>
 		</div>
 	);

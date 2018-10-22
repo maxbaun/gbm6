@@ -15,7 +15,8 @@
 .btn-outline {
 	background-color: transparent;
 	border: 1px solid #979797;
-	color: $white;
+	color: #979797;
+	font-weight: 400;
 
 	&:hover {
 		border-color: $white;

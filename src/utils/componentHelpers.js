@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import {List, Map, fromJS} from 'immutable';
+import {List, Map, fromJS, Range} from 'immutable';
 
 import {responsive} from '../constants';
 
@@ -292,4 +292,8 @@ export function debounce(func, wait, immediate) {
 			func.apply(context, args);
 		}
 	};
+}
+
+export function chunkList(list, chunkSize = 1) {
+	return Range(0, list.count(), chunkSize).map(chunkStart => list.slice(chunkStart, chunkStart + chunkSize));
 }

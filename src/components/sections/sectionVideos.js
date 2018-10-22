@@ -3,12 +3,12 @@ import {Link} from 'react-router-dom';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {Map, List} from 'immutable';
-import Masonry from 'react-masonry-component';
 import ReactPlayer from 'react-player';
 
 import CSS from './sectionVideos.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
 import VideoPreview from '../videoPreview/videoPreview';
+import Masonry from '../masonry/masonry';
 import Modal from '../modals/modal';
 import {click} from '../../utils/componentHelpers';
 import {responsive} from '../../constants';
@@ -37,7 +37,8 @@ export default class SectionVideos extends Component {
 		allVideosText: PropTypes.string,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		categoryAlign: PropTypes.oneOf(['left', 'center']),
-		id: PropTypes.string
+		id: PropTypes.string,
+		showCategories: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -48,7 +49,8 @@ export default class SectionVideos extends Component {
 		allVideosLink: null,
 		allVideosText: 'All Videos',
 		categoryAlign: 'left',
-		id: null
+		id: null,
+		showCategories: true
 	};
 
 	getHeadingWidth() {
@@ -80,7 +82,7 @@ export default class SectionVideos extends Component {
 	}
 
 	render() {
-		const {id, heading, videoCategories, allVideosText, videos, allVideosLink, categoryAlign} = this.props;
+		const {id, heading, videoCategories, allVideosText, videos, allVideosLink, categoryAlign, showCategories} = this.props;
 
 		return (
 			<div data-section id={id} className={CSS.section}>
@@ -105,30 +107,34 @@ export default class SectionVideos extends Component {
 								) : null}
 							</div>
 						</div>
-						<ul className={CSS.categories} data-align={categoryAlign}>
-							{videoCategories.map((category, index) => {
-								return (
-									<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
-										<div
-											className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
-											onClick={click(this.handleCategoryChange, index)}
-										>
-											{category.getIn(['fields', 'title'])}
-										</div>
-									</li>
-								);
-							})}
-						</ul>
+						{showCategories ? (
+							<ul className={CSS.categories} data-align={categoryAlign}>
+								{videoCategories.map((category, index) => {
+									return (
+										<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
+											<div
+												className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
+												onClick={click(this.handleCategoryChange, index)}
+											>
+												{category.getIn(['fields', 'title'])}
+											</div>
+										</li>
+									);
+								})}
+							</ul>
+						) : null}
 					</div>
 					<div className={CSS.videos}>
-						<Masonry updateOnEachImageLoad className={CSS.grid}>
-							{videos.map(video => {
-								return (
-									<div key={video.get('title')} className={CSS.gridItem}>
-										<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, video.get('video'))}/>
-									</div>
-								);
-							})}
+						<Masonry state={this.props.state}>
+							{videos
+								.map(video => {
+									return (
+										<div key={video.get('title')} className={CSS.video}>
+											<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, video.get('video'))}/>
+										</div>
+									);
+								})
+								.toJS()}
 						</Masonry>
 					</div>
 					<div className={CSS.loadMoreBtn}>

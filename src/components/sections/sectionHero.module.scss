@@ -5,15 +5,11 @@
 	width: 100%;
 
 	@include tabletUp {
-		height: 800px;
+		height: 95vh;
 	}
 
 	@include desktopUp {
-		height: 900px;
-	}
-
-	@include widescreen {
-		height: 1000px;
+		height: 100vh;
 	}
 }
 

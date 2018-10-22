@@ -48,26 +48,28 @@ export default class SectionCta extends Component {
 		const isMobile = state.getIn(['windowSize', 'width']) < responsive.collapse;
 		return (
 			<div data-section className={CSS.section}>
-				<div className={CSS.inner}>
-					{isMobile ? (
-						<div>
-							{this.renderHeader()}
-							{this.renderContact()}
-							{this.renderSocial()}
-							{this.renderForm()}
-						</div>
-					) : (
-						<Fragment>
-							<div className={CSS.header}>
-								<div className={CSS.row}>
-									<div className={CSS.colSocial}>{this.renderSocial()}</div>
-									<div className={CSS.colContact}>{this.renderContact()}</div>
-									<div className={CSS.colHeading}>{this.renderHeader()}</div>
-								</div>
+				<div className={CSS.wrap}>
+					<div className={CSS.inner}>
+						{isMobile ? (
+							<div>
+								{this.renderHeader()}
+								{this.renderContact()}
+								{this.renderSocial()}
+								{this.renderForm()}
 							</div>
-							<div className={CSS.content}>{this.renderForm()}</div>
-						</Fragment>
-					)}
+						) : (
+							<Fragment>
+								<div className={CSS.header}>
+									<div className={CSS.row}>
+										<div className={CSS.colSocial}>{this.renderSocial()}</div>
+										<div className={CSS.colContact}>{this.renderContact()}</div>
+										<div className={CSS.colHeading}>{this.renderHeader()}</div>
+									</div>
+								</div>
+								<div className={CSS.content}>{this.renderForm()}</div>
+							</Fragment>
+						)}
+					</div>
 				</div>
 			</div>
 		);

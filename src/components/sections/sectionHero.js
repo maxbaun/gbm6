@@ -130,9 +130,6 @@ export default class SectionHero extends Component {
 		const tHeight = (ww / 100) * 20 * window.devicePixelRatio;
 		const an = Math.atan(tHeight / ww);
 
-		console.log(tHeight, ww);
-		console.log(toDegrees(an));
-
 		const rect = this.image.getBoundingClientRect();
 		const width = rect.width;
 		const height = rect.height;

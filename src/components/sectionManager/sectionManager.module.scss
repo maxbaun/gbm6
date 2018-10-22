@@ -1,6 +1,7 @@
 @import '../../css/utils/utils';
 
-$angleHeight: 20vw;
+$angleHeight: 18vw;
+$sectionPadding: 15vw;
 
 $transform: 21.80140948635181deg;
 
@@ -49,12 +50,12 @@ $transform: 21.80140948635181deg;
 
 @mixin defaultStyles() {
 	[data-section]:not(:last-child) {
-		padding-bottom: $angleHeight;
+		padding-bottom: $sectionPadding;
 	}
 
 	[data-section]:not(:first-child) {
 		margin-top: $angleHeight * -1;
-		padding-top: $angleHeight;
+		padding-top: $sectionPadding;
 	}
 
 	[data-section]:first-child {

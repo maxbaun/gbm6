@@ -125,24 +125,8 @@
 	}
 }
 
-.grid {
-}
-
-.gridItem {
-	padding: 4.5px;
+.video {
 	width: 100%;
-
-	@include tabletUp {
-		width: calc(100% / 3);
-	}
-
-	@include desktopUp {
-		width: 25%;
-	}
-
-	@include widescreen {
-		width: 20%;
-	}
 }
 
 .loadMoreBtn {

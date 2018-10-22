@@ -111,7 +111,7 @@ export default class Page extends Component {
 						backgroundColor: '#0091D6',
 						backgroundBlendMode: 'luminosity',
 						backgroundSize: 'cover',
-						backgroundPosiition: 'top center'
+						backgroundPosition: 'center top'
 					}}
 					image={fromJS({src: HeroImg})}
 					state={this.props.state}

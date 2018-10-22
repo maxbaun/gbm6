@@ -1,0 +1,77 @@
+@import '../../css/utils/utils';
+
+.section {
+	background-color: $blueDarkest;
+}
+
+.wrap {
+	@extend .container;
+}
+
+.inner {
+	padding: 40px 0;
+}
+
+.heading {
+	@include brandTitle();
+}
+
+.row {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+
+	@include collapseUp {
+		flex-wrap: nowrap;
+	}
+}
+
+.col {
+	margin-bottom: 20px;
+	width: 100%;
+
+	@include collapseUp {
+		width: 50%;
+
+		&:first-child {
+			margin-right: 56px;
+		}
+	}
+}
+
+.imageRow {
+	@include noList();
+
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+
+	&:not(:last-child) {
+		margin-bottom: 50px;
+	}
+}
+
+.imageCol {
+	text-align: center;
+	width: 50%;
+
+	&:first-child {
+		margin-right: 15px;
+
+		@include tabletUp {
+			margin-right: 50px;
+		}
+
+		@include desktopUp {
+			margin-right: 100px;
+		}
+	}
+}
+
+.image {
+	img {
+		height: auto;
+		max-width: 100%;
+		margin: 0 auto;
+	}
+}
