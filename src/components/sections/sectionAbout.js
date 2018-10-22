@@ -85,7 +85,6 @@ export default class SectionAbout extends Component {
 									<HeadingBrand
 										isMobile={this.props.state.getIn(['windowSize', 'width']) < responsive.collapse}
 										heading={this.props.heading}
-										width={this.getHeadingWidth()}
 									/>
 								</div>
 							</div>

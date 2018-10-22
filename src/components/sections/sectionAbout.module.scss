@@ -17,14 +17,14 @@
 }
 
 .content {
-	padding: 20px 0;
+	padding: 20px 15px;
 
 	@include collapseUp {
-		padding: 60px 0;
+		padding: 60px 15px;
 	}
 
 	@include desktopUp {
-		padding: 80px 0;
+		padding: 80px 15px;
 	}
 }
 
@@ -57,13 +57,24 @@
 
 .heading {
 	@include brandTitle();
+	margin: 0 auto;
+	width: 320px;
+
+	@include tabletUp {
+		margin: 0;
+		width: 400px;
+	}
+
+	@include desktopUp {
+		width: 554px;
+	}
 }
 
 .text {
 	@include fontSize(15, 23);
 	color: $white;
-	max-width: 320px;
 	margin: 0 auto;
+	max-width: 320px;
 
 	@include collapseUp {
 		@include fontSize(16, 24);

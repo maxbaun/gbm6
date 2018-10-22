@@ -1,7 +1,7 @@
 @import '../../css/utils/utils.scss';
 
 .section {
-	background-color: $blueDark;
+	background: linear-gradient(to bottom, $blueDarkest 0%, $blueDark 100%);
 }
 
 .inner {
