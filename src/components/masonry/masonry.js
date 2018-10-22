@@ -1,23 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import * as ImmutableProptypes from 'react-immutable-proptypes';
 
 import CSS from './masonry.module.scss';
-import {ref} from '../../utils/componentHelpers';
+import {ref, debounce} from '../../utils/componentHelpers';
 
 export default class Masonry extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			autoRows: this.props.autoRows
-		};
-
 		this.resizeGridItem = this.resizeGridItem.bind(this);
+		this.debounceResize = this.debounceResize.bind(this);
+		this.debounceResize = debounce(this.debounceResize, 300);
 	}
 
 	static propTypes = {
-		state: ImmutableProptypes.map.isRequired,
 		children: PropTypes.arrayOf(PropTypes.node).isRequired,
 		columnWidth: PropTypes.number,
 		autoRows: PropTypes.number,
@@ -35,6 +31,16 @@ export default class Masonry extends Component {
 		setTimeout(() => {
 			this.resizeAllGridItems();
 		}, 300);
+
+		window.addEventListener('resize', this.debounceResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.debounceResize);
+	}
+
+	debounceResize() {
+		this.resizeAllGridItems();
 	}
 
 	resizeAllGridItems() {
@@ -52,10 +58,7 @@ export default class Masonry extends Component {
 
 	render() {
 		const gridStyle = {
-			// GridTemplateColumns: `repeat(auto-fill, minmax(max-content, ${this.props.columnWidth}px))`,
-			gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))'
-			// GridAutoRows: this.state.autoRows,
-			// gridGap: this.props.gridGap
+			gridTemplateColumns: `repeat(auto-fill, minmax(${this.props.columnWidth}px, 1fr))`
 		};
 
 		return (

@@ -1,0 +1,69 @@
+@import '../../css/utils/utils.scss';
+
+.section {
+	background-color: $blueDarkest;
+}
+
+.wrap {
+	@extend .container;
+}
+
+.inner {
+	padding: 40px 0;
+	position: relative;
+}
+
+.tesimonials {
+	max-width: 1176px;
+	margin: 0 auto;
+}
+
+.quote {
+	color: $blue;
+	display: none;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	left: 0;
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+
+	@include collapseUp {
+		display: block;
+		font-size: 200px;
+		line-height: 50px;
+	}
+
+	@include widescreen {
+		font-size: 400px;
+		left: -20px;
+		line-height: 125px;
+	}
+}
+
+.testimonial {
+	@include fontSize(18, 28);
+	background-color: rgba($white, 0.05);
+	font-family: $fontBase;
+	font-weight: 300;
+	padding: 10px 30px;
+
+	@include collapseUp {
+		padding: 35px 55px;
+	}
+
+	@include desktopUp {
+		padding: 45px 65px;
+	}
+}
+
+.testimonialContent {
+	margin-bottom: 28px;
+}
+
+.testimonialName {
+	font-weight: 700;
+}
+
+.testimonialSubtitle {
+	font-style: italic;
+}
