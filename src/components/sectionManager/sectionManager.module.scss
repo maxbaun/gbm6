@@ -135,6 +135,15 @@ $transform: 21.80140948635181deg;
 	@include zIndex(sectionLines);
 }
 
+*[data-line='true'] {
+	background-color: $grey;
+	height: 1px;
+	position: absolute;
+	width: 0;
+	transform-origin: 0;
+	@include zIndex(sectionLines);
+}
+
 .lineWrap[data-layout='chevron'] {
 	.lines:nth-child(2) {
 		.line {

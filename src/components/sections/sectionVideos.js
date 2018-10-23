@@ -70,6 +70,10 @@ export default class SectionVideos extends Component {
 
 		return (
 			<div data-section id={id} className={CSS.section}>
+				<div data-lines>
+					<div data-line/>
+					<div data-line/>
+				</div>
 				<div className={CSS.inner}>
 					<div className={CSS.header}>
 						<div className={CSS.content}>

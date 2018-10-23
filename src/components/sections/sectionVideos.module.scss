@@ -2,6 +2,7 @@
 
 .section {
 	background: linear-gradient(to bottom, $blueDarkest 0%, $blueDark 100%);
+	position: relative;
 }
 
 .inner {

@@ -13,6 +13,11 @@ const SectionAbout = ({heading, text, backgroundImage, icons, id, counters}) => 
 
 	return (
 		<div data-section id={id} className={CSS.section}>
+			<div data-lines>
+				<div data-line/>
+				<div data-line/>
+				<div data-line/>
+			</div>
 			<div className={CSS.background}>
 				<img src={backgroundImage.get('src')}/>
 			</div>
