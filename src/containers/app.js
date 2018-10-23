@@ -17,9 +17,7 @@ import Footer from '../components/footer/footer';
 import PageTemplate from '../templates/page';
 import WatchThis from '../components/page/watchThis';
 import Concerts from '../components/page/concerts';
-import FaqPage from '../components/page/faq';
 import ProjectsPage from '../components/page/projects';
-import TestimonialsPage from '../components/page/testimonials';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -82,12 +80,10 @@ class App extends Component {
 			<Fragment>
 				<Header menus={this.props.menus} actions={this.props.actions} state={this.props.state} history={this.props.history}/>
 				<Switch>
-					<Route path="/watch-this" render={p => <WatchThis {...props} {...p}/>}/>
-					<Route path="/concerts" render={p => <Concerts {...props} {...p}/>}/>
-					<Route path="/faq" render={p => <FaqPage {...props} {...p}/>}/>
-					<Route path="/projects" render={p => <ProjectsPage {...props} {...p}/>}/>
-					<Route path="/testimonials" render={p => <TestimonialsPage {...props} {...p}/>}/>
-					<Route path="/:slug" render={p => <PageTemplate {...props} {...p}/>}/>
+					<Route exact path="/watch-this" render={p => <WatchThis {...props} {...p}/>}/>
+					<Route exact path="/concerts" render={p => <Concerts {...props} {...p}/>}/>
+					<Route exact path="/projects" render={p => <ProjectsPage {...props} {...p}/>}/>
+					<Route exact path="/:slug" render={p => <PageTemplate {...props} {...p}/>}/>
 					<Route path="*" render={p => <PageTemplate {...props} {...p}/>}/>
 				</Switch>
 				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>

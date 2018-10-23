@@ -6,6 +6,7 @@ import {Map} from 'immutable';
 
 import CSS from './video.module.scss';
 import Modal from '../modals/modal';
+import Image from '../common/image';
 import {click, ref, unique} from '../../utils/componentHelpers';
 
 export default class Video extends Component {
@@ -56,6 +57,8 @@ export default class Video extends Component {
 			height: 'auto'
 		};
 
+		const isOpen = this.props.state.getIn(['offmenu', this.unique]);
+
 		return (
 			<div>
 				<div className={CSS.preview} style={previewStyle}>
@@ -65,12 +68,12 @@ export default class Video extends Component {
 								<span className={CSS.icon}/>
 							</div>
 						</div>
-						<img src={thumbnail.get('src')}/>
+						<Image image={thumbnail} width={609}/>
 					</div>
 				</div>
 				<Modal
 					showClose
-					active={this.props.state.getIn(['offmenu', this.unique])}
+					active={isOpen}
 					backgroundColor="transparent"
 					size="medium"
 					windowHeight={this.props.state.getIn(['windowSize', 'height'])}
@@ -79,6 +82,7 @@ export default class Video extends Component {
 					<div className={CSS.playerWrap}>
 						<ReactPlayer
 							className={CSS.player}
+							playing={isOpen}
 							url={url}
 							width="100%"
 							height="100%"

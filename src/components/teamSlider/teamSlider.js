@@ -8,6 +8,7 @@ import CSS from './teamSlider.module.scss';
 import SliderNav from '../sliderNav/sliderNav';
 import {ref, windowWidthChange, click, debounce} from '../../utils/componentHelpers';
 import {responsive} from '../../constants';
+import Image from '../common/image';
 
 const TeamSize = 307;
 const TeamSizeMobile = 159;
@@ -74,10 +75,10 @@ export default class TeamSlider extends Component {
 									<div key={teamMember.getIn(['fields', 'title'])} className="swiper-slide">
 										<div className={CSS.teamMember}>
 											<div className={CSS.teamMemberImage}>
-												<img src={teamMember.getIn(['fields', 'image', 'src'])}/>
+												<Image image={teamMember.getIn(['fields', 'image'])} width={300}/>
 											</div>
 											<div className={CSS.teamMemberImageActive}>
-												<img src={teamMember.getIn(['fields', 'imageActive', 'src'])}/>
+												<Image image={teamMember.getIn(['fields', 'imageActive'])} width={300}/>
 											</div>
 											<div className={CSS.teamMemberName}>{teamMember.getIn(['fields', 'title'])}</div>
 										</div>

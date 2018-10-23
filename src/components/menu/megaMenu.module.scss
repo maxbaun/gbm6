@@ -35,3 +35,11 @@
 		opacity: 0.7;
 	}
 }
+
+.mobileOnly {
+	display: block;
+
+	@include collapseUp {
+		display: none;
+	}
+}

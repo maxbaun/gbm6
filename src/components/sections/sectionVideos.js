@@ -10,18 +10,19 @@ import HeadingBrand from '../headingBrand/headingBrand';
 import VideoPreview from '../videoPreview/videoPreview';
 import Masonry from '../masonry/masonry';
 import Modal from '../modals/modal';
-import {click} from '../../utils/componentHelpers';
+import {click, unique} from '../../utils/componentHelpers';
+import InView from '../hoc/inView';
+import {videosPerPage} from '../../constants';
 
-const perPage = 1;
-
-export default class SectionVideos extends Component {
+class SectionVideos extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			activeVideo: null,
+			activeVideo: 0,
 			activeCategory: 0,
-			page: 1
+			page: 1,
+			perGroup: videosPerPage
 		};
 
 		this.handleModalClose = this.handleModalClose.bind(this);
@@ -30,6 +31,8 @@ export default class SectionVideos extends Component {
 		this.handleLoadMore = this.handleLoadMore.bind(this);
 		this.hasMore = this.hasMore.bind(this);
 		this.getActiveVideos = this.getActiveVideos.bind(this);
+
+		this.unique = unique();
 	}
 
 	static propTypes = {
@@ -42,7 +45,8 @@ export default class SectionVideos extends Component {
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		categoryAlign: PropTypes.oneOf(['left', 'center']),
 		id: PropTypes.string,
-		showCategories: PropTypes.bool
+		showCategories: PropTypes.bool,
+		hasAppeared: PropTypes.bool.isRequired
 	};
 
 	static defaultProps = {
@@ -58,17 +62,21 @@ export default class SectionVideos extends Component {
 	};
 
 	handleModalClose() {
-		this.setState({activeVideo: null});
-		this.props.actions.offmenuHide('videoModal');
+		this.props.actions.offmenuHide(this.unique);
 	}
 
 	handleVideoOpen(videoUrl) {
 		this.setState({activeVideo: videoUrl});
-		this.props.actions.offmenuToggle('videoModal');
+		this.props.actions.offmenuToggle(this.unique);
 	}
 
 	handleCategoryChange(activeCategory) {
-		this.setState({activeCategory, page: 1});
+		this.setState(prevState => {
+			return {
+				activeCategory,
+				perGroup: videosPerPage * prevState.page
+			};
+		});
 	}
 
 	handleLoadMore() {
@@ -78,7 +86,7 @@ export default class SectionVideos extends Component {
 	hasMore() {
 		const activeVideos = this.getActiveVideos();
 
-		return activeVideos.count() > this.state.page * perPage;
+		return activeVideos.count() > this.state.page * videosPerPage;
 	}
 
 	getNextVideos(page) {
@@ -86,7 +94,7 @@ export default class SectionVideos extends Component {
 	}
 
 	getPaginatedVideos() {
-		return this.getActiveVideos().take(this.state.page * perPage);
+		return this.getActiveVideos().take(this.state.page * videosPerPage);
 	}
 
 	getActiveVideos() {
@@ -118,10 +126,12 @@ export default class SectionVideos extends Component {
 	}
 
 	render() {
-		const {id, heading, categories, allVideosText, videos, allVideosLink, categoryAlign, showCategories} = this.props;
+		const {id, heading, categories, allVideosText, videos, allVideosLink, categoryAlign, showCategories, hasAppeared} = this.props;
 
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
+
+		const modalOpen = this.props.state.getIn(['offmenu', this.unique]);
 
 		return (
 			<div data-section id={id} className={CSS.section}>
@@ -167,19 +177,21 @@ export default class SectionVideos extends Component {
 							</ul>
 						) : null}
 					</div>
-					<div className={CSS.videos}>
-						<Masonry items={videos}>
-							{paginatedVideos
-								.map(video => {
-									return (
-										<div key={video.getIn(['fields', 'title'])} className={CSS.video}>
-											<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, video.getIn(['fields', 'video']))}/>
-										</div>
-									);
-								})
-								.toJS()}
-						</Masonry>
-					</div>
+					{hasAppeared ? (
+						<div className={CSS.videos}>
+							<Masonry perGroup={this.state.perGroup} items={videos}>
+								{paginatedVideos
+									.map((video, index) => {
+										return (
+											<div key={video.getIn(['fields', 'title'])} className={CSS.video}>
+												<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, index)}/>
+											</div>
+										);
+									})
+									.toJS()}
+							</Masonry>
+						</div>
+					) : null}
 					{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
 						<div className={CSS.loadMoreBtn}>
 							<div className={CSS.btn}>
@@ -192,26 +204,43 @@ export default class SectionVideos extends Component {
 				</div>
 				<Modal
 					showClose
-					active={this.props.state.getIn(['offmenu', 'videoModal'])}
+					active={modalOpen}
 					backgroundColor="transparent"
 					size="medium"
 					windowHeight={this.props.state.getIn(['windowSize', 'height'])}
 					onClose={this.handleModalClose}
 				>
 					<div className={CSS.playerWrap}>
-						<ReactPlayer
-							className={CSS.player}
-							url={this.state.activeVideo}
-							playing={Boolean(this.state.activeVideo)}
-							width="100%"
-							height="100%"
-							style={{
-								margin: '0 auto'
-							}}
-						/>
+						{paginatedVideos
+							.map((video, index) => {
+								const isActiveVideo = index === this.state.activeVideo;
+
+								return (
+									<ReactPlayer
+										playsinline
+										// eslint-disable-next-line
+										key={index}
+										className={CSS.player}
+										url={video.getIn(['fields', 'video'])}
+										playing={modalOpen && isActiveVideo}
+										width="100%"
+										height="100%"
+										style={{
+											margin: '0 auto',
+											display: isActiveVideo ? 'block' : 'none'
+										}}
+										onPlay={() => {
+											console.log('playing');
+										}}
+									/>
+								);
+							})
+							.toJS()}
 					</div>
 				</Modal>
 			</div>
 		);
 	}
 }
+
+export default InView(SectionVideos, {partialVisibility: true, delayedCall: true, scrollDelay: 2000});

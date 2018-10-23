@@ -24,9 +24,9 @@ export default class SectionManager extends Component {
 	};
 
 	componentDidMount() {
-		setTimeout(() => {
-			this.positionLines();
-		}, 300);
+		// SetTimeout(() => {
+		// 	this.positionLines();
+		// }, 300);
 	}
 
 	positionLines() {

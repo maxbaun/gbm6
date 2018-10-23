@@ -2,7 +2,6 @@ import {takeEvery, all, call, put, select} from 'redux-saga/effects';
 
 import {getMenus} from '../services/api';
 import {types as menuTypes, selectors as menuSelectors} from '../ducks/menus';
-import {types as pageTypes} from '../ducks/pages';
 import {types as cacheTypes} from '../ducks/cache';
 import {shouldCache} from '../constants';
 
@@ -28,10 +27,6 @@ function * onMenusGet({payload}) {
 		put({
 			type: menuTypes.MENUS_UPDATE,
 			payload: res
-		}),
-		put({
-			type: pageTypes.PAGES_UPDATE,
-			payload: res.map(menu => menu.fields.links)
 		})
 	]);
 }

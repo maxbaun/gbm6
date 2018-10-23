@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {Link} from 'react-router-dom';
+import {List} from 'immutable';
 
 import CSS from './megaMenu.module.scss';
 import Offmenu from '../offmenu/offmenu';
@@ -16,11 +17,13 @@ export default class MegaMenu extends Component {
 
 	static propTypes = {
 		active: PropTypes.bool,
+		links: ImmutableProptypes.list,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired
 	};
 
 	static defaultProps = {
-		active: false
+		active: false,
+		links: List()
 	};
 
 	render() {
@@ -28,41 +31,28 @@ export default class MegaMenu extends Component {
 			<Offmenu theme="megaMenu" active={this.props.active} position="right" onToggle={click(this.props.actions.offmenuToggle, 'megaMenu')}>
 				<div className={CSS.menu}>
 					<ul className={CSS.links}>
-						<li>
-							<Link to="/" className={CSS.link}>
-								Home
-							</Link>
-						</li>
-						<li>
-							<Link to="/" className={CSS.link}>
-								About Us
-							</Link>
-						</li>
-						<li>
-							<Link to="/" className={CSS.link}>
-								Our Team
-							</Link>
-						</li>
-						<li>
-							<Link to="/" className={CSS.link}>
-								Videos
-							</Link>
-						</li>
-						<li>
-							<Link to="/" className={CSS.link}>
-								Testimonials
-							</Link>
-						</li>
-						<li>
-							<Link to="/" className={CSS.link}>
-								FAQ
-							</Link>
-						</li>
-						<li>
-							<Link to="/" className={CSS.link}>
-								Contact
-							</Link>
-						</li>
+						{this.props.links.map(link => {
+							const linkParts = link.get('link');
+							const linkClass = link.get('className');
+
+							const linkCss = [CSS.link];
+
+							if (linkClass && CSS[linkClass]) {
+								linkCss.push(CSS[linkClass]);
+							}
+
+							return (
+								<li key={linkParts.get(1)}>
+									<Link
+										to={linkParts.get(0)}
+										className={linkCss.join(' ')}
+										onClick={click(this.props.actions.offmenuToggle, 'megaMenu')}
+									>
+										{linkParts.get(1)}
+									</Link>
+								</li>
+							);
+						})}
 					</ul>
 				</div>
 			</Offmenu>

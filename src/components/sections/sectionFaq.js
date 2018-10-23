@@ -25,8 +25,8 @@ export default class SectionFaq extends Component {
 		heading: PropTypes.string,
 		faqs: ImmutableProptypes.list,
 		backgroundImage: ImmutableProptypes.map,
-		allFaqLink: PropTypes.string,
-		allFaqText: PropTypes.string,
+		allFaqLinkUrl: PropTypes.string,
+		allFaqLinkText: PropTypes.string,
 		layout: PropTypes.oneOf(['normal', 'accordion']),
 		ctaContent: PropTypes.string,
 		ctaLinkUrl: PropTypes.string,
@@ -37,8 +37,8 @@ export default class SectionFaq extends Component {
 		heading: null,
 		faqs: List(),
 		backgroundImage: Map(),
-		allFaqLink: null,
-		allFaqText: 'View all questions',
+		allFaqLinkUrl: null,
+		allFaqLinkText: 'View all questions',
 		layout: 'normal',
 		ctaContent: null,
 		ctaLinkUrl: null,
@@ -50,10 +50,10 @@ export default class SectionFaq extends Component {
 	}
 
 	render() {
-		const {heading, layout, allFaqLink, allFaqText, ctaContent, ctaLinkUrl, ctaLinkText} = this.props;
+		const {heading, layout, allFaqLinkUrl, allFaqLinkText, ctaContent, ctaLinkUrl, ctaLinkText} = this.props;
 
 		const backgroundStyle = {
-			backgroundImage: `url(${this.props.backgroundImage.get('src')})`
+			backgroundImage: `url(${this.props.backgroundImage.getIn(['fields', 'file', 'url'])})`
 		};
 
 		const renderAccordion = window.innerWidth < responsive.collapse || layout === 'accordion';
@@ -74,8 +74,8 @@ export default class SectionFaq extends Component {
 								{renderAccordion === false ? (
 									<div className={CSS.headingCol}>
 										<div className={CSS.allFaqLink}>
-											<Link to={allFaqLink} className={CSS.allLink}>
-												{allFaqText}
+											<Link to={allFaqLinkUrl} className={CSS.allLink}>
+												{allFaqLinkText}
 											</Link>
 										</div>
 									</div>
@@ -84,10 +84,10 @@ export default class SectionFaq extends Component {
 						) : null}
 
 						{renderAccordion ? this.renderAccordionTabs() : this.renderVerticalTabs()}
-						{renderAccordion && allFaqLink ? (
+						{renderAccordion && allFaqLinkUrl ? (
 							<div className={CSS.allFaqLink}>
-								<Link to={allFaqLink} className={CSS.allLink}>
-									{allFaqText}
+								<Link to={allFaqLinkUrl} className={CSS.allLink}>
+									{allFaqLinkText}
 								</Link>
 							</div>
 						) : null}
@@ -123,13 +123,14 @@ export default class SectionFaq extends Component {
 							itemCss.push(CSS.accordionItemActive);
 							questionCss.push(CSS.questionActive);
 						}
+
 						return (
-							<li key={faq.get('question')} className={itemCss.join(' ')}>
+							<li key={faq.getIn(['fields', 'question'])} className={itemCss.join(' ')}>
 								<div className={questionCss.join(' ')} onClick={click(this.handleFaqChange, index)}>
-									<span>{faq.get('question')}</span>
+									<span>{faq.getIn(['fields', 'question'])}</span>
 								</div>
 								<div className={CSS.answer}>
-									<Markdown content={faq.get('answer')}/>
+									<Markdown content={faq.getIn(['fields', 'answer'])}/>
 								</div>
 							</li>
 						);
@@ -153,8 +154,12 @@ export default class SectionFaq extends Component {
 								}
 
 								return (
-									<li key={faq.get('question')} className={questionCss.join(' ')} onClick={click(this.handleFaqChange, index)}>
-										<span>{faq.get('question')}</span>
+									<li
+										key={faq.getIn(['fields', 'question'])}
+										className={questionCss.join(' ')}
+										onClick={click(this.handleFaqChange, index)}
+									>
+										<span>{faq.getIn(['fields', 'question'])}</span>
 									</li>
 								);
 							})}
@@ -163,7 +168,7 @@ export default class SectionFaq extends Component {
 				</div>
 				<div className={CSS.col}>
 					<div className={CSS.answer}>
-						<Markdown content={this.props.faqs.getIn([this.state.activeIndex, 'answer'])}/>
+						<Markdown content={this.props.faqs.getIn([this.state.activeIndex, 'fields', 'answer'])}/>
 					</div>
 				</div>
 			</div>

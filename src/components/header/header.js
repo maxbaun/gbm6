@@ -8,8 +8,10 @@ import SearchTakeover from '../searchTakeover/searchTakeover';
 import Hamburg from '../hamburg/hamburg';
 import MegaMenu from '../menu/megaMenu';
 import Logo from '../logo/logo';
-import {click} from '../../utils/componentHelpers';
+import {click, chunkList} from '../../utils/componentHelpers';
 import {responsive} from '../../constants';
+import {currentMenu} from '../../utils/contentfulHelpers';
+import {List, fromJS} from 'immutable';
 
 export default class Header extends Component {
 	constructor(props) {
@@ -18,6 +20,8 @@ export default class Header extends Component {
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleOffmenuClose = this.handleOffmenuClose.bind(this);
 		this.getLogoSize = this.getLogoSize.bind(this);
+		this.getTopLinks = this.getTopLinks.bind(this);
+		this.getMegaMenuLinks = this.getMegaMenuLinks.bind(this);
 	}
 
 	static propTypes = {
@@ -26,6 +30,10 @@ export default class Header extends Component {
 		state: ImmutablePropTypes.map.isRequired,
 		history: PropTypes.object.isRequired
 	};
+
+	componentDidMount() {
+		this.props.actions.menusGet({payload: {location: 'top'}});
+	}
 
 	handleSearch(query) {
 		this.props.actions.offmenuHide('search');
@@ -61,6 +69,41 @@ export default class Header extends Component {
 		};
 	}
 
+	currentMenu(location) {
+		return currentMenu(this.props.menus, location);
+	}
+
+	splitMenuLinks(linkStr) {
+		return linkStr.split('\n').map(linkStr => linkStr.split(':'));
+	}
+
+	getTopLinks() {
+		const menu = this.currentMenu('Top');
+
+		if (!menu || menu.isEmpty()) {
+			return fromJS([]);
+		}
+
+		const linkStr = menu.getIn(['fields', 'links']);
+
+		return fromJS(this.splitMenuLinks(linkStr));
+	}
+
+	getMegaMenuLinks() {
+		const menu = this.currentMenu('Mega');
+
+		const topLinks = this.getTopLinks();
+
+		let mainLinks = List();
+
+		if (menu && menu.getIn(['sys', 'id'])) {
+			const linkStr = menu.getIn(['fields', 'links']);
+			mainLinks = fromJS(this.splitMenuLinks(linkStr));
+		}
+
+		return fromJS([...mainLinks.map(link => ({link})), ...topLinks.map(link => ({link, className: 'mobileOnly'}))]);
+	}
+
 	render() {
 		const megaMenuOpen = this.props.state.getIn(['offmenu', 'megaMenu']);
 		const logoSize = this.getLogoSize();
@@ -73,46 +116,44 @@ export default class Header extends Component {
 						<SearchTakeover state={this.props.state} onSubmit={this.handleSearch} onOffmenuClose={this.handleOffmenuClose}/>
 					</div>
 					<div className={CSS.menuWrap}>
-						<div className={CSS.menuLeft}>
-							<ul className={CSS.navLinks}>
-								<li>
-									<Link to="/" className={CSS.navLink}>
-										Concerts
-									</Link>
-								</li>
-								<li>
-									<Link to="/" className={CSS.navLink}>
-										Special Projects
-									</Link>
-								</li>
-							</ul>
-						</div>
+						<div className={CSS.menuLeft}>{this.renderTopLinks(0)}</div>
 						<div className={CSS.logo} style={{...logoSize}}>
 							<Link to="/" className={CSS.logoLink}>
 								<Logo width={logoSize.width} height={logoSize.height}/>
 							</Link>
 						</div>
-						<div className={CSS.menuRight}>
-							<ul className={CSS.navLinks}>
-								<li>
-									<Link to="/" className={CSS.navLink}>
-										Behind The Scenes
-									</Link>
-								</li>
-								<li>
-									<Link to="/" className={CSS.navLink}>
-										Watch This
-									</Link>
-								</li>
-							</ul>
-						</div>
+						<div className={CSS.menuRight}>{this.renderTopLinks(1)}</div>
 					</div>
 					<div className={CSS.hamburg}>
 						<Hamburg active={megaMenuOpen} onClick={click(this.props.actions.offmenuToggle, 'megaMenu')}/>
 					</div>
 				</div>
-				<MegaMenu active={megaMenuOpen} actions={this.props.actions}/>
+				<MegaMenu links={this.getMegaMenuLinks()} active={megaMenuOpen} actions={this.props.actions}/>
 			</header>
+		);
+	}
+
+	renderTopLinks(index) {
+		const topLinks = this.getTopLinks();
+
+		const topChunks = chunkList(topLinks, 2);
+
+		if (!topChunks.get(index)) {
+			return null;
+		}
+
+		return (
+			<ul className={CSS.navLinks}>
+				{topChunks.get(index).map(link => {
+					return (
+						<li key={link.get(1)}>
+							<Link to={link.get(0)} className={CSS.navLink}>
+								{link.get(1)}
+							</Link>
+						</li>
+					);
+				})}
+			</ul>
 		);
 	}
 }

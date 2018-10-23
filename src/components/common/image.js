@@ -13,15 +13,30 @@ export default class Image extends Component {
 	}
 
 	static propTypes = {
-		image: ImmutablePropTypes.map
+		image: ImmutablePropTypes.map,
+		width: PropTypes.number
 	};
 
 	static defaultProps = {
-		image: Map()
+		image: Map(),
+		width: 0
 	};
 
 	getUrl() {
-		return this.props.image.getIn(['fields', 'file', 'url']);
+		const {width, image} = this.props;
+		const baseUrl = image.getIn(['fields', 'file', 'url']);
+
+		if (!baseUrl) {
+			return undefined;
+		}
+
+		let url = baseUrl + '?';
+
+		if (width > 0) {
+			url += `w=${width}?`;
+		}
+
+		return url.slice(0, -1);
 	}
 
 	render() {
