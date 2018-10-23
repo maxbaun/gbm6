@@ -5,11 +5,12 @@
 	width: 100%;
 
 	@include tabletUp {
-		height: 95vh;
+		height: 75vh;
+		min-height: 800px;
 	}
 
 	@include desktopUp {
-		height: 100vh;
+		height: 80vh;
 	}
 }
 

@@ -113,3 +113,32 @@ $transform: 21.80140948635181deg;
 		}
 	}
 }
+
+.lineWrap {
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	@include zIndex(sectionLines);
+}
+
+.lines {
+	@include zIndex(sectionLines);
+}
+
+.line {
+	background-color: $grey;
+	height: 2px;
+	position: absolute;
+	width: 200vw;
+	transform-origin: 0;
+	@include zIndex(sectionLines);
+}
+
+.lineWrap[data-layout='chevron'] {
+	.lines:nth-child(2) {
+		.line {
+			transform-origin: 100%;
+		}
+	}
+}
