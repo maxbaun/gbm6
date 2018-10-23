@@ -10,7 +10,8 @@ const ContenfulClient = contentful.createClient({
 export async function getPages({query = {}}) {
 	try {
 		const res = await ContenfulClient.getEntries({
-			content_type: 'page', // eslint-disable-line camelcase
+			content_type: 'page', // eslint-disable-line camelcase,
+			include: 10,
 			...query
 		});
 
@@ -45,7 +46,7 @@ export async function getVideos({query = {}}) {
 
 		// @TODO: Cache portfolio items here
 
-		return res.items;
+		return res;
 	} catch (error) {
 		return error;
 	}

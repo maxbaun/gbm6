@@ -12,25 +12,31 @@ import Masonry from '../masonry/masonry';
 import Modal from '../modals/modal';
 import {click} from '../../utils/componentHelpers';
 
+const perPage = 1;
+
 export default class SectionVideos extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			activeVideo: null,
-			activeCategory: 0
+			activeCategory: 0,
+			page: 1
 		};
 
 		this.handleModalClose = this.handleModalClose.bind(this);
 		this.handleVideoOpen = this.handleVideoOpen.bind(this);
 		this.handleCategoryChange = this.handleCategoryChange.bind(this);
+		this.handleLoadMore = this.handleLoadMore.bind(this);
+		this.hasMore = this.hasMore.bind(this);
+		this.getActiveVideos = this.getActiveVideos.bind(this);
 	}
 
 	static propTypes = {
 		state: ImmutableProptypes.map,
 		heading: PropTypes.string,
 		videos: ImmutableProptypes.list,
-		videoCategories: ImmutableProptypes.list,
+		categories: ImmutableProptypes.list,
 		allVideosLink: PropTypes.string,
 		allVideosText: PropTypes.string,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
@@ -43,7 +49,7 @@ export default class SectionVideos extends Component {
 		state: Map(),
 		heading: null,
 		videos: List(),
-		videoCategories: List(),
+		categories: List(),
 		allVideosLink: null,
 		allVideosText: 'All Videos',
 		categoryAlign: 'left',
@@ -62,11 +68,60 @@ export default class SectionVideos extends Component {
 	}
 
 	handleCategoryChange(activeCategory) {
-		this.setState({activeCategory});
+		this.setState({activeCategory, page: 1});
+	}
+
+	handleLoadMore() {
+		this.getNextVideos(this.state.page + 1);
+	}
+
+	hasMore() {
+		const activeVideos = this.getActiveVideos();
+
+		return activeVideos.count() > this.state.page * perPage;
+	}
+
+	getNextVideos(page) {
+		this.setState({page});
+	}
+
+	getPaginatedVideos() {
+		return this.getActiveVideos().take(this.state.page * perPage);
+	}
+
+	getActiveVideos() {
+		if (this.props.categories.count() === 0 || this.props.videos.count() === 0) {
+			return List();
+		}
+
+		const activeCategory = this.props.categories.find((cat, index) => index === this.state.activeCategory);
+
+		return this.props.videos.reduce((list, video) => {
+			if (this.videoHasCategory(video, activeCategory)) {
+				return list.push(video);
+			}
+
+			return list;
+		}, List());
+	}
+
+	videoHasCategory(video, category) {
+		let hasCategory = false;
+
+		video.getIn(['fields', 'categories']).forEach(cat => {
+			if (cat.getIn(['fields', 'slug']) === category.getIn(['fields', 'slug'])) {
+				hasCategory = true;
+			}
+		});
+
+		return hasCategory;
 	}
 
 	render() {
-		const {id, heading, videoCategories, allVideosText, videos, allVideosLink, categoryAlign, showCategories} = this.props;
+		const {id, heading, categories, allVideosText, videos, allVideosLink, categoryAlign, showCategories} = this.props;
+
+		const paginatedVideos = this.getPaginatedVideos();
+		const hasMore = this.hasMore();
 
 		return (
 			<div data-section id={id} className={CSS.section}>
@@ -97,7 +152,7 @@ export default class SectionVideos extends Component {
 						</div>
 						{showCategories ? (
 							<ul className={CSS.categories} data-align={categoryAlign}>
-								{videoCategories.map((category, index) => {
+								{categories.map((category, index) => {
 									return (
 										<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
 											<div
@@ -113,25 +168,27 @@ export default class SectionVideos extends Component {
 						) : null}
 					</div>
 					<div className={CSS.videos}>
-						<Masonry>
-							{videos
+						<Masonry items={videos}>
+							{paginatedVideos
 								.map(video => {
 									return (
-										<div key={video.get('title')} className={CSS.video}>
-											<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, video.get('video'))}/>
+										<div key={video.getIn(['fields', 'title'])} className={CSS.video}>
+											<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, video.getIn(['fields', 'video']))}/>
 										</div>
 									);
 								})
 								.toJS()}
 						</Masonry>
 					</div>
-					<div className={CSS.loadMoreBtn}>
-						<div className={CSS.btn}>
-							<button type="button" className="btn btn-outline">
-								Load more videos
-							</button>
+					{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
+						<div className={CSS.loadMoreBtn}>
+							<div className={CSS.btn}>
+								<button type="button" className="btn btn-outline" onClick={this.handleLoadMore}>
+									Load more videos
+								</button>
+							</div>
 						</div>
-					</div>
+					) : null}
 				</div>
 				<Modal
 					showClose

@@ -5,9 +5,10 @@ import {Map} from 'immutable';
 
 import CSS from './sectionAbout.module.scss';
 import Markdown from '../common/markdown';
+import Image from '../common/image';
 import HeadingBrand from '../headingBrand/headingBrand';
 
-const SectionAbout = ({heading, text, backgroundImage, icons, id, counters}) => {
+const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => {
 	icons = icons.split('\n');
 	counters = counters.split('\n');
 
@@ -18,9 +19,13 @@ const SectionAbout = ({heading, text, backgroundImage, icons, id, counters}) => 
 				<div data-line/>
 				<div data-line/>
 			</div>
-			<div className={CSS.background}>
-				<img src={backgroundImage.get('src')}/>
-			</div>
+			<div
+				className={CSS.background}
+				style={{
+					...imageCss,
+					backgroundImage: `url(${image.getIn(['fields', 'file', 'url'])})`
+				}}
+			/>
 			<div className={CSS.inner}>
 				<div className={CSS.content}>
 					<div className={CSS.row}>
@@ -82,19 +87,21 @@ const SectionAbout = ({heading, text, backgroundImage, icons, id, counters}) => 
 SectionAbout.propTypes = {
 	heading: PropTypes.string,
 	text: PropTypes.string,
-	backgroundImage: ImmutablePropTypes.map,
+	image: ImmutablePropTypes.map,
 	icons: PropTypes.string,
 	state: ImmutablePropTypes.map.isRequired,
 	id: PropTypes.string.isRequired,
-	counters: PropTypes.string
+	counters: PropTypes.string,
+	imageCss: PropTypes.object
 };
 
 SectionAbout.defaultProps = {
 	heading: '',
 	text: '',
-	backgroundImage: Map(),
+	image: Map(),
 	icons: '',
-	counters: ''
+	counters: '',
+	imageCss: {}
 };
 
 export default SectionAbout;

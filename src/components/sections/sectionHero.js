@@ -6,6 +6,7 @@ import {Map} from 'immutable';
 import CSS from './sectionHero.module.scss';
 import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
+import Image from '../common/image';
 
 export default class SectionHero extends Component {
 	constructor(props) {
@@ -31,15 +32,15 @@ export default class SectionHero extends Component {
 	};
 
 	render() {
-		const {scrollColor, scrollTo} = this.props;
+		const {scrollColor, scrollTo, image, imageCss} = this.props;
 
 		return (
 			<div data-section className={CSS.hero}>
 				<div
 					className={CSS.image}
 					style={{
-						...this.props.imageCss,
-						backgroundImage: `url(${this.props.image.get('src')})`
+						...imageCss,
+						backgroundImage: `url(${image.getIn(['fields', 'file', 'url'])})`
 					}}
 				/>
 				{scrollTo && scrollTo !== '' ? (

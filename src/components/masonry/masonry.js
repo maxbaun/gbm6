@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import * as ImmutableProptypes from 'react-immutable-proptypes';
 
 import CSS from './masonry.module.scss';
 import {ref, debounce} from '../../utils/componentHelpers';
@@ -17,7 +18,8 @@ export default class Masonry extends Component {
 		children: PropTypes.arrayOf(PropTypes.node).isRequired,
 		columnWidth: PropTypes.number,
 		autoRows: PropTypes.number,
-		gridGap: PropTypes.number
+		gridGap: PropTypes.number,
+		items: ImmutableProptypes.list.isRequired
 	};
 
 	static defaultProps = {
@@ -37,6 +39,12 @@ export default class Masonry extends Component {
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.debounceResize);
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.items.equals(prevProps.items)) {
+			this.resizeAllGridItems();
+		}
 	}
 
 	debounceResize() {

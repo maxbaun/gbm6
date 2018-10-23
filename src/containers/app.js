@@ -9,11 +9,12 @@ import {Route, Switch} from 'react-router-dom';
 import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages';
 import {selectors as menuSelectors, actions as menuActions} from '../ducks/menus';
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
+import {selectors as videoSelectors, actions as videoActions} from '../ducks/videos';
 import {noop} from '../utils/componentHelpers';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
-import Page from '../components/page/page';
+import PageTemplate from '../templates/page';
 import WatchThis from '../components/page/watchThis';
 import Concerts from '../components/page/concerts';
 import FaqPage from '../components/page/faq';
@@ -31,7 +32,8 @@ const mapDispatchToProps = dispatch => ({
 		{
 			...pageActions,
 			...menuActions,
-			...stateActions
+			...stateActions,
+			...videoActions
 		},
 		dispatch
 	)
@@ -58,11 +60,7 @@ class App extends Component {
 		window.addEventListener('resize', this.handleWindowResize);
 		this.handleWindowResize();
 
-		// This.props.actions.menusGet({
-		// 	payload: {
-		// 		location: 'Top'
-		// 	}
-		// });
+		this.props.actions.videosInit({});
 	}
 
 	componentWillUnmount() {
@@ -89,8 +87,8 @@ class App extends Component {
 					<Route path="/faq" render={p => <FaqPage {...props} {...p}/>}/>
 					<Route path="/projects" render={p => <ProjectsPage {...props} {...p}/>}/>
 					<Route path="/testimonials" render={p => <TestimonialsPage {...props} {...p}/>}/>
-					<Route path="/:slug" render={p => <Page {...props} {...p}/>}/>
-					<Route path="*" render={p => <Page {...props} {...p}/>}/>
+					<Route path="/:slug" render={p => <PageTemplate {...props} {...p}/>}/>
+					<Route path="*" render={p => <PageTemplate {...props} {...p}/>}/>
 				</Switch>
 				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
 			</Fragment>

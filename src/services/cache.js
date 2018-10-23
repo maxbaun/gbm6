@@ -6,10 +6,8 @@ const storageKey = 'gbm6';
 const timestampKey = 'gbm6timestamp';
 const expireTime = 8.64e7; // Cache expires after 1 day
 
-const cache = getCache();
-
 export function setData({key, data}) {
-	let cachedStorage = cache;
+	let cachedStorage = getCache();
 
 	cachedStorage = cachedStorage.set(key, fromJS(data));
 
@@ -18,6 +16,7 @@ export function setData({key, data}) {
 }
 
 export function getData(key) {
+	const cache = getCache();
 	return cache.get(key);
 }
 

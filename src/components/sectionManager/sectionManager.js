@@ -68,8 +68,6 @@ export default class SectionManager extends Component {
 		const isFirstAndChevron = index === 1 && this.props.template === 'chevron';
 		const isEven = index % 2 === 0;
 
-		console.log(isEven, index);
-
 		const transform = `rotate(${rotate}deg)`;
 		const transformReverse = `rotate(${rotate * -1}deg)`;
 

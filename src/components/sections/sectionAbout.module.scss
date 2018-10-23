@@ -7,13 +7,9 @@
 
 .background {
 	@include absoluteFull();
+	background-size: cover;
+	background-position: center top;
 	z-index: -2;
-
-	img {
-		object-fit: cover;
-		height: 100%;
-		width: 100%;
-	}
 }
 
 .content {

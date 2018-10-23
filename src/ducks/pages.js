@@ -2,6 +2,8 @@ import {List} from 'immutable';
 import {createSelector} from 'reselect';
 
 import * as utils from '../utils/duckHelpers';
+import {getData} from '../services/cache';
+import {currentPage} from '../utils/contentfulHelpers';
 
 export const types = {
 	PAGES_UPDATE: 'PAGES_UPDATE',
@@ -9,10 +11,10 @@ export const types = {
 };
 
 export const actions = {
-	pages: obj => utils.action(types.PAGES_GET, obj)
+	pagesGet: obj => utils.action(types.PAGES_GET, obj)
 };
 
-const initialState = List();
+const initialState = getData('pages') || List();
 
 export default (state = initialState, action) => {
 	switch (action.type) {
@@ -25,7 +27,9 @@ export default (state = initialState, action) => {
 };
 
 const getPages = state => state.get('pages');
+const getPage = (state, slug) => currentPage(state.get('pages'), slug);
 
 export const selectors = {
-	getPages: createSelector([getPages], pages => pages)
+	getPages: createSelector([getPages], pages => pages),
+	getPage: createSelector([getPage], page => page)
 };

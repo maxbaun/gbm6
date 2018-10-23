@@ -89,6 +89,7 @@
 
 .categoryLink {
 	@include fontSize(22, 32);
+	cursor: pointer;
 	font-family: $fontHeading;
 	font-weight: 700;
 	opacity: 1;

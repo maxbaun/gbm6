@@ -6,10 +6,10 @@ import * as ImmutableProptypes from 'react-immutable-proptypes';
 import CSS from './videoPreview.module.scss';
 
 const VideoPreview = ({video, onVideoOpen}) => {
-	const firstImage = video.getIn(['images', 0]);
+	const firstImage = video.getIn(['fields', 'images', 0]);
 
 	const contentStyle = {
-		backgroundImage: `url(${firstImage.get('src')})`
+		backgroundImage: `url(${firstImage.getIn(['fields', 'file', 'url'])})`
 	};
 
 	return (
@@ -17,7 +17,7 @@ const VideoPreview = ({video, onVideoOpen}) => {
 			<div className={CSS.inner} style={contentStyle}>
 				<div className={CSS.content}>
 					<div className={CSS.contentInner}>
-						{video.get('video') ? (
+						{video.getIn(['fields', 'video']) ? (
 							<div className={CSS.iconVideo} onClick={onVideoOpen}>
 								<span className="far fa-play-circle"/>
 							</div>
@@ -26,11 +26,11 @@ const VideoPreview = ({video, onVideoOpen}) => {
 								<span className="far fa-images"/>
 							</div>
 						)}
-						<span className={CSS.date}>{video.get('date')}</span>
-						<h3 className={CSS.title}>{video.get('title')}</h3>
-						<span className={CSS.location}>{video.get('location')}</span>
-						<Link to={`/${video.get('slug')}`} className={CSS.link}>
-							{video.get('linkTitle') || 'View Details'}
+						<span className={CSS.date}>{video.getIn(['fields', 'date'])}</span>
+						<h3 className={CSS.title}>{video.getIn(['fields', 'date'])}</h3>
+						<span className={CSS.location}>{video.getIn(['fields', 'location'])}</span>
+						<Link to={`/projects/${video.getIn(['fields', 'slug'])}`} className={CSS.link}>
+							{video.getIn(['fields', 'linkTitle']) || 'View Details'}
 						</Link>
 						<div className={CSS.overlay}/>
 					</div>
