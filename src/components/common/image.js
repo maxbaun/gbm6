@@ -17,7 +17,10 @@ export default class Image extends Component {
 		background: PropTypes.bool,
 		style: PropTypes.object,
 		className: PropTypes.string,
-		width: PropTypes.number
+		width: PropTypes.number,
+		height: PropTypes.number,
+		f: PropTypes.string, // The focus are for cropping,
+		fit: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -25,11 +28,14 @@ export default class Image extends Component {
 		background: false,
 		style: {},
 		className: '',
-		width: 0
+		width: 0,
+		height: 0,
+		f: null,
+		fit: null
 	};
 
 	getUrl() {
-		const {width, image} = this.props;
+		const {width, height, image, f, fit} = this.props;
 		const baseUrl = image.getIn(['fields', 'file', 'url']);
 
 		if (!baseUrl) {
@@ -39,7 +45,19 @@ export default class Image extends Component {
 		let url = baseUrl + '?';
 
 		if (width > 0) {
-			url += `w=${width}?`;
+			url += `w=${width}&`;
+		}
+
+		if (height > 0) {
+			url += `w=${height}&`;
+		}
+
+		if (f) {
+			url += `f=${f}&`;
+		}
+
+		if (fit) {
+			url += `fit=${fit}&`;
 		}
 
 		return url.slice(0, -1);

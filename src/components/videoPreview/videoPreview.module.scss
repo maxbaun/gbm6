@@ -11,8 +11,8 @@
 	}
 
 	&:hover {
-		.inner {
-			background-color: rgba($black, 0.5);
+		.overlay {
+			opacity: 0.4;
 		}
 
 		.content {
@@ -21,18 +21,31 @@
 	}
 }
 
-.overlay {
-}
-
 .inner {
-	background-color: rgba($black, 0.2);
-	background-size: cover;
-	background-blend-mode: multiply;
 	padding: 4px;
 	position: relative;
 	text-align: center;
-	transition: all 0.2s ease-in-out;
 	user-select: none;
+}
+
+.image {
+	@include absoluteFull();
+	background-color: rgba($black, 0.4);
+	z-index: -2;
+
+	img {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
+}
+
+.overlay {
+	@include absoluteFull();
+	background-color: rgba(0, 0, 0, 1);
+	opacity: 0.3;
+	transition: all 0.2s ease-in-out;
+	z-index: -1;
 }
 
 .content {

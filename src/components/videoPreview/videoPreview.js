@@ -5,17 +5,17 @@ import * as ImmutableProptypes from 'react-immutable-proptypes';
 
 import CSS from './videoPreview.module.scss';
 import {portfolioBase} from '../../constants';
+import Image from '../common/image';
 
 const VideoPreview = ({video, onVideoOpen}) => {
 	const firstImage = video.getIn(['fields', 'images', 0]);
 
-	const contentStyle = {
-		backgroundImage: `url(${firstImage.getIn(['fields', 'file', 'url'])})`
-	};
-
 	return (
 		<div className={CSS.preview}>
-			<div className={CSS.inner} style={contentStyle}>
+			<div className={CSS.inner}>
+				<div className={CSS.image}>
+					<Image image={firstImage} width={400} height={600} f="center" fit="thumb"/>
+				</div>
 				<div className={CSS.content}>
 					<div className={CSS.contentInner}>
 						{video.getIn(['fields', 'video']) ? (
