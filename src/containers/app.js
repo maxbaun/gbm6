@@ -11,10 +11,12 @@ import {selectors as menuSelectors, actions as menuActions} from '../ducks/menus
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 import {selectors as videoSelectors, actions as videoActions} from '../ducks/videos';
 import {noop} from '../utils/componentHelpers';
+import {portfolioBase} from '../constants';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import PageTemplate from '../templates/page';
+import PortfolioTemplate from '../templates/portfolio';
 import WatchThis from '../components/page/watchThis';
 import Concerts from '../components/page/concerts';
 import ProjectsPage from '../components/page/projects';
@@ -82,9 +84,9 @@ class App extends Component {
 				<Switch>
 					<Route exact path="/watch-this" render={p => <WatchThis {...props} {...p}/>}/>
 					<Route exact path="/concerts" render={p => <Concerts {...props} {...p}/>}/>
-					<Route exact path="/projects" render={p => <ProjectsPage {...props} {...p}/>}/>
-					<Route exact path="/:slug" render={p => <PageTemplate {...props} {...p}/>}/>
-					<Route path="*" render={p => <PageTemplate {...props} {...p}/>}/>
+					<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
+					<Route exact path="/:slug" component={PageTemplate}/>
+					<Route path="*" component={PageTemplate}/>
 				</Switch>
 				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
 			</Fragment>

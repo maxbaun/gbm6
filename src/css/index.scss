@@ -17,6 +17,7 @@ body {
 
 body {
 	@include fontSize(18, 22);
+	background-color: $blueDarkest;
 	color: $white;
 	margin: 0;
 	padding: 0;

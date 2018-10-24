@@ -30,6 +30,12 @@ $transform: 21.80140948635181deg;
 	}
 }
 
+@mixin firstChild() {
+	[data-section]:first-child {
+		@content;
+	}
+}
+
 @mixin lastChild() {
 	[data-section]:last-child {
 		@content;
@@ -108,8 +114,47 @@ $transform: 21.80140948635181deg;
 			@include lastChild() {
 				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
 			}
+		}
+	}
 
+	&[data-template='project'] {
+		$projectAngle: 50 - $angleHeight;
+		@include hassOddLength() {
+			@include evenSections() {
+				clip-path: polygon(0 #{$projectAngle}, 100% 0, 100% 100%, 0 100%);
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 0, 100% #{$projectAngle}, 100% 100%, 0 100%);
+			}
+		}
+
+		@include hasEvenLength() {
+			@include evenSections() {
+				clip-path: polygon(0 0, 100% #{$projectAngle}, 100% 100%, 0 100%);
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 #{$projectAngle}, 100% 0, 100% 100%, 0 100%);
+			}
+		}
+
+		@include allSections() {
 			@include defaultStyles();
+
+			@include firstChild() {
+				[data-clip] {
+					clip-path: polygon(0 0, 50% #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+					height: $angleHeight;
+					margin-top: $angleHeight * -1;
+				}
+			}
+
+			@include targetChild(2) {
+				clip-path: none;
+				margin-top: 0;
+				padding-top: 0;
+			}
 		}
 	}
 }

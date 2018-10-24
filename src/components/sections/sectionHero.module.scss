@@ -6,11 +6,12 @@
 
 	@include tabletUp {
 		height: 75vh;
-		min-height: 800px;
+		min-height: 450px;
 	}
 
 	@include desktopUp {
 		height: 80vh;
+		min-height: 600px;
 	}
 }
 
@@ -23,13 +24,102 @@
 
 .image {
 	@include heroHeight();
+}
 
-	img {
-		height: 100%;
-		object-fit: cover;
-		object-position: top center;
-		width: 100%;
+.carousel {
+	@include heroHeight();
+	position: absolute;
+}
+
+.nav {
+	bottom: calc(10vw - 52px);
+	display: none;
+	position: absolute;
+	right: 10%;
+
+	@include collapseUp {
+		display: block;
 	}
+
+	@include desktopUp {
+		bottom: calc(11vw - 52px);
+	}
+}
+
+.pagination {
+	bottom: 50px;
+	left: 0;
+	margin: 0 auto;
+	position: absolute;
+	right: 0;
+	width: 100%;
+
+	@include collapseUp {
+		bottom: 75px;
+		width: 50%;
+	}
+
+	> div {
+		position: relative;
+	}
+}
+
+.paginationBullet {
+	background-color: $black;
+	border-radius: 100%;
+	cursor: pointer;
+	display: inline-block;
+	height: 12px;
+	margin: 0 6px;
+	width: 12px;
+
+	@include collapseUp {
+		margin: 0 11px;
+	}
+}
+
+.paginationBulletActive {
+	background-color: $blue;
+}
+
+.playOverlay {
+	@include absoluteFull();
+	align-items: center;
+	background-color: rgba($black, 0.3);
+	display: flex;
+	justify-content: center;
+}
+
+.playBtn {
+	cursor: pointer;
+	height: 80px;
+	width: 80px;
+	font-size: 80px;
+	line-height: 80px;
+	opacity: 0.7;
+	transition: opacity 0.2s ease-in-out;
+
+	@include collapseUp {
+		height: 119px;
+		width: 119px;
+		font-size: 119px;
+		line-height: 119px;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.playerWrap {
+	position: relative;
+	padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+}
+
+.player {
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .content {
@@ -133,4 +223,14 @@
 .scrollLine:last-child {
 	left: 50%;
 	width: 50%;
+}
+
+// Modifiers
+.heroPortfolio {
+	[data-clip] {
+		background-color: $blueDarkest;
+		position: absolute;
+		width: 100%;
+		z-index: 1;
+	}
 }

@@ -1,0 +1,62 @@
+@import '../../css/utils/utils';
+
+.section {
+	background-color: $blueDarkest;
+}
+
+.wrap {
+	@extend .container;
+}
+
+.inner {
+	padding: 40px 0;
+
+	@include collapseUp {
+		padding: 60px 0;
+	}
+
+	@include desktopUp {
+		padding: 90px 0;
+	}
+}
+
+.header {
+	@include collapseUp {
+		align-items: flex-start;
+		display: flex;
+	}
+}
+
+.heading {
+	@include brandTitle();
+	max-width: 100%;
+	margin: 0 0 30px;
+	width: 500px;
+
+	@include collapseUp {
+		margin: 0 0 50px;
+		margin: 0;
+		width: 450px;
+	}
+
+	@include desktopUp {
+		margin: 0 0 94px;
+		width: 585px;
+	}
+}
+
+.meta {
+	margin: 0 0 30px;
+
+	@include collapseUp {
+		margin: 0 0 50px;
+		padding-left: 100px;
+		width: calc(100% - 450px);
+	}
+
+	@include desktopUp {
+		margin: 0 0 94px;
+		padding-left: 135px;
+		width: calc(100% - 585px);
+	}
+}

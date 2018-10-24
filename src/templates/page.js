@@ -105,11 +105,13 @@ class PageTemplate extends Component {
 			return (
 				<SectionHero
 					key={index}
-					image={fields.get('image')}
+					images={List([fields.get('image')])}
 					imageCss={fields.get('imageCss') ? fields.get('imageCss').toJS() : {}}
 					content={fields.get('content')}
 					scrollTo={fields.get('scrollTo')}
 					scrollColor={fields.get('scrollColor')}
+					state={this.props.state}
+					actions={this.props.actions}
 				/>
 			);
 		}

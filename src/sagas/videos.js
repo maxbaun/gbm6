@@ -59,7 +59,7 @@ function * onVideosGet({payload}) {
 	return yield all([
 		put({
 			type: videoTypes.VIDEOS_UPDATE,
-			payload: res
+			payload: res.items
 		})
 	]);
 }

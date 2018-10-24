@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 
 import CSS from './videoPreview.module.scss';
+import {portfolioBase} from '../../constants';
 
 const VideoPreview = ({video, onVideoOpen}) => {
 	const firstImage = video.getIn(['fields', 'images', 0]);
@@ -29,7 +30,7 @@ const VideoPreview = ({video, onVideoOpen}) => {
 						<span className={CSS.date}>{video.getIn(['fields', 'date'])}</span>
 						<h3 className={CSS.title}>{video.getIn(['fields', 'date'])}</h3>
 						<span className={CSS.location}>{video.getIn(['fields', 'location'])}</span>
-						<Link to={`/projects/${video.getIn(['fields', 'slug'])}`} className={CSS.link}>
+						<Link to={`/${portfolioBase}/${video.getIn(['fields', 'slug'])}`} className={CSS.link}>
 							{video.getIn(['fields', 'linkTitle']) || 'View Details'}
 						</Link>
 						<div className={CSS.overlay}/>

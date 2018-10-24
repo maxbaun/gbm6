@@ -14,11 +14,17 @@ export default class Image extends Component {
 
 	static propTypes = {
 		image: ImmutablePropTypes.map,
+		background: PropTypes.bool,
+		style: PropTypes.object,
+		className: PropTypes.string,
 		width: PropTypes.number
 	};
 
 	static defaultProps = {
 		image: Map(),
+		background: false,
+		style: {},
+		className: '',
 		width: 0
 	};
 
@@ -40,12 +46,16 @@ export default class Image extends Component {
 	}
 
 	render() {
-		const {image} = this.props;
+		const {image, background, className, style} = this.props;
 
 		const url = this.getUrl();
 
 		if (!url) {
 			return null;
+		}
+
+		if (background) {
+			return <div className={className} style={{...style, backgroundImage: `url(${url})`}}/>;
 		}
 
 		return <img src={url} alt={image.getIn(['fields', 'title'])}/>;
