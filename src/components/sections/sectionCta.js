@@ -165,12 +165,17 @@ export default class SectionCta extends Component {
 						</li>
 						<li>
 							<label htmlFor="email">Your Email</label>
-							<input type="email" value={this.state.email} onChange={state(this.handleChange, 'email')}/>
+							<input type="email" name="email" value={this.state.email} onChange={state(this.handleChange, 'email')}/>
 						</li>
 
 						<li>
 							<label htmlFor="organization">Your organization</label>
-							<input type="text" value={this.state.organization} onChange={state(this.handleChange, 'organitation')}/>
+							<input
+								type="text"
+								name="organization"
+								value={this.state.organization}
+								onChange={state(this.handleChange, 'organitation')}
+							/>
 						</li>
 						<li className={CSS.full}>
 							<label htmlFor="message">Your Message</label>
