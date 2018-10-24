@@ -174,7 +174,7 @@ export default class SectionCta extends Component {
 								type="text"
 								name="organization"
 								value={this.state.organization}
-								onChange={state(this.handleChange, 'organitation')}
+								onChange={state(this.handleChange, 'organization')}
 							/>
 						</li>
 						<li className={CSS.full}>
