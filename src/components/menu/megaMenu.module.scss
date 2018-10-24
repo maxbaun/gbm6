@@ -25,7 +25,7 @@
 	transition: opacity 0.15s ease-in-out;
 	text-transform: uppercase;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		@include fontSize(28, 41);
 		padding: 20px 0;
 	}
@@ -39,7 +39,7 @@
 .mobileOnly {
 	display: block;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		display: none;
 	}
 }

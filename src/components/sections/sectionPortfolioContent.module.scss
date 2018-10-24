@@ -26,8 +26,6 @@
 }
 
 .heading {
-	@include brandTitle();
-
 	@include media-breakpoint-up(lg) {
 		@include headings() {
 			@include fontSize(60, 70);

@@ -12,6 +12,7 @@
     "react": "^16.5.2",
     "react-click-outside": "^3.0.1",
     "react-dom": "^16.5.2",
+    "react-fittext": "^1.0.0",
     "react-immutable-proptypes": "^2.1.0",
     "react-motion": "^0.5.2",
     "react-player": "^1.6.6",

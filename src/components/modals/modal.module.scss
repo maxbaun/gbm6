@@ -23,7 +23,7 @@
 	will-change: top, opacity;
 	@include zIndex(modal);
 
-	@include tabletUp {
+	@include media-breakpoint-up(md) {
 		width: 55%;
 	}
 
@@ -41,7 +41,7 @@
 	height: 85%;
 	width: 80%;
 
-	@include tabletUp {
+	@include media-breakpoint-up(md) {
 		width: 75%;
 	}
 }
@@ -68,7 +68,7 @@
 	transition: opacity 0.15s ease-in-out;
 	@include zIndex(modalClose);
 
-	@include tabletUp {
+	@include media-breakpoint-up(md) {
 		margin-right: -60px;
 		right: 23%;
 	}

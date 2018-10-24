@@ -1,9 +1,30 @@
 @import '../../css/utils/utils.scss';
 
+.wrap {
+	margin: 0 auto;
+
+	@include media-breakpoint-up(md) {
+		max-width: 584px;
+		margin: 0;
+	}
+}
+
 .polygon {
 	opacity: 0.6;
 }
 
 .heading {
-	padding: 5px 3px 13px;
+	line-height: 1;
+	padding: 5px 0 13px;
+
+	@include headings() {
+		display: inline-block;
+		color: $white;
+		font-family: $fontHeading;
+		font-weight: 700;
+		font-size: inherit;
+		line-height: 1;
+		margin: 0;
+		text-transform: uppercase;
+	}
 }

@@ -43,18 +43,18 @@ export default class SectionCta extends Component {
 	render() {
 		return (
 			<div data-section className={CSS.section}>
-				<div className={CSS.wrap}>
-					<div className={CSS.inner}>
-						<Fragment>
-							<div className={CSS.header}>
-								<div className={CSS.row}>
-									<div className={CSS.colHeading}>{this.renderHeader()}</div>
-									<div className={CSS.colContact}>{this.renderContact()}</div>
-									<div className={CSS.colSocial}>{this.renderSocial()}</div>
+				<div className={CSS.inner}>
+					<div className="container">
+						<div className="row">
+							<div className="col-lg-10 offset-lg-1">
+								<div className={CSS.header}>
+									{this.renderHeader()}
+									{this.renderContact()}
+									{this.renderSocial()}
 								</div>
+								<div className={CSS.content}>{this.renderForm()}</div>
 							</div>
-							<div className={CSS.content}>{this.renderForm()}</div>
-						</Fragment>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -120,17 +120,19 @@ export default class SectionCta extends Component {
 
 		return (
 			<div className={CSS.social}>
-				<ul className={CSS.socialIcons}>
-					{icons.map(icon => {
-						return (
-							<li key={icon} className={CSS.socialIcon}>
-								<a href={siteSettings.get(icon.get('property'))}>
-									<span className={icon.get('icon')}/>
-								</a>
-							</li>
-						);
-					})}
-				</ul>
+				<div className={CSS.socialInner}>
+					<ul className={CSS.socialIcons}>
+						{icons.map(icon => {
+							return (
+								<li key={icon} className={CSS.socialIcon}>
+									<a href={siteSettings.get(icon.get('property'))}>
+										<span className={icon.get('icon')}/>
+									</a>
+								</li>
+							);
+						})}
+					</ul>
+				</div>
 			</div>
 		);
 	}

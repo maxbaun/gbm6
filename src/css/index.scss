@@ -1,5 +1,6 @@
 @import '~bootstrap/scss/bootstrap-reboot';
 @import '~bootstrap/scss/bootstrap-grid';
+@import '~bootstrap/scss/utilities';
 
 @import '~swiper/dist/css/swiper.css';
 
@@ -18,7 +19,6 @@ body {
 }
 
 body {
-	@include fontSize(18, 22);
 	background-color: $blueDarkest;
 	color: $white;
 	margin: 0;
@@ -40,6 +40,13 @@ body {
 	font-weight: 400;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+// hack to get responsive breakpoint to show up in chrome breakpoint debugger
+@media only screen and (max-width: 414px) {
+	* {
+		box-sizing: border-box;
+	}
 }
 
 body.offmenu-open {
@@ -73,6 +80,7 @@ a {
 	&:active,
 	&:hover {
 		color: inherit;
+		text-decoration: none;
 	}
 }
 

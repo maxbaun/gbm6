@@ -13,7 +13,6 @@
 }
 
 .heading {
-	@include brandTitle();
 }
 
 .row {
@@ -21,7 +20,7 @@
 	display: flex;
 	flex-wrap: wrap;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		flex-wrap: nowrap;
 	}
 }
@@ -30,7 +29,7 @@
 	margin-bottom: 20px;
 	width: 100%;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		width: 50%;
 
 		&:first-child {
@@ -58,11 +57,11 @@
 	&:first-child {
 		margin-right: 15px;
 
-		@include tabletUp {
+		@include media-breakpoint-up(sm) {
 			margin-right: 50px;
 		}
 
-		@include desktopUp {
+		@include media-breakpoint-up(lg) {
 			margin-right: 100px;
 		}
 	}

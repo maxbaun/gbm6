@@ -134,7 +134,7 @@ $offmenuWidth: 473px;
 	height: 75px;
 	position: relative;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		height: 100px;
 	}
 }
@@ -144,7 +144,7 @@ $offmenuWidth: 473px;
 	position: relative;
 	overflow: hidden;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		height: calc(100% - 130px);
 	}
 }
@@ -164,7 +164,7 @@ $offmenuWidth: 473px;
 		opacity: 0.7;
 	}
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		@include fontSize(30, 30);
 		right: 44px;
 		width: 30px;
@@ -174,7 +174,7 @@ $offmenuWidth: 473px;
 	&[data-position='top'] {
 		top: 30px;
 
-		@include collapseUp {
+		@include media-breakpoint-up(md) {
 			top: 44px;
 		}
 	}

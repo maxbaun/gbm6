@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {List, Map} from 'immutable';
@@ -56,56 +56,64 @@ export default class SectionFaq extends Component {
 			backgroundImage: `url(${this.props.backgroundImage.getIn(['fields', 'file', 'url'])})`
 		};
 
-		const renderAccordion = window.innerWidth < responsive.collapse || layout === 'accordion';
+		const renderAccordion = layout === 'accordion';
 
 		return (
 			<div data-section className={CSS.section} data-layout={layout}>
 				<div className={CSS.overlay}/>
 				<div className={CSS.background} style={backgroundStyle}/>
-				<div className={CSS.wrap}>
-					<div className={CSS.inner}>
-						{heading && heading !== '' ? (
-							<div className={CSS.headingRow}>
-								<div className={CSS.headingCol}>
+				<div className="container">
+					{heading && heading !== '' ? (
+						<div className={CSS.header}>
+							<div className="row align-items-end">
+								<div className="col-md-6 col-lg-5 offset-lg-1">
 									<div className={CSS.heading}>
 										<HeadingBrand heading={heading}/>
 									</div>
 								</div>
-								{renderAccordion === false ? (
-									<div className={CSS.headingCol}>
-										<div className={CSS.allFaqLink}>
-											<Link to={allFaqLinkUrl} className={CSS.allLink}>
-												{allFaqLinkText}
-											</Link>
-										</div>
-									</div>
-								) : null}
-							</div>
-						) : null}
-
-						{renderAccordion ? this.renderAccordionTabs() : this.renderVerticalTabs()}
-						{renderAccordion && allFaqLinkUrl ? (
-							<div className={CSS.allFaqLink}>
-								<Link to={allFaqLinkUrl} className={CSS.allLink}>
-									{allFaqLinkText}
-								</Link>
-							</div>
-						) : null}
-						{ctaContent ? (
-							<div className={CSS.cta}>
-								<div className={CSS.ctaInner}>
-									<div className={CSS.ctaContent}>
-										<Markdown content={ctaContent}/>
-									</div>
-									<div className={CSS.ctaButton}>
-										<Link to={ctaLinkUrl} className="btn btn-primary">
-											{ctaLinkText}
+								<div className="col-md-6 col-lg-5 offset-lg-1 d-sm-none d-md-block">
+									<div className={CSS.allFaqLink}>
+										<Link to={allFaqLinkUrl} className={CSS.allLink}>
+											{allFaqLinkText}
 										</Link>
 									</div>
 								</div>
 							</div>
-						) : null}
-					</div>
+						</div>
+					) : null}
+					{renderAccordion ? (
+						this.renderAccordionTabs()
+					) : (
+						<Fragment>
+							<div className="d-sm-none d-md-block">{this.renderVerticalTabs()}</div>
+							<div className="d-none d-sm-block d-md-none">
+								{this.renderAccordionTabs()}
+								<div className={CSS.allFaqLink}>
+									<Link to={allFaqLinkUrl} className={CSS.allLink}>
+										{allFaqLinkText}
+									</Link>
+								</div>
+							</div>
+						</Fragment>
+					)}
+					{ctaContent ? (
+						<div className="row">
+							<div className="col-md-10 offset-md-1">
+								<div className={CSS.cta}>
+									<div className={CSS.ctaInner}>
+										<div className={CSS.ctaContent}>
+											<Markdown content={ctaContent}/>
+										</div>
+										<div className={CSS.ctaButton}>
+											<Link to={ctaLinkUrl} className="btn btn-primary">
+												{ctaLinkText}
+											</Link>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					) : null}
 				</div>
 			</div>
 		);
@@ -142,8 +150,8 @@ export default class SectionFaq extends Component {
 
 	renderVerticalTabs() {
 		return (
-			<div className={CSS.row}>
-				<div className={CSS.col}>
+			<div className="row">
+				<div className="col-md-6 col-lg-5 offset-lg-1">
 					<div className={CSS.questions}>
 						<ul className={CSS.questionList}>
 							{this.props.faqs.map((faq, index) => {
@@ -166,7 +174,7 @@ export default class SectionFaq extends Component {
 						</ul>
 					</div>
 				</div>
-				<div className={CSS.col}>
+				<div className="col-md-6 col-lg-5 offset-lg-1 d-sm-none d-md-block">
 					<div className={CSS.answer}>
 						<Markdown content={this.props.faqs.getIn([this.state.activeIndex, 'fields', 'answer'])}/>
 					</div>

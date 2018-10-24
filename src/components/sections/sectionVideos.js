@@ -122,11 +122,11 @@ class SectionVideos extends Component {
 					<div data-line/>
 				</div>
 				<div className={CSS.inner}>
-					<div className={CSS.header}>
+					<div className="container">
 						<div className={CSS.content}>
-							<div className={CSS.row}>
+							<div className="row align-items-end">
 								{heading && heading !== '' ? (
-									<div className={CSS.col}>
+									<div className="col-md-6 col-lg-5 offset-md-1">
 										<div className={CSS.heading}>
 											<HeadingBrand heading={this.props.heading}/>
 										</div>
@@ -134,7 +134,7 @@ class SectionVideos extends Component {
 								) : null}
 
 								{allVideosLink ? (
-									<div className={CSS.col}>
+									<div className="col-md-5 col-lg-5 offset-lg-1">
 										<Link to={allVideosLink} className={CSS.allVideosLink}>
 											{allVideosText}
 										</Link>
@@ -143,20 +143,24 @@ class SectionVideos extends Component {
 							</div>
 						</div>
 						{showCategories ? (
-							<ul className={CSS.categories} data-align={categoryAlign}>
-								{categories.map((category, index) => {
-									return (
-										<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
-											<div
-												className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
-												onClick={click(this.handleCategoryChange, index)}
-											>
-												{category.getIn(['fields', 'title'])}
-											</div>
-										</li>
-									);
-								})}
-							</ul>
+							<div className="row">
+								<div className="col-md-11 offset-md-1">
+									<ul className={CSS.categories} data-align={categoryAlign}>
+										{categories.map((category, index) => {
+											return (
+												<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
+													<div
+														className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
+														onClick={click(this.handleCategoryChange, index)}
+													>
+														{category.getIn(['fields', 'title'])}
+													</div>
+												</li>
+											);
+										})}
+									</ul>
+								</div>
+							</div>
 						) : null}
 					</div>
 					{hasAppeared ? (

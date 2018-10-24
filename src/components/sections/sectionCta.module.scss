@@ -1,94 +1,76 @@
 @import '../../css/utils/utils.scss';
 
 .section {
-	@extend .clearfix;
 	background-color: $blueDarkest;
 }
 
-.wrap {
-	@extend .container;
+.inner {
+	@extend .py-sm-4;
+	@extend .py-md-5;
 }
 
-.inner {
-	padding: 60px 0 40px;
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 273px;
 
-	@include collapseUp {
-		padding: 40px 0 60px;
-	}
-
-	@include desktopUp {
-		padding-bottom: 40px 0 93px;
+	@include media-breakpoint-up(sm) {
+		max-width: none;
 	}
 }
 
 .heading {
-	@include brandTitle();
-	margin: 0 0 16px;
-
-	@include collapseUp {
-		margin: 0 0 20px;
-	}
-
-	@include desktopUp {
-		margin: 0 0 16px;
-	}
-}
-
-.row {
-	align-items: flex-end;
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.colSocial {
-	order: 2;
+	@extend .mb-3;
+	@extend .mb-sm-4;
 	width: 100%;
 
-	@include mobileUp {
-		width: 250px;
+	@include media-breakpoint-up(sm) {
+		margin-right: 50%;
+		width: 50%;
 	}
 
-	@include desktopUp {
-		order: 1;
-		width: 33%;
-	}
-}
-
-.colContact {
-	order: 3;
-	width: 100%;
-
-	@include mobileUp {
-		width: calc(100% - 250px);
-	}
-
-	@include desktopUp {
-		order: 2;
+	@include media-breakpoint-up(md) {
+		order: 3;
+		margin-left: 10%;
+		margin-right: 0;
 		width: 30%;
 	}
 }
 
-.colHeading {
-	order: 1;
+.contact {
+	@extend .mx-3;
+	@extend .mb-4;
 	width: 100%;
 
-	@include desktopUp {
-		order: 3;
-		width: 37%;
+	@extend .mx-sm-0;
+
+	@include media-breakpoint-up(sm) {
+		width: calc(100% / 3);
+	}
+
+	@include media-breakpoint-up(md) {
+		order: 2;
+		width: 15%;
 	}
 }
 
-.header {
-	padding: 0 5px;
-	margin: 0 0 35px;
+.social {
+	@extend .mx-3;
+	@extend .mb-4;
+	width: 100%;
 
-	@include desktopUp {
-		margin: 0 0 55px;
+	@extend .mx-sm-0;
+	@extend .mb-sm-0;
+
+	@include media-breakpoint-up(sm) {
+		width: calc(100% / 3 * 2);
 	}
-}
 
-.contact {
-	padding: 0 28px;
+	@include media-breakpoint-up(md) {
+		order: 1;
+		width: 40%;
+	}
 }
 
 .contactItems {
@@ -96,25 +78,17 @@
 }
 
 .contactItem {
-	margin-bottom: 32px;
-
-	@include collapseUp {
-		&:last-child {
-			margin: 0 0 16px;
-		}
-	}
-
 	h3,
 	h5 {
-		@include fontSize(22, 32);
+		@include fontSize(23, 32);
 		font-family: $fontHeading;
 		font-weight: 400;
 		margin: 0;
-		text-transform: uppercase;
 	}
 
 	h3 {
 		color: $blue;
+		text-transform: uppercase;
 	}
 
 	h5 {
@@ -122,36 +96,28 @@
 	}
 }
 
-.social {
-	padding: 0 22px;
-	margin-bottom: 27px;
-
-	@include collapseUp {
-		padding: 0;
-		margin: 0;
-	}
+.socialInner {
+	max-width: 230px;
 }
 
 .socialIcons {
 	@include noList();
 	display: flex;
 	flex-wrap: wrap;
-	width: 250px;
 }
 
 .socialIcon {
-	margin: 0 16px 16px 0;
-	width: 66px;
+	@include fontSize(32, 32);
+	@extend .mx-1;
+	@extend .mb-2;
 
 	a {
-		@include fontSize(30, 30);
 		align-items: center;
-		background-color: transparent;
-		border: 2px solid $blue;
+		border: 1px solid $blue;
 		color: $blue;
 		display: flex;
-		justify-content: center;
 		height: 66px;
+		justify-content: center;
 		transition: all 0.2s ease-in-out;
 		width: 66px;
 
@@ -169,11 +135,11 @@
 		flex-wrap: wrap;
 
 		li {
-			margin-bottom: 28px;
+			@extend .mb-4;
+			@extend .px-md-1;
 			width: 100%;
 
-			@include collapseUp {
-				padding: 0 5px;
+			@include media-breakpoint-up(md) {
 				width: calc(100% / 3);
 			}
 
@@ -185,22 +151,24 @@
 }
 
 .submitWrap {
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		display: flex;
 		justify-content: flex-end;
 	}
 
 	> input {
 		@include fontSize(18, 26);
+		@extend .py-3;
+		@extend .mx-auto;
+		@extend .mx-md-0;
+		@extend .ml-md-auto;
 		display: block;
-		margin: 0 auto;
-		padding: 17px 0;
+		max-width: 231px;
 		text-transform: uppercase;
 		width: 80%;
 
-		@include collapseUp {
-			margin: 0 0 0 auto;
-			width: 215px;
+		@include media-breakpoint-up(md) {
+			width: 100%;
 		}
 	}
 }

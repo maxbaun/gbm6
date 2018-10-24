@@ -48,7 +48,7 @@ export default class TeamSlider extends Component {
 
 	initSwiper() {
 		const container = this.wrap.querySelector('.swiper-container');
-		const slideSize = window.innerWidth < responsive.collapse ? TeamSizeMobile : TeamSize;
+		const slideSize = window.innerWidth < 768 ? TeamSizeMobile : TeamSize;
 
 		const options = {
 			loop: false,

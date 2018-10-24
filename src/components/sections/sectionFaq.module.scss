@@ -12,7 +12,7 @@
 	opacity: 0.23;
 	z-index: -1;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		background-attachment: initial;
 	}
 }
@@ -23,70 +23,19 @@
 	z-index: -1;
 }
 
-.wrap {
-	@extend .container;
-}
-
-.inner {
-	padding: 40px 0;
-}
-
-.heading {
-	@include brandTitle();
-}
-
-.row {
-	align-items: center;
-	display: flex;
-}
-
-.col {
-	width: 50%;
-
-	&:first-child {
-		padding-right: 10%;
-	}
-
-	@include desktopUp {
-		&:first-child {
-			padding-right: 131px;
-		}
-	}
-}
-
-.headingRow {
-	@extend .row;
-	align-items: flex-end;
-	margin-bottom: 47px;
-
-	@include collapseUp {
-		margin-bottom: 52px;
-	}
-}
-
-.headingCol {
-	@extend .col;
-
-	&:first-child {
-		@include collapseDown {
-			padding-right: 0;
-			width: 100%;
-		}
-	}
+.header {
+	@extend .mb-5;
+	@extend .mb-md-7;
 }
 
 .question {
 	cursor: pointer;
-	margin-bottom: 0;
-
-	@include collapseUp {
-		margin-bottom: 18px;
-	}
+	@extend .mb-md-3;
 
 	span {
 		@include fontSize(18, 26);
+		@extend .pb-2;
 		font-family: $fontHeading;
-		padding-bottom: 10px;
 		position: relative;
 
 		&::after {
@@ -100,7 +49,7 @@
 			width: 0;
 		}
 
-		@include collapseUp {
+		@include media-breakpoint-up(md) {
 			@include fontSize(22, 32);
 		}
 	}
@@ -109,17 +58,13 @@
 .answer {
 	@include fontSize(15, 23);
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		@include fontSize(18, 28);
 	}
 }
 
 .questionActive {
-	margin-bottom: 18px;
-
-	@include collapseUp {
-		margin-bottom: 18px;
-	}
+	@extend .mb-3;
 
 	span {
 		&::after {
@@ -138,7 +83,7 @@
 
 .accordionItem {
 	&:not(:last-child) {
-		margin-bottom: 28px;
+		@extend .mb-4;
 	}
 
 	.answer {
@@ -156,11 +101,8 @@
 }
 
 .allFaqLink {
-	margin-top: 30px;
-
-	@include collapseUp {
-		margin-top: 50px;
-	}
+	@extend .mt-5;
+	@extend .mt-md-6;
 }
 
 .allLink {
@@ -172,11 +114,8 @@
 }
 
 .cta {
-	margin-top: 60px;
-
-	@include collapseUp {
-		margin-top: 121px;
-	}
+	@extend .mt-5;
+	@extend .mt-md-8;
 }
 
 .ctaInner {
@@ -184,17 +123,17 @@
 	display: flex;
 	flex-wrap: wrap;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		flex-wrap: nowrap;
 	}
 }
 
 .ctaContent {
-	margin: 0 0 20px;
+	@extend .mb-3;
+	@extend .pr-md-8;
 	width: 100%;
 
-	@include collapseUp {
-		padding-right: 131px;
+	@include media-breakpoint-up(md) {
 		width: calc(100% - 231px);
 	}
 
@@ -223,7 +162,7 @@
 }
 
 .ctaButton {
-	margin: 0 0 20px;
+	@extend .mb-3;
 	width: 231px;
 
 	> a {

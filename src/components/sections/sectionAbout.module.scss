@@ -12,82 +12,45 @@
 	z-index: -2;
 }
 
-.content {
-	padding: 20px 15px;
-
-	@include collapseUp {
-		padding: 60px 15px;
-	}
-
-	@include desktopUp {
-		padding: 80px 15px;
-	}
-}
-
 .inner {
-	@extend .container;
-	padding: 20px 0;
-
-	@include desktopUp {
-		padding: 40px 0 60px;
-	}
-}
-
-.row {
-	align-items: center;
-
-	@include collapseUp {
-		display: flex;
-	}
-}
-
-.col {
-	margin-bottom: 31px;
-
-	&:first-child {
-		@include collapseUp {
-			margin-right: 45px;
-		}
-	}
+	@extend .py-sm-4;
+	@extend .py-md-5;
+	@extend .py-lg-6;
+	@extend .py-xl-7;
 }
 
 .heading {
-	@include brandTitle();
-	margin: 0 auto;
-	width: 320px;
+	@extend .mb-4;
+	@extend .mb-md-0;
+	@extend .pr-md-4;
 
-	@include tabletUp {
-		margin: 0;
-		width: 400px;
-	}
-
-	@include desktopUp {
-		width: 554px;
+	@include media-breakpoint-up(sm) {
+		width: 100%;
 	}
 }
 
 .text {
 	@include fontSize(15, 23);
 	color: $white;
-	margin: 0 auto;
-	max-width: 320px;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		@include fontSize(16, 24);
 		max-width: 585px;
 	}
 
-	@include desktopUp {
+	@include media-breakpoint-up(lg) {
 		@include fontSize(18, 28);
 	}
 }
 
 .iconBlocks {
 	@include noList();
+	@extend .mt-4;
+	@extend .mt-lg-6;
 	display: flex;
 	flex-wrap: wrap;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		flex-wrap: nowrap;
 		justify-content: space-between;
 	}
@@ -98,11 +61,11 @@
 	margin: 0 0 43px;
 	width: 50%;
 
-	@include mobileUp {
+	@include media-breakpoint-up(sm) {
 		width: calc(100% / 3);
 	}
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		width: auto;
 	}
 }
@@ -125,14 +88,8 @@
 
 .counters {
 	margin: 0;
-
-	@include tabletUp {
-		margin: 40px 0 0;
-	}
-
-	@include desktopUp {
-		margin: 80px 0 0;
-	}
+	@extend .mt-sm-5;
+	@extend .mt-lg-8;
 }
 
 .counterBlocks {
@@ -140,7 +97,7 @@
 	display: flex;
 	flex-wrap: wrap;
 
-	@include tabletUp {
+	@include media-breakpoint-up(sm) {
 		flex-wrap: nowrap;
 		justify-content: space-between;
 	}
@@ -148,11 +105,11 @@
 
 .counterBlock {
 	text-align: center;
-	margin: 0 0 22px;
+	@extend .mb-3;
+	@extend .mb-sm-4;
 	width: calc(100% / 3);
 
-	@include tabletUp {
-		margin: 0 0 40px;
+	@include media-breakpoint-up(sm) {
 		width: auto;
 	}
 }
@@ -162,7 +119,7 @@
 	margin: 0 auto;
 	padding: 0 5px;
 
-	@include tabletUp {
+	@include media-breakpoint-up(sm) {
 		max-width: 360px;
 		padding: 0 60px;
 	}
@@ -172,11 +129,11 @@
 		color: $green;
 		margin: 0;
 
-		@include tabletUp {
+		@include media-breakpoint-up(sm) {
 			@include fontSize(70, 90);
 		}
 
-		@include desktopUp {
+		@include media-breakpoint-up(lg) {
 			@include fontSize(100, 134);
 		}
 	}
@@ -187,11 +144,11 @@
 		font-weight: 700;
 		margin: 0;
 
-		@include tabletUp {
+		@include media-breakpoint-up(sm) {
 			@include fontSize(20, 20);
 		}
 
-		@include desktopUp {
+		@include media-breakpoint-up(lg) {
 			@include fontSize(24, 24);
 		}
 	}

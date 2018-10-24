@@ -27,38 +27,38 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 				}}
 			/>
 			<div className={CSS.inner}>
-				<div className={CSS.content}>
-					<div className={CSS.row}>
-						<div className={CSS.col}>
+				<div className="container">
+					<div className="row">
+						<div className="col-xs-10 col-md-5 offset-xs-1 offset-md-1">
 							<div className={CSS.heading}>
 								<HeadingBrand heading={heading}/>
 							</div>
 						</div>
-						<div className={CSS.col}>
+						<div className="col-xs-10 col-md-6 offset-xs-1">
 							<div className={CSS.text}>
 								<Markdown content={text}/>
 							</div>
 						</div>
 					</div>
-				</div>
-				{icons && icons.length ? (
-					<ul className={CSS.iconBlocks}>
-						{icons &&
-							icons.map(icon => {
-								const parts = icon.split(':');
+					{icons && icons.length ? (
+						<ul className={CSS.iconBlocks}>
+							{icons &&
+								icons.map(icon => {
+									const parts = icon.split(':');
 
-								return (
-									<li key={icon} className={CSS.iconBlock}>
-										<div className={CSS.icon}>
-											<span className={parts[0]}/>
-											<p>{parts[1]}</p>
-										</div>
-									</li>
-								);
-							})}
-					</ul>
-				) : null}
-				{counters && counters.length ? (
+									return (
+										<li key={icon} className={CSS.iconBlock}>
+											<div className={CSS.icon}>
+												<span className={parts[0]}/>
+												<p>{parts[1]}</p>
+											</div>
+										</li>
+									);
+								})}
+						</ul>
+					) : null}
+				</div>
+				{counters && counters.length && counters[0] !== '' ? (
 					<div className={CSS.counters}>
 						<ul className={CSS.counterBlocks}>
 							{counters.map(counter => {
@@ -100,7 +100,7 @@ SectionAbout.defaultProps = {
 	text: '',
 	image: Map(),
 	icons: '',
-	counters: '',
+	counters: null,
 	imageCss: {}
 };
 

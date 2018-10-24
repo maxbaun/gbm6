@@ -14,7 +14,7 @@ const Hamburg = ({onClick, active}) => {
 	return (
 		<div className={wrapCss.join(' ')} onClick={onClick}>
 			<div className={CSS.box}>
-				<div className={CSS.inner}/>
+				<span className="fas fa-bars"/>
 			</div>
 		</div>
 	);

@@ -38,22 +38,20 @@ export default class SectionTeam extends Component {
 		return (
 			<div data-section className={CSS.section}>
 				<div className={CSS.inner}>
-					<div className={CSS.sectionContainer}>
-						<div className={CSS.row}>
-							{window.innerWidth > responsive.desktop ? (
-								<div className={CSS.col}>
-									<div className={CSS.video}>
-										<Video
-											url={this.props.video.get('videoUrl')}
-											thumbnail={this.props.video.get('videoThumbnail')}
-											actions={this.props.actions}
-											state={this.props.state}
-											previewWidth={603}
-										/>
-									</div>
+					<div className="container">
+						<div className="row align-items-md-center">
+							<div className="col col-md-6 col-xl-5 d-sm-none d-md-block">
+								<div className={CSS.video}>
+									<Video
+										url={this.props.video.get('videoUrl')}
+										thumbnail={this.props.video.get('videoThumbnail')}
+										actions={this.props.actions}
+										state={this.props.state}
+										previewWidth={603}
+									/>
 								</div>
-							) : null}
-							<div className={CSS.col}>
+							</div>
+							<div className="col col-md-6 col-xl-5 offset-xl-1">
 								<div className={CSS.content}>
 									<div className={CSS.heading}>
 										<HeadingBrand heading={this.props.heading}/>
@@ -61,7 +59,7 @@ export default class SectionTeam extends Component {
 									<div className={CSS.copy}>
 										<Markdown content={this.props.text}/>
 									</div>
-									{window.innerWidth <= responsive.desktop ? (
+									<div className="d-none d-sm-block d-md-none">
 										<div className={CSS.video}>
 											<Video
 												url={this.props.video.get('videoUrl')}
@@ -71,7 +69,7 @@ export default class SectionTeam extends Component {
 												previewWidth={603}
 											/>
 										</div>
-									) : null}
+									</div>
 								</div>
 							</div>
 						</div>

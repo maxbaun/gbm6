@@ -5,55 +5,18 @@
 	position: relative;
 }
 
-.inner {
-	padding: $spacingUnitLg 0;
-
-	@include media-breakpoint-up(lg) {
-		padding: $spacingUnitXl 0 $spacingUnitXxl;
-	}
-}
-
 .header {
 	@extend .container;
 }
 
-.row {
-	align-items: flex-end;
-	display: flex;
-	flex-wrap: wrap;
-
-	@include tabletUp {
-		flex-wrap: initial;
-	}
-}
-
-.col:first-child {
-	margin-bottom: 18px;
-	padding-right: 35px;
-	width: 100%;
-
-	@include tabletUp {
-		margin: 0;
-		width: auto;
-	}
-}
-
-.col:last-child {
-	@include tabletUp {
-		padding-left: 115px;
-	}
-}
-
 .content {
-	margin-bottom: 40px;
-
-	@include collapseUp {
-		margin-bottom: 72px;
-	}
+	@extend .mb-5;
+	@extend .mb-md-6;
 }
 
 .heading {
-	@include brandTitle();
+	@extend .mb-5;
+	@extend .mb-md-0;
 }
 
 .allVideosLink {
@@ -62,6 +25,8 @@
 
 .categories {
 	@include noList();
+	@extend .mb-1;
+	@extend .mb-md-2;
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 10px;
@@ -69,22 +34,15 @@
 	&[data-align='center'] {
 		justify-content: center;
 	}
-
-	@include collapseUp {
-		margin-bottom: 20px;
-	}
 }
 
 .category {
-	margin: 0 40px 30px 0;
+	@extend .mr-3;
+	@extend .mb-4;
 
-	@include collapseUp {
-		margin-right: 0 70px 30px 0;
-	}
+	@extend .mr-md-4;
 
-	@include desktopUp {
-		margin-right: 0 112px 30px 0;
-	}
+	@extend .mr-lg-6;
 }
 
 .categoryLink {

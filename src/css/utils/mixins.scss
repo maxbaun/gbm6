@@ -58,25 +58,6 @@ $browser-context: 18; // Default
 	}
 }
 
-@mixin brandTitle {
-	@include headings() {
-		@include fontSize(38, 42);
-		color: $white;
-		font-family: $fontHeading;
-		font-weight: 700;
-		margin: 0;
-		text-transform: uppercase;
-
-		@include collapseUp {
-			@include fontSize(48, 58);
-		}
-
-		@include desktopUp {
-			@include fontSize(67, 78);
-		}
-	}
-}
-
 @mixin arrowLink($showArrow: true) {
 	@include fontSize(18, 24);
 	color: $white;

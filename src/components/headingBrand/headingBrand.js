@@ -1,34 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FitText from 'react-fittext';
+import Remarkable from 'remarkable';
 
 import CSS from './headingBrand.module.scss';
 import LogoPolygon from '../common/logoPolygon';
-import Markdown from '../common/markdown';
+import {innerHtml} from '../../utils/componentHelpers';
 
-const HeadingBrand = ({heading, width}) => {
+const md = new Remarkable({
+	html: true
+});
+
+const HeadingBrand = ({heading}) => {
+	const parsed = md.render(heading);
 	return (
-		<div className={CSS.headingBrand} style={{maxWidth: '100%', width}}>
+		<div className={CSS.wrap}>
 			<div className={CSS.polygon}>
-				<LogoPolygon width={width} height={27}/>
+				<LogoPolygon height={27}/>
 			</div>
-			<div className={CSS.heading} style={{width: width, maxWidth: '100%'}}>
-				<Markdown content={heading}/>
+			<div className={CSS.heading}>
+				<FitText minFontSize={32}>
+					{/* eslint-disable-next-line react/no-danger */}
+					<div dangerouslySetInnerHTML={innerHtml(parsed)}/>
+				</FitText>
 			</div>
 			<div className={CSS.polygon}>
-				<LogoPolygon flipped width={width} height={27}/>
+				<LogoPolygon flipped height={27}/>
 			</div>
 		</div>
 	);
 };
 
 HeadingBrand.propTypes = {
-	heading: PropTypes.string,
-	width: PropTypes.number
+	heading: PropTypes.string
 };
 
 HeadingBrand.defaultProps = {
-	heading: '',
-	width: 554
+	heading: ''
 };
 
 export default HeadingBrand;
