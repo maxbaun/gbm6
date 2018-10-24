@@ -5,7 +5,7 @@ import {Map, fromJS} from 'immutable';
 
 import CSS from './sectionCta.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
-import {state} from '../../utils/componentHelpers';
+import {state, unique, isLoading, getError, getSuccess} from '../../utils/componentHelpers';
 
 export default class SectionCta extends Component {
 	constructor(props) {
@@ -20,10 +20,13 @@ export default class SectionCta extends Component {
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+
+		this.fetch = unique();
 	}
 
 	static propTypes = {
-		siteSettings: ImmutableProptypes.map
+		siteSettings: ImmutableProptypes.map,
+		actions: PropTypes.objectOf(PropTypes.func).isRequired
 	};
 
 	static defaultProps = {
@@ -33,7 +36,15 @@ export default class SectionCta extends Component {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		console.log('form submitted');
+		this.props.actions.formCreate({
+			fetch: this.fetch,
+			payload: {
+				key: 'contact',
+				data: this.state,
+				formName: 'Contact Form',
+				success: 'Thank you for contacting us! We will be in touch shortly!'
+			}
+		});
 	}
 
 	handleChange(state) {
@@ -138,6 +149,10 @@ export default class SectionCta extends Component {
 	}
 
 	renderForm() {
+		const success = getSuccess(this.fetch, this.props.state);
+		const error = getError(this.fetch, this.props.state);
+		const loading = isLoading(this.fetch, this.props.state);
+
 		return (
 			<div className={CSS.form}>
 				<form onSubmit={this.handleSubmit}>
@@ -160,8 +175,10 @@ export default class SectionCta extends Component {
 							<textarea name="message" value={this.state.message} onChange={state(this.handleChange, 'message')}/>
 						</li>
 						<li className={CSS.full}>
+							{error ? error : null}
+							{success ? success : null}
 							<div className={CSS.submitWrap}>
-								<input className="btn btn-primary" type="submit" value="Submit"/>
+								<input className="btn btn-primary" type="submit" value={loading ? 'Sending...' : 'Submit'}/>
 							</div>
 						</li>
 					</ul>

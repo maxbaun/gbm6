@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages';
 import {selectors as videoSelectors} from '../ducks/videos';
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
+import {actions as formActions, selectors as formSelectors} from '../ducks/forms';
 
 import SectionManager from '../components/sectionManager/sectionManager';
 import {unique} from '../utils/componentHelpers';
@@ -27,14 +28,16 @@ import SectionCta from '../components/sections/sectionCta';
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
 	videos: videoSelectors.getVideos(state),
-	state: stateSelectors.getState(state)
+	state: stateSelectors.getState(state),
+	forms: formSelectors.getForms(state)
 });
 
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(
 		{
 			...pageActions,
-			...stateActions
+			...stateActions,
+			...formActions
 		},
 		dispatch
 	)
@@ -199,7 +202,7 @@ class PageTemplate extends Component {
 		return (
 			<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
 				{sections.toJS()}
-				{hasCta ? <SectionCta siteSettings={SiteSettings} state={this.props.state}/> : null}
+				{hasCta ? <SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/> : null}
 			</SectionManager>
 		);
 	}

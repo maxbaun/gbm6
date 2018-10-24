@@ -11,7 +11,8 @@ export const types = {
 	REGISTER_PROMO: 'REGISTER_PROMO',
 	OFFMENU_RESET: 'OFFMENU_RESET',
 	WINDOW_RESIZE: 'WINDOW_RESIZE',
-	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD'
+	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD',
+	STATUS_CHANGE: 'STATUS_CHANGE'
 };
 
 export const actions = {
@@ -32,6 +33,7 @@ export const initialState = utils.initialState({
 		width: window.innerWidth,
 		height: window.innerHeight
 	},
+	status: {},
 	isCollapsed: window.innerWidth < responsive.collapse,
 	videoModals: []
 });
@@ -61,6 +63,14 @@ export default (state = initialState, action) => {
 			});
 		case types.OFFMENU_RESET:
 			return state.set('offmenu', initialState.get('offmenu'));
+		case types.STATUS_CHANGE:
+			return state.updateIn(['status', action.fetch], u => {
+				if (!u) {
+					return fromJS(action.payload);
+				}
+
+				return u.merge(fromJS(action.payload));
+			});
 		case types.VIDEO_MODAL_ADD:
 			return state.update('videoModals', u => {
 				action.payload.forEach(video => {
@@ -91,5 +101,18 @@ const getOffmenu = (state, name) => {
 export const selectors = {
 	getState: createSelector([getState], s => s),
 	getParams: createSelector([getParams], params => params),
-	getOffmenu: createSelector([getOffmenu], o => o)
+	getOffmenu: createSelector([getOffmenu], o => o),
+	getErrors: createSelector([getState], state => {
+		const status = state.get('status');
+
+		if (status.isEmpty()) {
+			return List();
+		}
+
+		return status.reduce((list, s) => {
+			const hasError = s.get('error') && s.get('error') !== '';
+
+			return hasError ? list.push(s.get('error')) : list;
+		}, List());
+	})
 };

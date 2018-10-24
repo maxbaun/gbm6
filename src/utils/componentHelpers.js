@@ -67,8 +67,16 @@ export function ref(target) {
 	};
 }
 
-export function isLoading(fetch, status) {
-	return status.getIn([fetch, 'loading']);
+export function isLoading(fetch, state) {
+	return state.getIn(['status', fetch, 'loading']);
+}
+
+export function getError(fetch, state) {
+	return state.getIn(['status', fetch, 'error']);
+}
+
+export function getSuccess(fetch, state) {
+	return state.getIn(['status', fetch, 'success']);
 }
 
 export function topPosition(element) {

@@ -27,7 +27,8 @@ const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
 	menus: menuSelectors.getMenus(state),
 	state: stateSelectors.getState(state),
-	videos: videoSelectors.getVideos(state)
+	videos: videoSelectors.getVideos(state),
+	errors: stateSelectors.getErrors(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -58,10 +59,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			uniqueVideos: List()
-		};
-
 		this.handleWindowResize = this.handleWindowResize.bind(this);
 	}
 
@@ -69,12 +66,14 @@ class App extends Component {
 		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
 		state: ImmutableProptypes.map.isRequired,
-		videos: ImmutableProptypes.list
+		videos: ImmutableProptypes.list,
+		errors: ImmutableProptypes.list
 	};
 
 	static defaultProps = {
 		actions: {noop},
-		videos: List()
+		videos: List(),
+		errors: List()
 	};
 
 	static getDerivedStateFromProps(props) {
@@ -104,6 +103,8 @@ class App extends Component {
 	render() {
 		const {state, menus, actions} = this.props;
 		const props = {state, menus, actions};
+
+		console.log(this.props.errors.toJS());
 
 		return (
 			<Fragment>
