@@ -10,6 +10,7 @@ import ScrollTo from '../common/scrollTo';
 import Image from '../common/image';
 import SliderNav from '../sliderNav/sliderNav';
 import {ref, click, vimeoId} from '../../utils/componentHelpers';
+import PlayBtn from '../playBtn/playBtn';
 
 export default class SectionHero extends Component {
 	constructor(props) {
@@ -83,8 +84,6 @@ export default class SectionHero extends Component {
 			heroCss.push(CSS[className]);
 		}
 
-		const modalOpen = state.getIn(['offmenu', this.videoId]);
-
 		return (
 			<div data-section className={heroCss.join(' ')}>
 				{this.shouldRenderCarousel() ? (
@@ -92,22 +91,35 @@ export default class SectionHero extends Component {
 				) : (
 					<Fragment>
 						<Image background style={imageCss} className={CSS.image} image={images.first()}/>
+						{content && content !== '' ? <div className={CSS.imageOverlay}/> : null}
 					</Fragment>
 				)}
 				{video && video !== '' ? (
 					<Fragment>
 						<div className={CSS.playOverlay}>
-							<div className={CSS.playBtn} onClick={click(actions.offmenuToggle, vimeoId(video))}>
-								<span className="far fa-play-circle"/>
-							</div>
+							<PlayBtn size={119} onClick={click(actions.offmenuToggle, vimeoId(video))}/>
 						</div>
 					</Fragment>
 				) : null}
 				{scrollTo && scrollTo !== '' ? (
 					<ScrollTo target={scrollTo}>
 						<div className={CSS.scroll}>
-							<div className={CSS.scrollLine} style={{backgroundColor: scrollColor}}/>
-							<div className={CSS.scrollLine} style={{backgroundColor: scrollColor}}/>
+							<div
+								className={CSS.scrollLine}
+								style={{
+									backgroundColor: scrollColor,
+									transform: `rotate(${state.get('angle')}deg)`,
+									transformOrigin: '100%'
+								}}
+							/>
+							<div
+								className={CSS.scrollLine}
+								style={{
+									backgroundColor: scrollColor,
+									transform: `rotate(${state.get('angle') * -1}deg)`,
+									transformOrigin: '0'
+								}}
+							/>
 						</div>
 					</ScrollTo>
 				) : null}

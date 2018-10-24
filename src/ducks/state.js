@@ -12,7 +12,8 @@ export const types = {
 	OFFMENU_RESET: 'OFFMENU_RESET',
 	WINDOW_RESIZE: 'WINDOW_RESIZE',
 	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD',
-	STATUS_CHANGE: 'STATUS_CHANGE'
+	STATUS_CHANGE: 'STATUS_CHANGE',
+	ANGLE_SET: 'ANGLE_SET'
 };
 
 export const actions = {
@@ -20,7 +21,8 @@ export const actions = {
 	offmenuShow: name => utils.action(types.OFFMENU_SHOW, {name}),
 	offmenuHide: name => utils.action(types.OFFMENU_HIDE, {name}),
 	windowResize: payload => utils.action(types.WINDOW_RESIZE, {payload}),
-	addVideoModal: payload => utils.action(types.VIDEO_MODAL_ADD, {payload})
+	addVideoModal: payload => utils.action(types.VIDEO_MODAL_ADD, {payload}),
+	angleSet: payload => utils.action(types.ANGLE_SET, {payload})
 };
 
 export const initialState = utils.initialState({
@@ -33,6 +35,7 @@ export const initialState = utils.initialState({
 		width: window.innerWidth,
 		height: window.innerHeight
 	},
+	angle: 0,
 	status: {},
 	isCollapsed: window.innerWidth < responsive.collapse,
 	videoModals: []
@@ -71,6 +74,8 @@ export default (state = initialState, action) => {
 
 				return u.merge(fromJS(action.payload));
 			});
+		case types.ANGLE_SET:
+			return state.set('angle', fromJS(action.payload));
 		case types.VIDEO_MODAL_ADD:
 			return state.update('videoModals', u => {
 				action.payload.forEach(video => {

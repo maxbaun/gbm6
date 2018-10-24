@@ -22,6 +22,7 @@ import WatchThis from '../components/page/watchThis';
 import Concerts from '../components/page/concerts';
 import ProjectsPage from '../components/page/projects';
 import VideoModal from '../components/modals/videoModal';
+import {toDegrees} from '../utils/mathHelpers';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -67,12 +68,24 @@ class App extends Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.handleWindowResize);
 		this.handleWindowResize();
+		this.setAngle();
 
 		this.props.actions.videosInit({});
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleWindowResize);
+	}
+
+	setAngle() {
+		const windowWidth = window.innerWidth;
+		const halfWindow = windowWidth / 2;
+
+		const height = (windowWidth / 100) * 18;
+
+		const angle = toDegrees(Math.atan(height / halfWindow));
+
+		this.props.actions.angleSet(angle);
 	}
 
 	handleWindowResize() {
