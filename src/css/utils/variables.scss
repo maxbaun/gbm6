@@ -14,3 +14,12 @@ $headerHeight: 124px;
 $headerHeightMobile: 52px;
 
 $footerHeight: 70px;
+
+$spacingUnit: 1em;
+$spacingUnitPx: 1em * 0.05;
+$spacingUnitXs: $spacingUnit * 0.5;
+$spacingUnitSm: $spacingUnit * 0.75;
+$spacingUnitMd: $spacingUnit * 1.25;
+$spacingUnitLg: $spacingUnit * 2;
+$spacingUnitXl: $spacingUnit * 3.25;
+$spacingUnitXxl: $spacingUnit * 5.25;

@@ -103,6 +103,8 @@ $transform: 21.80140948635181deg;
 
 	&[data-template='angle'] {
 		@include allSections() {
+			@include defaultStyles();
+
 			@include evenSections() {
 				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
 			}
@@ -121,21 +123,21 @@ $transform: 21.80140948635181deg;
 		$projectAngle: 50 - $angleHeight;
 		@include hassOddLength() {
 			@include evenSections() {
-				clip-path: polygon(0 #{$projectAngle}, 100% 0, 100% 100%, 0 100%);
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
 			}
 
 			@include oddSections() {
-				clip-path: polygon(0 0, 100% #{$projectAngle}, 100% 100%, 0 100%);
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
 			}
 		}
 
 		@include hasEvenLength() {
 			@include evenSections() {
-				clip-path: polygon(0 0, 100% #{$projectAngle}, 100% 100%, 0 100%);
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
 			}
 
 			@include oddSections() {
-				clip-path: polygon(0 #{$projectAngle}, 100% 0, 100% 100%, 0 100%);
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
 			}
 		}
 

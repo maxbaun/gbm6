@@ -28,7 +28,7 @@ const VideoPreview = ({video, onVideoOpen}) => {
 							</div>
 						)}
 						<span className={CSS.date}>{video.getIn(['fields', 'date'])}</span>
-						<h3 className={CSS.title}>{video.getIn(['fields', 'date'])}</h3>
+						<h3 className={CSS.title}>{video.getIn(['fields', 'title'])}</h3>
 						<span className={CSS.location}>{video.getIn(['fields', 'location'])}</span>
 						<Link to={`/${portfolioBase}/${video.getIn(['fields', 'slug'])}`} className={CSS.link}>
 							{video.getIn(['fields', 'linkTitle']) || 'View Details'}

@@ -1,0 +1,12 @@
+@import '../../css/utils/utils';
+
+.title {
+	@include fontSize(35, 52);
+	@include titleUnderline(75%, 232px, $spacingUnitXs);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.videos {
+	margin: $spacingUnit * 1.5 0 0;
+}

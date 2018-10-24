@@ -121,7 +121,6 @@ export default class Modal extends Component {
 								display: display,
 								opacity: styles.opacity,
 								top: `${styles.top}%`,
-								zIndex: active ? 1003 : 1000,
 								backgroundColor: backgroundColor,
 								transform: `scaleX(${styles.x}) scaleY(${styles.y})`
 							};
@@ -165,13 +164,12 @@ export default class Modal extends Component {
 						{styles => {
 							return (
 								<div
-									onClick={this.handleClose}
 									className={CSS.fog}
 									style={{
 										visibility: visibility,
-										opacity: styles.opacity,
-										zIndex: active ? 1002 : 999
+										opacity: styles.opacity
 									}}
+									onClick={this.handleClose}
 								/>
 							);
 						}}

@@ -7,11 +7,9 @@ import ReactPlayer from 'react-player';
 
 import CSS from './sectionVideos.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
-import VideoPreview from '../videoPreview/videoPreview';
-import Masonry from '../masonry/masonry';
-import Modal from '../modals/modal';
 import {click, unique} from '../../utils/componentHelpers';
 import InView from '../hoc/inView';
+import VideoGrid from '../videoGrid/videoGrid';
 import {videosPerPage} from '../../constants';
 
 class SectionVideos extends Component {
@@ -19,20 +17,15 @@ class SectionVideos extends Component {
 		super(props);
 
 		this.state = {
-			activeVideo: 0,
 			activeCategory: 0,
 			page: 1,
 			perGroup: videosPerPage
 		};
 
-		this.handleModalClose = this.handleModalClose.bind(this);
-		this.handleVideoOpen = this.handleVideoOpen.bind(this);
 		this.handleCategoryChange = this.handleCategoryChange.bind(this);
 		this.handleLoadMore = this.handleLoadMore.bind(this);
 		this.hasMore = this.hasMore.bind(this);
 		this.getActiveVideos = this.getActiveVideos.bind(this);
-
-		this.unique = unique();
 	}
 
 	static propTypes = {
@@ -60,15 +53,6 @@ class SectionVideos extends Component {
 		id: null,
 		showCategories: true
 	};
-
-	handleModalClose() {
-		this.props.actions.offmenuHide(this.unique);
-	}
-
-	handleVideoOpen(videoUrl) {
-		this.setState({activeVideo: videoUrl});
-		this.props.actions.offmenuToggle(this.unique);
-	}
 
 	handleCategoryChange(activeCategory) {
 		this.setState(prevState => {
@@ -126,12 +110,10 @@ class SectionVideos extends Component {
 	}
 
 	render() {
-		const {id, heading, categories, allVideosText, videos, allVideosLink, categoryAlign, showCategories, hasAppeared} = this.props;
+		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories, hasAppeared} = this.props;
 
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
-
-		const modalOpen = this.props.state.getIn(['offmenu', this.unique]);
 
 		return (
 			<div data-section id={id} className={CSS.section}>
@@ -179,17 +161,12 @@ class SectionVideos extends Component {
 					</div>
 					{hasAppeared ? (
 						<div className={CSS.videos}>
-							<Masonry perGroup={this.state.perGroup} items={videos}>
-								{paginatedVideos
-									.map((video, index) => {
-										return (
-											<div key={video.getIn(['fields', 'title'])} className={CSS.video}>
-												<VideoPreview video={video} onVideoOpen={click(this.handleVideoOpen, index)}/>
-											</div>
-										);
-									})
-									.toJS()}
-							</Masonry>
+							<VideoGrid
+								videos={paginatedVideos}
+								perGroup={this.state.perGroup}
+								state={this.props.state}
+								actions={this.props.actions}
+							/>
 						</div>
 					) : null}
 					{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
@@ -202,42 +179,6 @@ class SectionVideos extends Component {
 						</div>
 					) : null}
 				</div>
-				<Modal
-					showClose
-					active={modalOpen}
-					backgroundColor="transparent"
-					size="medium"
-					windowHeight={this.props.state.getIn(['windowSize', 'height'])}
-					onClose={this.handleModalClose}
-				>
-					<div className={CSS.playerWrap}>
-						{paginatedVideos
-							.map((video, index) => {
-								const isActiveVideo = index === this.state.activeVideo;
-
-								return (
-									<ReactPlayer
-										playsinline
-										// eslint-disable-next-line
-										key={index}
-										className={CSS.player}
-										url={video.getIn(['fields', 'video'])}
-										playing={modalOpen && isActiveVideo}
-										width="100%"
-										height="100%"
-										style={{
-											margin: '0 auto',
-											display: isActiveVideo ? 'block' : 'none'
-										}}
-										onPlay={() => {
-											console.log('playing');
-										}}
-									/>
-								);
-							})
-							.toJS()}
-					</div>
-				</Modal>
 			</div>
 		);
 	}

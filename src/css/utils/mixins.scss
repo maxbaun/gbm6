@@ -23,7 +23,7 @@
 	justify-content: center;
 }
 
-$browser-context: 16; // Default
+$browser-context: 18; // Default
 
 @function em($pixels, $context: $browser-context) {
 	@return #{$pixels/$context}em;
@@ -122,5 +122,23 @@ $browser-context: 16; // Default
 		&::after {
 			width: 100%;
 		}
+	}
+}
+
+@mixin titleUnderline($width, $maxWidth: 100%, $spacing: $spacingUnit) {
+	padding-bottom: $spacing;
+	position: relative;
+
+	&::after {
+		background-color: $green;
+		bottom: 0;
+		content: ' ';
+		height: 1px;
+		left: 0;
+		margin: 0 auto;
+		max-width: $maxWidth;
+		position: absolute;
+		right: 0;
+		width: $width;
 	}
 }

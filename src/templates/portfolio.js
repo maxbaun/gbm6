@@ -23,6 +23,7 @@ import SectionTestimonials from '../components/sections/sectionTestimonials';
 
 import SectionCta from '../components/sections/sectionCta';
 import SectionPortfolioContent from '../components/sections/sectionPortfolioContent';
+import SectionFeaturedEvents from '../components/sections/sectionFeaturedEvents';
 
 const mapStateToProps = state => ({
 	videos: videoSelectors.getVideos(state),
@@ -106,7 +107,19 @@ class PortfolioTemplate extends Component {
 					state={this.props.state}
 					actions={this.props.actions}
 				/>
-				<SectionPortfolioContent/>
+				<SectionPortfolioContent
+					title={video.getIn(['fields', 'title'])}
+					content={video.getIn(['fields', 'text'])}
+					date={video.getIn(['fields', 'date'])}
+					location={video.getIn(['fields', 'location'])}
+					talent={video.getIn(['fields', 'talent'])}
+				/>
+				<SectionFeaturedEvents
+					title="More Legendary Events"
+					actions={this.props.actions}
+					state={this.props.state}
+					videos={this.props.videos.take(4)}
+				/>
 				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
 			</SectionManager>
 		);

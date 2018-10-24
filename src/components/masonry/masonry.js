@@ -72,7 +72,7 @@ export default class Masonry extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.items.equals(prevProps.items)) {
+		if (!this.props.items.equals(prevProps.items)) {
 			this.resizeAllGridItems();
 		}
 	}

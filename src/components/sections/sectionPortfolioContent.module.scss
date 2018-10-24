@@ -9,54 +9,98 @@
 }
 
 .inner {
-	padding: 40px 0;
+	padding: $spacingUnitLg 0;
 
-	@include collapseUp {
-		padding: 60px 0;
+	@include media-breakpoint-up(md) {
+		padding: $spacingUnitXl 0;
 	}
 
-	@include desktopUp {
-		padding: 90px 0;
+	@include media-breakpoint-up(lg) {
+		padding: $spacingUnitXxl 0;
 	}
 }
 
-.header {
-	@include collapseUp {
-		align-items: flex-start;
-		display: flex;
-	}
+.heading,
+.meta {
+	margin: 0 0 $spacingUnit;
 }
 
 .heading {
 	@include brandTitle();
-	max-width: 100%;
-	margin: 0 0 30px;
-	width: 500px;
 
-	@include collapseUp {
-		margin: 0 0 50px;
-		margin: 0;
-		width: 450px;
+	@include media-breakpoint-up(lg) {
+		@include headings() {
+			@include fontSize(60, 70);
+		}
 	}
 
-	@include desktopUp {
-		margin: 0 0 94px;
-		width: 585px;
+	@include media-breakpoint-up(xl) {
+		@include headings() {
+			@include fontSize(60, 70);
+		}
 	}
 }
 
-.meta {
-	margin: 0 0 30px;
+.metaList {
+	@include noList();
+}
 
-	@include collapseUp {
-		margin: 0 0 50px;
-		padding-left: 100px;
-		width: calc(100% - 450px);
+.metaBlock {
+	margin-bottom: $spacingUnit;
+
+	@include media-breakpoint-up(sm) {
+		margin-bottom: $spacingUnit;
 	}
 
-	@include desktopUp {
-		margin: 0 0 94px;
-		padding-left: 135px;
-		width: calc(100% - 585px);
+	@include media-breakpoint-up(md) {
+		margin-bottom: $spacingUnitMd;
+	}
+
+	@include media-breakpoint-up(lg) {
+		margin-bottom: $spacingUnitLg;
+	}
+}
+
+.metaTitle,
+.metaText {
+	@include fontSize(24, 30);
+	font-family: $fontHeading;
+	font-weight: 400;
+	margin: 0;
+	text-transform: uppercase;
+
+	@include media-breakpoint-up(sm) {
+		@include fontSize(24, 30);
+	}
+
+	@include media-breakpoint-up(lg) {
+		@include fontSize(32, 47);
+	}
+}
+
+.metaTitle {
+	color: $blue;
+}
+
+.metaText {
+	color: $white;
+}
+
+.content {
+	@include fontSize(18, 28);
+	font-weight: 400;
+
+	margin: $spacingUnit 0 0;
+
+	@include media-breakpoint-up(sm) {
+		margin: $spacingUnitMd 0 0;
+	}
+
+	@include media-breakpoint-up(md) {
+		margin: $spacingUnitLg 0 0;
+	}
+
+	@include media-breakpoint-up(lg) {
+		margin: $spacingUnitXl 0 0;
 	}
 }

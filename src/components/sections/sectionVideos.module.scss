@@ -6,10 +6,10 @@
 }
 
 .inner {
-	padding: 20px 0;
+	padding: $spacingUnitLg 0;
 
-	@include desktopUp {
-		padding: 40px 0 60px;
+	@include media-breakpoint-up(lg) {
+		padding: $spacingUnitXl 0 $spacingUnitXxl;
 	}
 }
 
@@ -127,10 +127,6 @@
 	}
 }
 
-.video {
-	width: 100%;
-}
-
 .loadMoreBtn {
 	padding: 20px 15px;
 	text-align: center;
@@ -144,15 +140,4 @@
 		display: block;
 		margin: 0 auto;
 	}
-}
-
-.playerWrap {
-	position: relative;
-	padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
-}
-
-.player {
-	position: absolute;
-	top: 0;
-	left: 0;
 }

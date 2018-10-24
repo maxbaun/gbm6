@@ -33,6 +33,10 @@ const getVideos = state => state.get('videos');
 const getVideo = (state, slug) => currentPage(state.get('videos'), slug);
 
 export const selectors = {
-	getVideos: createSelector([getVideos], videos => videos),
+	getVideos: createSelector([getVideos], videos => {
+		return videos.sort((a, b) => {
+			return new Date(b.getIn(['fields', 'eventDate'])).getTime() - new Date(a.getIn(['fields', 'eventDate'])).getTime();
+		});
+	}),
 	getVideo: createSelector([getVideo], video => video)
 };
