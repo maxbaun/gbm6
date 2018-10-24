@@ -9,21 +9,23 @@ import {state, unique, isLoading, getError, getSuccess, innerHtml} from '../../u
 import Markdown from '../common/markdown';
 import Button from '../button/button';
 
+const initialState = {
+	name: '',
+	email: '',
+	organization: '',
+	message: ''
+};
+
+const fetch = unique();
+
 export default class SectionCta extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			name: '',
-			email: '',
-			organization: '',
-			message: ''
-		};
+		this.state = initialState;
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-
-		this.fetch = unique();
 	}
 
 	static propTypes = {
@@ -35,11 +37,21 @@ export default class SectionCta extends Component {
 		siteSettings: Map()
 	};
 
+	static getDerivedStateFromProps(props, state) {
+		const success = getSuccess(fetch, props.state);
+
+		if (!success) {
+			return state;
+		}
+
+		return initialState;
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 
 		this.props.actions.formCreate({
-			fetch: this.fetch,
+			fetch: fetch,
 			payload: {
 				key: 'contact',
 				data: this.state,
@@ -151,9 +163,9 @@ export default class SectionCta extends Component {
 	}
 
 	renderForm() {
-		const success = getSuccess(this.fetch, this.props.state);
-		const error = getError(this.fetch, this.props.state);
-		const loading = isLoading(this.fetch, this.props.state);
+		const success = getSuccess(fetch, this.props.state);
+		const error = getError(fetch, this.props.state);
+		const loading = isLoading(fetch, this.props.state);
 
 		return (
 			<div className={CSS.form}>
