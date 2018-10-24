@@ -43,18 +43,6 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 
-const getUniqueVideos = videos => {
-	return videos.reduce((list, video) => {
-		const videoUrl = video.getIn(['fields', 'video']);
-
-		if (!videoUrl || list.indexOf(videoUrl) > -1) {
-			return list;
-		}
-
-		return list.push(videoUrl);
-	}, List());
-};
-
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -75,12 +63,6 @@ class App extends Component {
 		videos: List(),
 		errors: List()
 	};
-
-	static getDerivedStateFromProps(props) {
-		return {
-			uniqueVideos: getUniqueVideos(props.videos)
-		};
-	}
 
 	componentDidMount() {
 		window.addEventListener('resize', this.handleWindowResize);
@@ -103,8 +85,6 @@ class App extends Component {
 	render() {
 		const {state, menus, actions} = this.props;
 		const props = {state, menus, actions};
-
-		console.log(this.props.errors.toJS());
 
 		return (
 			<Fragment>

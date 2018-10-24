@@ -5,7 +5,9 @@ import {Map, fromJS} from 'immutable';
 
 import CSS from './sectionCta.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
-import {state, unique, isLoading, getError, getSuccess} from '../../utils/componentHelpers';
+import {state, unique, isLoading, getError, getSuccess, innerHtml} from '../../utils/componentHelpers';
+import Markdown from '../common/markdown';
+import Button from '../button/button';
 
 export default class SectionCta extends Component {
 	constructor(props) {
@@ -175,10 +177,12 @@ export default class SectionCta extends Component {
 							<textarea name="message" value={this.state.message} onChange={state(this.handleChange, 'message')}/>
 						</li>
 						<li className={CSS.full}>
-							{error ? error : null}
-							{success ? success : null}
+							<div className={CSS.notifications}>
+								{error ? <Markdown content={error} className={CSS.error}/> : null}
+								{success ? <Markdown content={success} className={CSS.success}/> : null}
+							</div>
 							<div className={CSS.submitWrap}>
-								<input className="btn btn-primary" type="submit" value={loading ? 'Sending...' : 'Submit'}/>
+								<Button text="submit" className="btn btn-primary" type="submit" loading={loading}/>
 							</div>
 						</li>
 					</ul>

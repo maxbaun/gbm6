@@ -78,6 +78,7 @@
 }
 
 .contactItem {
+
 	h3,
 	h5 {
 		@include fontSize(23, 32);
@@ -156,7 +157,7 @@
 		justify-content: flex-end;
 	}
 
-	> input {
+	button {
 		@include fontSize(18, 26);
 		@extend .py-3;
 		@extend .mx-auto;
@@ -171,4 +172,29 @@
 			width: 100%;
 		}
 	}
+}
+
+.notifications {
+	display: flex;
+	justify-content: center;
+
+	@include media-breakpoint-up(md) {
+		justify-content: flex-end;
+	}
+}
+
+.notification {
+	@include fontSize(16, 20);
+	font-weight: 400;
+	margin: 0;
+}
+
+.error {
+	@extend .notification;
+	color: $white;
+}
+
+.success {
+	@extend .notification;
+	color: $green;
 }
