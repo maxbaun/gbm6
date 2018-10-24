@@ -107,9 +107,10 @@
 
 .allLink {
 	@include arrowLink();
+	@include fontSize(16, 20);
 
-	@include collapseDown {
-		@include fontSize(16, 20);
+	@include media-breakpoint-up(md) {
+		@include fontSize(18, 24);
 	}
 }
 

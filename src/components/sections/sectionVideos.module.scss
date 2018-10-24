@@ -5,10 +5,6 @@
 	position: relative;
 }
 
-.header {
-	@extend .container;
-}
-
 .content {
 	@extend .mb-5;
 	@extend .mb-md-6;

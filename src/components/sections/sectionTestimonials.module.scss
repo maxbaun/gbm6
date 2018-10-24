@@ -4,13 +4,12 @@
 	background-color: $blueDarkest;
 }
 
-.wrap {
-	@extend .container;
-}
-
-.inner {
-	padding: 40px 0;
+.contain {
 	position: relative;
+	@extend .py-4;
+	@extend .py-md-5;
+	@extend .py-lg-6;
+	@extend .py-xl-7;
 }
 
 .tesimonials {
@@ -27,16 +26,16 @@
 	top: 0;
 	vertical-align: middle;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		display: block;
 		font-size: 200px;
-		line-height: 50px;
+		line-height: 100px;
 	}
 
-	@include widescreen {
+	@include media-breakpoint-up(xl) {
 		font-size: 400px;
 		left: -20px;
-		line-height: 125px;
+		line-height: 200px;
 	}
 }
 
@@ -45,19 +44,20 @@
 	background-color: rgba($white, 0.05);
 	font-family: $fontBase;
 	font-weight: 300;
-	padding: 10px 30px;
+	padding: em(10) em(30);
 
-	@include collapseUp {
-		padding: 35px 55px;
+	@include media-breakpoint-up(md) {
+		padding: em(35) em(55);
 	}
 
-	@include desktopUp {
-		padding: 45px 65px;
+	@include media-breakpoint-up(lg) {
+		padding: em(45) em(65);
 	}
 }
 
 .testimonialContent {
-	margin-bottom: 28px;
+	@extend .mb-4;
+	@extend .mb-md-5;
 }
 
 .testimonialName {

@@ -118,7 +118,7 @@ class PortfolioTemplate extends Component {
 					title="More Legendary Events"
 					actions={this.props.actions}
 					state={this.props.state}
-					videos={this.props.videos.take(4)}
+					videos={this.props.videos.filter(v => v.getIn(['fields', 'slug']) !== this.props.match.params.slug).take(4)}
 				/>
 				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
 			</SectionManager>

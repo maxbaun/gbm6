@@ -5,12 +5,13 @@ import {connect} from 'react-redux';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {Route, Switch} from 'react-router-dom';
+import {List} from 'immutable';
 
 import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages';
 import {selectors as menuSelectors, actions as menuActions} from '../ducks/menus';
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 import {selectors as videoSelectors, actions as videoActions} from '../ducks/videos';
-import {noop} from '../utils/componentHelpers';
+import {noop, vimeoId} from '../utils/componentHelpers';
 import {portfolioBase} from '../constants';
 
 import Header from '../components/header/header';
@@ -20,11 +21,13 @@ import PortfolioTemplate from '../templates/portfolio';
 import WatchThis from '../components/page/watchThis';
 import Concerts from '../components/page/concerts';
 import ProjectsPage from '../components/page/projects';
+import VideoModal from '../components/modals/videoModal';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
 	menus: menuSelectors.getMenus(state),
-	state: stateSelectors.getState(state)
+	state: stateSelectors.getState(state),
+	videos: videoSelectors.getVideos(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -39,9 +42,25 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 
+const getUniqueVideos = videos => {
+	return videos.reduce((list, video) => {
+		const videoUrl = video.getIn(['fields', 'video']);
+
+		if (!videoUrl || list.indexOf(videoUrl) > -1) {
+			return list;
+		}
+
+		return list.push(videoUrl);
+	}, List());
+};
+
 class App extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			uniqueVideos: List()
+		};
 
 		this.handleWindowResize = this.handleWindowResize.bind(this);
 	}
@@ -49,12 +68,20 @@ class App extends Component {
 	static propTypes = {
 		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
-		state: ImmutableProptypes.map.isRequired
+		state: ImmutableProptypes.map.isRequired,
+		videos: ImmutableProptypes.list
 	};
 
 	static defaultProps = {
-		actions: {noop}
+		actions: {noop},
+		videos: List()
 	};
+
+	static getDerivedStateFromProps(props) {
+		return {
+			uniqueVideos: getUniqueVideos(props.videos)
+		};
+	}
 
 	componentDidMount() {
 		window.addEventListener('resize', this.handleWindowResize);
@@ -88,6 +115,9 @@ class App extends Component {
 					<Route exact path="/:slug" component={PageTemplate}/>
 					<Route path="*" component={PageTemplate}/>
 				</Switch>
+				{this.props.state.get('videoModals').map(video => {
+					return <VideoModal key={video} url={video} state={state} actions={actions}/>;
+				})}
 				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
 			</Fragment>
 		);

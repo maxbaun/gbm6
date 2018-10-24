@@ -22,7 +22,6 @@ export default class SectionTeam extends Component {
 		text: PropTypes.string,
 		video: ImmutableProptypes.map,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
-		state: ImmutableProptypes.map,
 		team: ImmutableProptypes.list
 	};
 
@@ -30,9 +29,12 @@ export default class SectionTeam extends Component {
 		heading: '',
 		text: '',
 		video: Map(),
-		state: Map(),
 		team: List()
 	};
+
+	componentDidMount() {
+		this.props.actions.addVideoModal([this.props.video.get('videoUrl')]);
+	}
 
 	render() {
 		return (
@@ -46,7 +48,6 @@ export default class SectionTeam extends Component {
 										url={this.props.video.get('videoUrl')}
 										thumbnail={this.props.video.get('videoThumbnail')}
 										actions={this.props.actions}
-										state={this.props.state}
 										previewWidth={603}
 									/>
 								</div>
@@ -65,7 +66,6 @@ export default class SectionTeam extends Component {
 												url={this.props.video.get('videoUrl')}
 												thumbnail={this.props.video.get('videoThumbnail')}
 												actions={this.props.actions}
-												state={this.props.state}
 												previewWidth={603}
 											/>
 										</div>

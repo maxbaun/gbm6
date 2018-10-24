@@ -130,14 +130,7 @@ export default class Page extends Component {
 					allVideosLink="/"
 					allVideosText="Watch All Videos"
 				/>
-				<SectionTeam
-					heading={SectionTeamHeading}
-					text={SectionTeamText}
-					video={SectionTeamVideo}
-					actions={this.props.actions}
-					state={this.props.state}
-					team={Team}
-				/>
+				<SectionTeam heading={SectionTeamHeading} text={SectionTeamText} video={SectionTeamVideo} actions={this.props.actions} team={Team}/>
 				<SectionFaq backgroundImage={fromJS({src: AboutBg})} heading={FaqHeading} faqs={Faqs} state={this.props.state} allFaqLink="/"/>
 				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
 			</SectionManager>

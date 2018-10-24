@@ -11,7 +11,7 @@ const SectionFeatured = ({images, heading}) => {
 
 	return (
 		<div data-section className={CSS.section}>
-			<div className={CSS.wrap}>
+			<div className="container">
 				<div className={CSS.inner}>
 					<div className={CSS.row}>
 						<div className={CSS.col}>

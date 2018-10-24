@@ -7,9 +7,11 @@ import {innerHtml} from '../../utils/componentHelpers';
 const Footer = ({copyright}) => {
 	return (
 		<footer className={CSS.footer}>
-			<div className={CSS.inner}>
-				{/* eslint-disable-next-line react/no-danger */}
-				<div dangerouslySetInnerHTML={innerHtml(copyright)} className={CSS.copy}/>
+			<div className="container">
+				<div className={CSS.inner}>
+					{/* eslint-disable-next-line react/no-danger */}
+					<div dangerouslySetInnerHTML={innerHtml(copyright)} className={CSS.copy}/>
+				</div>
 			</div>
 		</footer>
 	);

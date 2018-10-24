@@ -6,9 +6,9 @@ import {Link} from 'react-router-dom';
 
 import CSS from './sectionFaq.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
+import Image from '../common/image';
 import Markdown from '../common/markdown';
 import {click} from '../../utils/componentHelpers';
-import {responsive} from '../../constants';
 
 export default class SectionFaq extends Component {
 	constructor(props) {
@@ -52,16 +52,12 @@ export default class SectionFaq extends Component {
 	render() {
 		const {heading, layout, allFaqLinkUrl, allFaqLinkText, ctaContent, ctaLinkUrl, ctaLinkText} = this.props;
 
-		const backgroundStyle = {
-			backgroundImage: `url(${this.props.backgroundImage.getIn(['fields', 'file', 'url'])})`
-		};
-
 		const renderAccordion = layout === 'accordion';
 
 		return (
 			<div data-section className={CSS.section} data-layout={layout}>
 				<div className={CSS.overlay}/>
-				<div className={CSS.background} style={backgroundStyle}/>
+				<Image background className={CSS.background} image={this.props.backgroundImage}/>
 				<div className="container">
 					{heading && heading !== '' ? (
 						<div className={CSS.header}>

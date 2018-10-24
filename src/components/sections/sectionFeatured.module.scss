@@ -4,15 +4,11 @@
 	background-color: $blueDarkest;
 }
 
-.wrap {
-	@extend .container;
-}
-
 .inner {
-	padding: 40px 0;
-}
-
-.heading {
+	@extend .py-4;
+	@extend .py-md-5;
+	@extend .py-lg-6;
+	@extend .py-xl-7;
 }
 
 .row {

@@ -116,6 +116,10 @@ $transform: 21.80140948635181deg;
 			@include lastChild() {
 				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
 			}
+
+			@include firstChild() {
+				clip-path: none;
+			}
 		}
 	}
 

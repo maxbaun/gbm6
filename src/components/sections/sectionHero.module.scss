@@ -4,12 +4,12 @@
 	height: 400px;
 	width: 100%;
 
-	@include tabletUp {
+	@include media-breakpoint-up(sm) {
 		height: 75vh;
 		min-height: 450px;
 	}
 
-	@include desktopUp {
+	@include media-breakpoint-up(lg) {
 		height: 80vh;
 		min-height: 600px;
 	}
@@ -37,11 +37,11 @@
 	position: absolute;
 	right: 10%;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		display: block;
 	}
 
-	@include desktopUp {
+	@include media-breakpoint-up(lg) {
 		bottom: calc(11vw - 52px);
 	}
 }
@@ -54,7 +54,7 @@
 	right: 0;
 	width: 100%;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		bottom: 75px;
 		width: 50%;
 	}
@@ -73,7 +73,7 @@
 	margin: 0 6px;
 	width: 12px;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		margin: 0 11px;
 	}
 }
@@ -99,7 +99,7 @@
 	opacity: 0.7;
 	transition: opacity 0.2s ease-in-out;
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		height: 119px;
 		width: 119px;
 		font-size: 119px;
@@ -143,11 +143,11 @@
 		margin: 0;
 		text-transform: uppercase;
 
-		@include collapseUp {
+		@include media-breakpoint-up(md) {
 			@include fontSize(70, 70);
 		}
 
-		@include desktopUp {
+		@include media-breakpoint-up(lg) {
 			@include fontSize(90, 90);
 			white-space: nowrap;
 		}
@@ -164,13 +164,13 @@
 		margin: 9px 0 0;
 		text-transform: uppercase;
 
-		@include collapseUp {
+		@include media-breakpoint-up(md) {
 			@include fontSize(23, 30);
 			letter-spacing: 3px;
 			white-space: nowrap;
 		}
 
-		@include desktopUp {
+		@include media-breakpoint-up(lg) {
 			@include fontSize(26, 39);
 			letter-spacing: 3px;
 			white-space: nowrap;
@@ -196,7 +196,7 @@
 	width: 169px;
 	@include zIndex(heroScroll);
 
-	@include collapseUp {
+	@include media-breakpoint-up(md) {
 		display: block;
 	}
 

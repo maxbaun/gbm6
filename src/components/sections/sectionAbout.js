@@ -19,13 +19,7 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 				<div data-line/>
 				<div data-line/>
 			</div>
-			<div
-				className={CSS.background}
-				style={{
-					...imageCss,
-					backgroundImage: `url(${image.getIn(['fields', 'file', 'url'])})`
-				}}
-			/>
+			<Image background className={CSS.background} style={imageCss} image={image}/>
 			<div className={CSS.inner}>
 				<div className="container">
 					<div className="row">

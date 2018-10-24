@@ -3,11 +3,10 @@ import {Link} from 'react-router-dom';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {Map, List} from 'immutable';
-import ReactPlayer from 'react-player';
 
 import CSS from './sectionVideos.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
-import {click, unique} from '../../utils/componentHelpers';
+import {click} from '../../utils/componentHelpers';
 import InView from '../hoc/inView';
 import VideoGrid from '../videoGrid/videoGrid';
 import {videosPerPage} from '../../constants';

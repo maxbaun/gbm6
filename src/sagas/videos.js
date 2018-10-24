@@ -2,6 +2,7 @@ import {takeEvery, all, put, select, call} from 'redux-saga/effects';
 
 import {getVideos} from '../services/api';
 import {types as videoTypes, selectors as videoSelectors} from '../ducks/videos';
+import {types as stateTypes} from '../ducks/state';
 import {types as cacheTypes} from '../ducks/cache';
 import {shouldCache} from '../constants';
 
@@ -64,8 +65,12 @@ function * onVideosGet({payload}) {
 	]);
 }
 
-function * onVideosUpdate() {
+function * onVideosUpdate({payload}) {
 	return yield all([
+		put({
+			type: stateTypes.VIDEO_MODAL_ADD,
+			payload: payload.map(i => i.fields.video)
+		}),
 		put({
 			type: cacheTypes.CACHE_VIDEOS_SET
 		})

@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {fromJS} from 'immutable';
+import {fromJS, List} from 'immutable';
 
 import * as utils from '../utils/duckHelpers';
 import {responsive} from '../constants';
@@ -10,14 +10,16 @@ export const types = {
 	OFFMENU_HIDE: 'OFFMENU_HIDE',
 	REGISTER_PROMO: 'REGISTER_PROMO',
 	OFFMENU_RESET: 'OFFMENU_RESET',
-	WINDOW_RESIZE: 'WINDOW_RESIZE'
+	WINDOW_RESIZE: 'WINDOW_RESIZE',
+	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD'
 };
 
 export const actions = {
 	offmenuToggle: name => utils.action(types.OFFMENU_TOGGLE, {name}),
 	offmenuShow: name => utils.action(types.OFFMENU_SHOW, {name}),
 	offmenuHide: name => utils.action(types.OFFMENU_HIDE, {name}),
-	windowResize: payload => utils.action(types.WINDOW_RESIZE, {payload})
+	windowResize: payload => utils.action(types.WINDOW_RESIZE, {payload}),
+	addVideoModal: payload => utils.action(types.VIDEO_MODAL_ADD, {payload})
 };
 
 export const initialState = utils.initialState({
@@ -30,7 +32,8 @@ export const initialState = utils.initialState({
 		width: window.innerWidth,
 		height: window.innerHeight
 	},
-	isCollapsed: window.innerWidth < responsive.collapse
+	isCollapsed: window.innerWidth < responsive.collapse,
+	videoModals: []
 });
 
 export default (state = initialState, action) => {
@@ -58,6 +61,16 @@ export default (state = initialState, action) => {
 			});
 		case types.OFFMENU_RESET:
 			return state.set('offmenu', initialState.get('offmenu'));
+		case types.VIDEO_MODAL_ADD:
+			return state.update('videoModals', u => {
+				action.payload.forEach(video => {
+					if (video && video !== '' && u.indexOf(video) === -1) {
+						u = u.push(video);
+					}
+				});
+
+				return u;
+			});
 		default:
 			return state;
 	}

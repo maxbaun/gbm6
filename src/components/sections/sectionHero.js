@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import {List, Map} from 'immutable';
 import Swiper from 'swiper';
-import ReactPlayer from 'react-player';
 
 import CSS from './sectionHero.module.scss';
 import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
 import Image from '../common/image';
 import SliderNav from '../sliderNav/sliderNav';
-import Modal from '../modals/modal';
-import {ref, unique, click} from '../../utils/componentHelpers';
+import {ref, click, vimeoId} from '../../utils/componentHelpers';
 
 export default class SectionHero extends Component {
 	constructor(props) {
@@ -19,7 +17,6 @@ export default class SectionHero extends Component {
 
 		this.carousel = null;
 		this.swiper = null;
-		this.videoId = unique();
 	}
 
 	static propTypes = {
@@ -100,31 +97,10 @@ export default class SectionHero extends Component {
 				{video && video !== '' ? (
 					<Fragment>
 						<div className={CSS.playOverlay}>
-							<div className={CSS.playBtn} onClick={click(actions.offmenuToggle, this.videoId)}>
+							<div className={CSS.playBtn} onClick={click(actions.offmenuToggle, vimeoId(video))}>
 								<span className="far fa-play-circle"/>
 							</div>
 						</div>
-						<Modal
-							showClose
-							active={modalOpen}
-							backgroundColor="transparent"
-							size="medium"
-							windowHeight={state.getIn(['windowSize', 'height'])}
-							onClose={click(actions.offmenuHide, this.videoId)}
-						>
-							<div className={CSS.playerWrap}>
-								<ReactPlayer
-									className={CSS.player}
-									playing={modalOpen}
-									url={video}
-									width="100%"
-									height="100%"
-									style={{
-										margin: '0 auto'
-									}}
-								/>
-							</div>
-						</Modal>
 					</Fragment>
 				) : null}
 				{scrollTo && scrollTo !== '' ? (
