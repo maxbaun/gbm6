@@ -12,10 +12,9 @@ import {selectors as stateSelectors, actions as stateActions} from '../ducks/sta
 import {actions as formActions, selectors as formSelectors} from '../ducks/forms';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique} from '../utils/componentHelpers';
+import {unique, ScrollToHelper, noop} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
-
 import SectionHero from '../components/sections/sectionHero';
 import SectionAbout from '../components/sections/sectionAbout';
 import SectionVideos from '../components/sections/sectionVideos';
@@ -49,6 +48,9 @@ class PageTemplate extends Component {
 
 		this.fetch = unique();
 
+		this.scrollChecker = null;
+		this.scrollRef = null;
+
 		this.getSection = this.getSection.bind(this);
 	}
 
@@ -56,6 +58,7 @@ class PageTemplate extends Component {
 		state: ImmutabelProptypes.map.isRequired,
 		videos: ImmutabelProptypes.list,
 		match: PropTypes.object.isRequired,
+		location: PropTypes.object.isRequired,
 		pages: ImmutabelProptypes.list,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired
 	};
@@ -66,14 +69,26 @@ class PageTemplate extends Component {
 	};
 
 	componentDidMount() {
+		window.scrollTo(0, 0);
 		this.getPage();
+
+		document.addEventListener('readystatechange', () => (document.readyState === 'complete' ? this.checkScroll() : noop()));
 	}
 
 	componentDidUpdate(prevProps) {
 		// If the slug has changed, get the new page
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
+			window.scrollTo(0, 0);
 			this.getPage();
+			this.checkScroll();
+		} else if (prevProps.location.hash !== this.props.location.hash) {
+			window.scrollTo(0, 0);
+			this.checkScroll();
 		}
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('readystatechange');
 	}
 
 	getPage() {
@@ -94,6 +109,43 @@ class PageTemplate extends Component {
 		}
 
 		return slug;
+	}
+
+	checkScroll() {
+		if (!this.props.location.hash || this.props.location.hash === '') {
+			return;
+		}
+
+		this.scrollChecker = setInterval(() => {
+			const currentPage = this.currentPage();
+
+			if (currentPage && !currentPage.isEmpty()) {
+				this.checkTargetElem();
+			}
+		}, 100);
+	}
+
+	checkTargetElem() {
+		clearInterval(this.scrollChecker);
+
+		this.scrollChecker = setInterval(() => {
+			const targetElem = document.querySelector(this.props.location.hash);
+
+			if (targetElem) {
+				this.scrollToHash(targetElem);
+			}
+		}, 100);
+	}
+
+	scrollToHash(target) {
+		clearInterval(this.scrollChecker);
+
+		setTimeout(() => {
+			this.scrollRef = new ScrollToHelper(target, {
+				duration: 800,
+				container: window
+			});
+		}, 150);
 	}
 
 	currentPage() {
@@ -155,6 +207,7 @@ class PageTemplate extends Component {
 			return (
 				<SectionTeam
 					key={index}
+					id={fields.get('id')}
 					heading={fields.get('heading')}
 					text={fields.get('text')}
 					actions={this.props.actions}

@@ -49,7 +49,7 @@ export default class Image extends Component {
 		}
 
 		if (height > 0) {
-			url += `w=${height}&`;
+			url += `h=${height}&`;
 		}
 
 		if (f) {

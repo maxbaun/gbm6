@@ -137,7 +137,7 @@ export class ScrollToHelper {
 		this.target = typeof target === 'string' ? document.querySelector(target) : target;
 		this.container = typeof container === 'string' ? document.querySelector(container) : container;
 
-		this.paddingTop = parseInt(window.getComputedStyle(this.target).getPropertyValue('padding-top'), 10);
+		// This.paddingTop = parseInt(window.getComputedStyle(this.target).getPropertyValue('padding-top'), 10);
 
 		this.start = window === this.container ? this.container.pageYOffset : this.container.scrollTop;
 		this.distance = topPosition(this.target) - this.start + this.options.offset + (this.paddingTop || 0);

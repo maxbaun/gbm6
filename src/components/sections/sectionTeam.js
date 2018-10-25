@@ -22,7 +22,8 @@ export default class SectionTeam extends Component {
 		text: PropTypes.string,
 		video: ImmutableProptypes.map,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
-		team: ImmutableProptypes.list
+		team: ImmutableProptypes.list,
+		id: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
@@ -38,7 +39,7 @@ export default class SectionTeam extends Component {
 
 	render() {
 		return (
-			<div data-section className={CSS.section}>
+			<div data-section id={this.props.id} className={CSS.section}>
 				<div className={CSS.inner}>
 					<div className="container">
 						<div className="row align-items-md-center">
