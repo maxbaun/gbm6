@@ -52,6 +52,10 @@ function getDerivedProps(props) {
 			return map;
 		}, Map())
 		.reduce((list, prop, key) => {
+			if (key === 'title') {
+				return list.push(<title>{prop}</title>);
+			}
+
 			return list.push(
 				fromJS({
 					content: prop,
@@ -66,6 +70,10 @@ const Head = props => {
 	return (
 		<Helmet>
 			{derivedProps.map(prop => {
+				if (!prop.get) {
+					return prop;
+				}
+
 				return <meta key={prop.get('name')} name={prop.get('name')} content={prop.get('content')}/>;
 			})}
 		</Helmet>
