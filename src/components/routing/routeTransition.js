@@ -60,8 +60,6 @@ class RouteTransition extends Component {
 			return [];
 		}
 
-		console.log(this.props.children.key);
-
 		return [
 			{
 				key: this.props.children.key,

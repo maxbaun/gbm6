@@ -41,7 +41,7 @@ export const initialState = utils.initialState({
 	},
 	angle: 0,
 	status: {},
-	pageTransitioning: true,
+	pageTransitioning: false,
 	isCollapsed: window.innerWidth < responsive.collapse,
 	videoModals: []
 });

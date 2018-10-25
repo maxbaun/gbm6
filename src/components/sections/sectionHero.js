@@ -84,6 +84,12 @@ export default class SectionHero extends Component {
 			heroCss.push(CSS[className]);
 		}
 
+		const contentCss = [CSS.content];
+
+		if (state.get('pageTransitioning') === false) {
+			contentCss.push(CSS.contentActive);
+		}
+
 		return (
 			<div data-section className={heroCss.join(' ')}>
 				{this.shouldRenderCarousel() ? (
@@ -124,7 +130,7 @@ export default class SectionHero extends Component {
 					</ScrollTo>
 				) : null}
 				{content && content !== '' ? (
-					<div className={CSS.content}>
+					<div className={contentCss.join(' ')}>
 						<Markdown className={CSS.contentInner} content={content}/>
 					</div>
 				) : null}
