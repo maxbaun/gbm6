@@ -17,7 +17,7 @@ const VideoModal = ({url, state, actions}) => {
 			active={isOpen}
 			backgroundColor="transparent"
 			size="medium"
-			windowHeight={state.getIn(['windowSize', 'height'])}
+			windowHeight={window.innerHeight}
 			onClose={click(actions.offmenuHide, videoId)}
 		>
 			<div className={CSS.playerWrap}>

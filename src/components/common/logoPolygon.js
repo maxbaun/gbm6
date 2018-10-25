@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const LogoPolygon = ({width, flipped, fill}) => {
-	const style = {width, maxWidth: '100%', opacity: 0.6};
+	const style = {
+		width,
+		maxWidth: '100%',
+		opacity: width > 0 ? 0.6 : 0,
+		transition: 'opacity 0.3s ease-in-out'
+	};
 
 	if (flipped) {
 		style.transform = 'rotate(180deg)';

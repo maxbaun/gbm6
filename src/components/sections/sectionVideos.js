@@ -125,9 +125,9 @@ class SectionVideos extends Component {
 						<div className={CSS.content}>
 							<div className="row align-items-end">
 								{heading && heading !== '' ? (
-									<div className="col-md-6 col-lg-5 offset-md-1">
+									<div className="col-md-6 col-lg-6">
 										<div className={CSS.heading}>
-											<HeadingBrand heading={this.props.heading}/>
+											<HeadingBrand heading={this.props.heading} headingClass={CSS.videoHeading}/>
 										</div>
 									</div>
 								) : null}
@@ -141,27 +141,23 @@ class SectionVideos extends Component {
 								) : null}
 							</div>
 						</div>
-						{showCategories ? (
-							<div className="row">
-								<div className="col-md-11 offset-md-1">
-									<ul className={CSS.categories} data-align={categoryAlign}>
-										{categories.map((category, index) => {
-											return (
-												<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
-													<div
-														className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
-														onClick={click(this.handleCategoryChange, index)}
-													>
-														{category.getIn(['fields', 'title'])}
-													</div>
-												</li>
-											);
-										})}
-									</ul>
-								</div>
-							</div>
-						) : null}
 					</div>
+					{showCategories ? (
+						<ul className={CSS.categories} data-align={categoryAlign}>
+							{categories.map((category, index) => {
+								return (
+									<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
+										<div
+											className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
+											onClick={click(this.handleCategoryChange, index)}
+										>
+											{category.getIn(['fields', 'title'])}
+										</div>
+									</li>
+								);
+							})}
+						</ul>
+					) : null}
 					{hasAppeared ? (
 						<div className={CSS.videos}>
 							<VideoGrid

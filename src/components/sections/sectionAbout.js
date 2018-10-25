@@ -20,12 +20,13 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 				<div data-line/>
 			</div>
 			<Image background className={CSS.background} style={imageCss} image={image}/>
+			<div className={CSS.overlay}/>
 			<div className={CSS.inner}>
 				<div className="container">
-					<div className="row">
-						<div className="col-xs-10 col-md-5 offset-xs-1 offset-md-1">
+					<div className="row align-items-md-center">
+						<div className="col-xs-10 col-md-6 offset-xs-1">
 							<div className={CSS.heading}>
-								<HeadingBrand heading={heading}/>
+								<HeadingBrand heading={heading} headingClass={CSS.aboutHeading}/>
 							</div>
 						</div>
 						<div className="col-xs-10 col-md-6 offset-xs-1">

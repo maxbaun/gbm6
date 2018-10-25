@@ -45,12 +45,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-
-		this.handleWindowResize = this.handleWindowResize.bind(this);
-	}
-
 	static propTypes = {
 		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
@@ -66,15 +60,9 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		window.addEventListener('resize', this.handleWindowResize);
-		this.handleWindowResize();
 		this.setAngle();
 
 		this.props.actions.videosInit({});
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleWindowResize);
 	}
 
 	setAngle() {
@@ -86,13 +74,6 @@ class App extends Component {
 		const angle = toDegrees(Math.atan(height / halfWindow));
 
 		this.props.actions.angleSet(angle);
-	}
-
-	handleWindowResize() {
-		this.props.actions.windowResize({
-			width: window.innerWidth,
-			height: window.innerHeight
-		});
 	}
 
 	render() {

@@ -12,6 +12,12 @@
 	z-index: -2;
 }
 
+.overlay {
+	@include absoluteFull();
+	background-color: rgba(0, 0, 0, 0.45);
+	z-index: -1;
+}
+
 .inner {
 	@extend .py-sm-4;
 	@extend .py-md-5;
@@ -27,6 +33,10 @@
 	@include media-breakpoint-up(sm) {
 		width: 100%;
 	}
+}
+
+.aboutHeading {
+	@include headingBrand(40, 45, 37, 52, 63);
 }
 
 .text {
@@ -46,6 +56,7 @@
 .iconBlocks {
 	@include noList();
 	@extend .mt-4;
+	@extend .mt-md-5;
 	@extend .mt-lg-6;
 	display: flex;
 	flex-wrap: wrap;

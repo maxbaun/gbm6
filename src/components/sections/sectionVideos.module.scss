@@ -15,6 +15,10 @@
 	@extend .mb-md-0;
 }
 
+.videoHeading {
+	@include headingBrand(40, 45, 37, 52, 63);
+}
+
 .allVideosLink {
 	@include arrowLink();
 }
@@ -23,9 +27,12 @@
 	@include noList();
 	@extend .mb-1;
 	@extend .mb-md-2;
+	@extend .px-3;
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: 10px;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
 
 	&[data-align='center'] {
 		justify-content: center;
@@ -33,8 +40,10 @@
 }
 
 .category {
-	@extend .mr-3;
+	@extend .mr-2;
 	@extend .mb-4;
+
+	@extend .mr-sm-3;
 
 	@extend .mr-md-4;
 
@@ -90,7 +99,7 @@
 	margin: 0 auto;
 	width: 177px;
 
-	> * {
+	>* {
 		display: block;
 		margin: 0 auto;
 	}

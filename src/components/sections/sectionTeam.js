@@ -42,7 +42,7 @@ export default class SectionTeam extends Component {
 				<div className={CSS.inner}>
 					<div className="container">
 						<div className="row align-items-md-center">
-							<div className="col col-md-6 col-xl-5 d-sm-none d-md-block">
+							<div className="col col-lg-6 col-xl-5 d-none d-lg-block">
 								<div className={CSS.video}>
 									<Video
 										url={this.props.video.get('videoUrl')}
@@ -52,7 +52,7 @@ export default class SectionTeam extends Component {
 									/>
 								</div>
 							</div>
-							<div className="col col-md-6 col-xl-5 offset-xl-1">
+							<div className="col col-lg-6 col-xl-6 offset-xl-1">
 								<div className={CSS.content}>
 									<div className={CSS.heading}>
 										<HeadingBrand heading={this.props.heading}/>
@@ -60,7 +60,7 @@ export default class SectionTeam extends Component {
 									<div className={CSS.copy}>
 										<Markdown content={this.props.text}/>
 									</div>
-									<div className="d-none d-sm-block d-md-none">
+									<div className="d-lg-none">
 										<div className={CSS.video}>
 											<Video
 												url={this.props.video.get('videoUrl')}

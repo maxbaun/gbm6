@@ -46,6 +46,7 @@ $browser-context: 18; // Default
 }
 
 @mixin headings() {
+
 	h1,
 	h2,
 	h3,
@@ -65,7 +66,7 @@ $browser-context: 18; // Default
 	padding: 0 35px 10px 1px;
 	position: relative;
 
-	@if $showArrow == true {
+	@if $showArrow==true {
 		&::before {
 			color: $white;
 			content: '\f30b';
@@ -119,5 +120,38 @@ $browser-context: 18; // Default
 		position: absolute;
 		right: 0;
 		width: $width;
+	}
+}
+
+@mixin headingBrand($xs: 40, $sm: 45, $md: 50, $lg: 55, $xl: 70) {
+	line-height: 1;
+	padding: 5px 0;
+
+	@include headings() {
+		@include fontSize($xs, $xs + 10);
+		display: inline-block;
+		color: $white;
+		font-family: $fontHeading;
+		font-weight: 700;
+		font-size: inherit;
+		line-height: 1;
+		margin: 0;
+		text-transform: uppercase;
+
+		@include media-breakpoint-up(sm) {
+			@include fontSize($sm, $sm + 10);
+		}
+
+		@include media-breakpoint-up(md) {
+			@include fontSize($md, $md + 10);
+		}
+
+		@include media-breakpoint-up(lg) {
+			@include fontSize($lg, $lg + 10);
+		}
+
+		@include media-breakpoint-up(xl) {
+			@include fontSize($xl, $xl + 10);
+		}
 	}
 }
