@@ -153,7 +153,7 @@ export default class SectionVideos extends Component {
 									className={this.state.activeCategory === -1 ? CSS.categoryLinkActive : CSS.categoryLink}
 									onClick={click(this.handleCategoryChange, -1)}
 								>
-									All
+									{this.props.allCategoriesText}
 								</div>
 							</li>
 							{categories.map((category, index) => {
