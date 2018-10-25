@@ -7,7 +7,7 @@ module.exports = {
 	videosPerPage: process.env.REACT_APP_VIDEOS_PER_PAGE ? parseInt(process.env.REACT_APP_VIDEOS_PER_PAGE, 10) : 10,
 	portfolioBase: process.env.REACT_APP_PORTFOLIO_BASE || 'projects',
 	site: {
-		publicPath: process.env.REACT_APP_PUBLIC_PATH,
+		publicUrl: process.env.PUBLIC_URL,
 		titleFormat: process.env.REACT_APP_SITE_TITLE_FORMAT,
 		siteTitle: process.env.REACT_APP_SITE_TITLE,
 		siteDescription: process.env.REACT_APP_SITE_DESCRIPTION,

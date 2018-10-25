@@ -25,8 +25,8 @@ function getDerivedProps(props) {
 			if (key === 'image') {
 				return map.merge(
 					fromJS({
-						'og:image': isSet ? prop : `${site.publicPath}/gbm6.jpb`,
-						'twitter:image': isSet ? prop : `${site.publicPath}/gbm6.jpb`
+						'og:image': isSet ? prop : `${site.publicUrl}/gbm6.jpb`,
+						'twitter:image': isSet ? prop : `${site.publicUrl}/gbm6.jpb`
 					})
 				);
 			}
@@ -53,7 +53,7 @@ function getDerivedProps(props) {
 		}, Map())
 		.reduce((list, prop, key) => {
 			if (key === 'title') {
-				return list.push(<title>{prop}</title>);
+				return list.push(<title key="titleMetaProp">{prop}</title>);
 			}
 
 			return list.push(
