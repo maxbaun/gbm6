@@ -4,6 +4,7 @@ import * as ImmutableProptypes from 'react-immutable-proptypes';
 
 import CSS from './sectionFeatured.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
+import Image from '../common/image';
 import {chunkList} from '../../utils/componentHelpers';
 
 const SectionFeatured = ({images, heading}) => {
@@ -25,11 +26,12 @@ const SectionFeatured = ({images, heading}) => {
 									return (
 										// eslint-disable-next-line react/no-array-index-key
 										<ul key={index} className={CSS.imageRow}>
-											{row.map(image => {
+											{row.map((image, index) => {
 												return (
-													<li key={image.get('src')} className={CSS.imageCol}>
+													// eslint-disable-next-line react/no-array-index-key
+													<li key={index} className={CSS.imageCol}>
 														<div className={CSS.image}>
-															<img src={image.get('src')}/>
+															<Image image={image}/>
 														</div>
 													</li>
 												);
@@ -46,7 +48,7 @@ const SectionFeatured = ({images, heading}) => {
 	);
 };
 
-SectionFeatured.propTyeps = {
+SectionFeatured.propTypes = {
 	images: ImmutableProptypes.list.isRequired,
 	heading: PropTypes.string.isRequired
 };

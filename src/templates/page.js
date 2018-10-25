@@ -24,6 +24,7 @@ import SectionFaq from '../components/sections/sectionFaq';
 import SectionTestimonials from '../components/sections/sectionTestimonials';
 import SectionCta from '../components/sections/sectionCta';
 import Head from '../components/common/head';
+import SectionFeatured from '../components/sections/sectionFeatured';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -126,7 +127,14 @@ class PageTemplate extends Component {
 	checkTargetElem() {
 		clearInterval(this.scrollChecker);
 
+		if (!this.props.location.hash) {
+			return;
+		}
+
 		this.scrollChecker = setInterval(() => {
+			if (!this.props.location.hash) {
+				this.scrollToHash();
+			}
 			const targetElem = document.querySelector(this.props.location.hash);
 
 			if (targetElem) {
@@ -137,6 +145,10 @@ class PageTemplate extends Component {
 
 	scrollToHash(target) {
 		clearInterval(this.scrollChecker);
+
+		if (!target) {
+			return;
+		}
 
 		this.scrollRef = new ScrollToHelper(target, {
 			duration: 500,
@@ -187,8 +199,10 @@ class PageTemplate extends Component {
 			return (
 				<SectionVideos
 					key={index}
+					id={fields.get('id')}
 					heading={fields.get('heading')}
 					allVideosLink={fields.get('allVideosLink')}
+					allVideosText={fields.get('allVideosText')}
 					showCategories={fields.get('showCategories')}
 					categoryAlign={fields.get('categoryAlign')}
 					categories={fields.get('categories')}
@@ -222,6 +236,7 @@ class PageTemplate extends Component {
 					backgroundImage={fields.get('backgroundImage')}
 					allFaqLinkUrl={fields.get('allFaqLinkUrl')}
 					allFaqLinkText={fields.get('allFaqLinkText')}
+					allCategoriesText={fields.get('allCategoriesText')}
 					ctaContent={fields.get('ctaContent')}
 					ctaLinkUrl={fields.get('ctaLinkUrl')}
 					ctaLinkText={fields.get('ctaLinkText')}
@@ -229,6 +244,10 @@ class PageTemplate extends Component {
 					layout={fields.get('layout')}
 				/>
 			);
+		}
+
+		if (sectionType === 'sectionFeatured') {
+			return <SectionFeatured key={index} heading={fields.get('heading')} images={fields.get('images')}/>;
 		}
 
 		if (sectionType === 'sectionTestimonials') {
@@ -247,8 +266,6 @@ class PageTemplate extends Component {
 
 		const sections = page.getIn(['fields', 'sections']).map(this.getSection);
 		const hasCta = page.getIn(['fields', 'hasCta']);
-
-		console.log(page.getIn(['fields', 'image', 'fields', 'file', 'url']));
 
 		return (
 			<Fragment>

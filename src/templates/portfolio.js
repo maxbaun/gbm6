@@ -10,7 +10,7 @@ import {selectors as videoSelectors, actions as videoActions} from '../ducks/vid
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique} from '../utils/componentHelpers';
+import {unique, ScrollToHelper} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
 
@@ -53,7 +53,8 @@ class PortfolioTemplate extends Component {
 		state: ImmutabelProptypes.map.isRequired,
 		videos: ImmutabelProptypes.list,
 		match: PropTypes.object.isRequired,
-		actions: PropTypes.objectOf(PropTypes.func).isRequired
+		actions: PropTypes.objectOf(PropTypes.func).isRequired,
+		location: PropTypes.object.isRequired
 	};
 
 	static defaultProps = {
@@ -62,13 +63,64 @@ class PortfolioTemplate extends Component {
 
 	componentDidMount() {
 		this.getVideo();
+		this.locationChanged();
 	}
 
 	componentDidUpdate(prevProps) {
 		// If the slug has changed, get the new page
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
 			this.getVideo();
+			this.locationChanged();
+		} else if (prevProps.location.hash !== this.props.location.hash) {
+			this.locationChanged();
 		}
+	}
+
+	locationChanged() {
+		if (!this.props.location.hash || this.props.location.hash === '') {
+			window.scrollTo(0, 0);
+			return;
+		}
+
+		this.scrollChecker = setInterval(() => {
+			const currentVideo = this.currentVideo();
+
+			if (currentVideo && !currentVideo.isEmpty()) {
+				this.checkTargetElem();
+			}
+		}, 50);
+	}
+
+	checkTargetElem() {
+		clearInterval(this.scrollChecker);
+
+		if (!this.props.location.hash) {
+			return;
+		}
+
+		this.scrollChecker = setInterval(() => {
+			if (!this.props.location.hash) {
+				this.scrollToHash();
+			}
+			const targetElem = document.querySelector(this.props.location.hash);
+
+			if (targetElem) {
+				this.scrollToHash(targetElem);
+			}
+		}, 50);
+	}
+
+	scrollToHash(target) {
+		clearInterval(this.scrollChecker);
+
+		if (!target) {
+			return;
+		}
+
+		this.scrollRef = new ScrollToHelper(target, {
+			duration: 500,
+			container: window
+		});
 	}
 
 	getVideo() {
@@ -120,7 +172,7 @@ class PortfolioTemplate extends Component {
 					state={this.props.state}
 					videos={this.props.videos.filter(v => v.getIn(['fields', 'slug']) !== this.props.match.params.slug).take(4)}
 				/>
-				<SectionCta siteSettings={SiteSettings} state={this.props.state}/>
+				<SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/>
 			</SectionManager>
 		);
 	}

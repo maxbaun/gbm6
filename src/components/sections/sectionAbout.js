@@ -54,28 +54,28 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 								})}
 						</ul>
 					) : null}
-				</div>
-				{counters && counters.length && counters[0] !== '' ? (
-					<div className={CSS.counters}>
-						<ul className={CSS.counterBlocks}>
-							{counters.map(counter => {
-								const parts = counter.split(':');
+					{counters && counters.length && counters[0] !== '' ? (
+						<div className={CSS.counters}>
+							<ul className={CSS.counterBlocks}>
+								{counters.map(counter => {
+									const parts = counter.split(':');
 
-								return (
-									<li key={parts[0] + parts[2]} className={CSS.counterBlock}>
-										<div className={CSS.counter}>
-											<h3>
-												{parts[0]}
-												{parts[1]}
-											</h3>
-											<p>{parts[2]}</p>
-										</div>
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				) : null}
+									return (
+										<li key={parts[0] + parts[2]} className={CSS.counterBlock}>
+											<div className={CSS.counter}>
+												<h3>
+													{parts[0]}
+													{parts[1]}
+												</h3>
+												<p>{parts[2]}</p>
+											</div>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					) : null}
+				</div>
 			</div>
 		</div>
 	);

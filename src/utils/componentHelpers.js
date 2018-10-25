@@ -138,6 +138,7 @@ export class ScrollToHelper {
 		this.container = typeof container === 'string' ? document.querySelector(container) : container;
 
 		// This.paddingTop = parseInt(window.getComputedStyle(this.target).getPropertyValue('padding-top'), 10);
+		this.headerHeight = document.querySelector('header').offsetHeight;
 
 		this.start = window === this.container ? this.container.pageYOffset : this.container.scrollTop;
 		this.distance = this.setDistance();
@@ -153,7 +154,7 @@ export class ScrollToHelper {
 	}
 
 	setDistance() {
-		this.distance = topPosition(this.target) - this.start + this.options.offset + (this.paddingTop || 0);
+		this.distance = topPosition(this.target) - this.start + this.options.offset + (this.headerHeight || 0);
 		return this.distance;
 	}
 

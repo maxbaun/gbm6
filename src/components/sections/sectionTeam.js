@@ -8,7 +8,6 @@ import Markdown from '../common/markdown';
 import HeadingBrand from '../headingBrand/headingBrand';
 import Video from '../video/video';
 import TeamSlider from '../teamSlider/teamSlider';
-import {responsive} from '../../constants';
 
 export default class SectionTeam extends Component {
 	constructor(props) {

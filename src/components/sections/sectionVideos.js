@@ -33,6 +33,7 @@ export default class SectionVideos extends Component {
 		categories: ImmutableProptypes.list,
 		allVideosLink: PropTypes.string,
 		allVideosText: PropTypes.string,
+		allCategoriesText: PropTypes.string,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		categoryAlign: PropTypes.oneOf(['left', 'center']),
 		id: PropTypes.string,
@@ -47,6 +48,7 @@ export default class SectionVideos extends Component {
 		allVideosLink: null,
 		allVideosText: 'All Videos',
 		categoryAlign: 'left',
+		allCategoriesText: 'All',
 		id: null,
 		showCategories: true
 	};

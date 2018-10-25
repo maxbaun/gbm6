@@ -67,7 +67,7 @@ export default class SectionCta extends Component {
 
 	render() {
 		return (
-			<div data-section className={CSS.section}>
+			<div data-section id="contact" className={CSS.section}>
 				<div className={CSS.inner}>
 					<div className="container">
 						<div className="row">

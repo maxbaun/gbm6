@@ -18,9 +18,6 @@ import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import PageTemplate from '../templates/page';
 import PortfolioTemplate from '../templates/portfolio';
-import WatchThis from '../components/page/watchThis';
-import Concerts from '../components/page/concerts';
-import ProjectsPage from '../components/page/projects';
 import VideoModal from '../components/modals/videoModal';
 import {toDegrees} from '../utils/mathHelpers';
 
@@ -84,8 +81,6 @@ class App extends Component {
 			<Fragment>
 				<Header menus={this.props.menus} actions={this.props.actions} state={this.props.state} history={this.props.history}/>
 				<Switch>
-					<Route exact path="/watch-this" render={p => <WatchThis {...props} {...p}/>}/>
-					<Route exact path="/concerts" render={p => <Concerts {...props} {...p}/>}/>
 					<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
 					<Route exact path="/:slug" component={PageTemplate}/>
 					<Route path="*" component={PageTemplate}/>
