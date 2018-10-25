@@ -26,17 +26,17 @@ body {
 	position: relative;
 	font-family:
 		$fontBase,
- -apple-system,
- BlinkMacSystemFont,
- 'Segoe UI',
- 'Roboto',
- 'Oxygen',
- 'Ubuntu',
- 'Cantarell',
- 'Fira Sans',
- 'Droid Sans',
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		'Roboto',
+		'Oxygen',
+		'Ubuntu',
+		'Cantarell',
+		'Fira Sans',
+		'Droid Sans',
 		'Helvetica Neue',
- sans-serif;
+		sans-serif;
 	font-weight: 400;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -58,6 +58,8 @@ body.offmenu-open {
 }
 
 #root {
+	min-height: 100vh;
+	padding-bottom: $footerHeight + 1px;
 	position: relative;
 	width: 100%;
 }

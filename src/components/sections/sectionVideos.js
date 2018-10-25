@@ -7,11 +7,10 @@ import {Map, List} from 'immutable';
 import CSS from './sectionVideos.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
 import {click} from '../../utils/componentHelpers';
-import InView from '../hoc/inView';
 import VideoGrid from '../videoGrid/videoGrid';
 import {videosPerPage} from '../../constants';
 
-class SectionVideos extends Component {
+export default class SectionVideos extends Component {
 	constructor(props) {
 		super(props);
 
@@ -37,8 +36,7 @@ class SectionVideos extends Component {
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		categoryAlign: PropTypes.oneOf(['left', 'center']),
 		id: PropTypes.string,
-		showCategories: PropTypes.bool,
-		hasAppeared: PropTypes.bool.isRequired
+		showCategories: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -109,7 +107,7 @@ class SectionVideos extends Component {
 	}
 
 	render() {
-		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories, hasAppeared} = this.props;
+		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories} = this.props;
 
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
@@ -158,16 +156,9 @@ class SectionVideos extends Component {
 							})}
 						</ul>
 					) : null}
-					{hasAppeared ? (
-						<div className={CSS.videos}>
-							<VideoGrid
-								videos={paginatedVideos}
-								perGroup={this.state.perGroup}
-								state={this.props.state}
-								actions={this.props.actions}
-							/>
-						</div>
-					) : null}
+					<div className={CSS.videos}>
+						<VideoGrid videos={paginatedVideos} perGroup={this.state.perGroup} state={this.props.state} actions={this.props.actions}/>
+					</div>
 					{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
 						<div className={CSS.loadMoreBtn}>
 							<div className={CSS.btn}>
@@ -182,5 +173,3 @@ class SectionVideos extends Component {
 		);
 	}
 }
-
-export default InView(SectionVideos, {partialVisibility: true, delayedCall: true, scrollDelay: 2000});

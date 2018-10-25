@@ -68,27 +68,23 @@ class PageTemplate extends Component {
 		pages: List()
 	};
 
-	componentDidMount() {
-		window.scrollTo(0, 0);
-		this.getPage();
+	static getInitialData() {
+		console.log('getInitialData');
+	}
 
-		document.addEventListener('readystatechange', () => (document.readyState === 'complete' ? this.checkScroll() : noop()));
+	componentDidMount() {
+		this.getPage();
+		this.locationChanged();
 	}
 
 	componentDidUpdate(prevProps) {
 		// If the slug has changed, get the new page
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
-			window.scrollTo(0, 0);
 			this.getPage();
-			this.checkScroll();
+			this.locationChanged();
 		} else if (prevProps.location.hash !== this.props.location.hash) {
-			window.scrollTo(0, 0);
-			this.checkScroll();
+			this.locationChanged();
 		}
-	}
-
-	componentWillUnmount() {
-		document.removeEventListener('readystatechange');
 	}
 
 	getPage() {
@@ -111,8 +107,9 @@ class PageTemplate extends Component {
 		return slug;
 	}
 
-	checkScroll() {
+	locationChanged() {
 		if (!this.props.location.hash || this.props.location.hash === '') {
+			window.scrollTo(0, 0);
 			return;
 		}
 
@@ -122,7 +119,7 @@ class PageTemplate extends Component {
 			if (currentPage && !currentPage.isEmpty()) {
 				this.checkTargetElem();
 			}
-		}, 100);
+		}, 50);
 	}
 
 	checkTargetElem() {
@@ -134,18 +131,16 @@ class PageTemplate extends Component {
 			if (targetElem) {
 				this.scrollToHash(targetElem);
 			}
-		}, 100);
+		}, 50);
 	}
 
 	scrollToHash(target) {
 		clearInterval(this.scrollChecker);
 
-		setTimeout(() => {
-			this.scrollRef = new ScrollToHelper(target, {
-				duration: 800,
-				container: window
-			});
-		}, 150);
+		this.scrollRef = new ScrollToHelper(target, {
+			duration: 500,
+			container: window
+		});
 	}
 
 	currentPage() {

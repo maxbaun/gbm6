@@ -140,7 +140,7 @@ export class ScrollToHelper {
 		// This.paddingTop = parseInt(window.getComputedStyle(this.target).getPropertyValue('padding-top'), 10);
 
 		this.start = window === this.container ? this.container.pageYOffset : this.container.scrollTop;
-		this.distance = topPosition(this.target) - this.start + this.options.offset + (this.paddingTop || 0);
+		this.distance = this.setDistance();
 
 		this.requestAnimationFrame = this.requestAnimationFrame.bind(this);
 		this.loop = this.loop.bind(this);
@@ -152,7 +152,13 @@ export class ScrollToHelper {
 		});
 	}
 
+	setDistance() {
+		this.distance = topPosition(this.target) - this.start + this.options.offset + (this.paddingTop || 0);
+		return this.distance;
+	}
+
 	loop(time) {
+		this.setDistance();
 		this.timeElapsed = time - this.timeStart;
 		this.next = this.options.easing(this.timeElapsed, this.start, this.distance, this.options.duration);
 

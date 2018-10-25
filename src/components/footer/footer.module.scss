@@ -2,7 +2,9 @@
 
 .footer {
 	background-color: $blueDark;
+	bottom: 0;
 	height: $footerHeight + 1px;
+	position: absolute;
 	margin-top: -1px;
 	width: 100%;
 	@include zIndex(footer);
