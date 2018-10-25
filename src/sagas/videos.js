@@ -42,7 +42,7 @@ function * onVideosInit({payload = {}}) {
 	]);
 }
 
-function * onVideosGet({payload}) {
+function * onVideosGet({payload, fetch}) {
 	const query = {};
 
 	if (payload.slug) {
@@ -55,12 +55,31 @@ function * onVideosGet({payload}) {
 		query['fields.slug'] = payload.slug;
 	}
 
+	yield all([
+		put({
+			type: stateTypes.STATUS_CHANGE,
+			fetch,
+			payload: {
+				loading: true,
+				error: null
+			}
+		})
+	]);
+
 	const res = yield call(getVideos, {query});
 
 	return yield all([
 		put({
 			type: videoTypes.VIDEOS_UPDATE,
 			payload: res.items
+		}),
+		put({
+			type: stateTypes.STATUS_CHANGE,
+			fetch,
+			payload: {
+				loading: false,
+				error: null
+			}
 		})
 	]);
 }

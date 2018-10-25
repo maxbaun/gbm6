@@ -1,8 +1,10 @@
 import {takeEvery, all, put, select, call} from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 
 import {getPages} from '../services/api';
 import {types as pageTypes, selectors as pageSelectors} from '../ducks/pages';
 import {types as cacheTypes} from '../ducks/cache';
+import {types as stateTypes} from '../ducks/state';
 import {shouldCache} from '../constants';
 
 export function * watchPages() {
@@ -10,7 +12,7 @@ export function * watchPages() {
 	yield takeEvery(pageTypes.PAGES_UPDATE, onPagesUpdate);
 }
 
-function * onPagesGet({payload}) {
+function * onPagesGet({payload, fetch}) {
 	const page = yield select(pageSelectors.getPage, payload.slug);
 
 	if (page && shouldCache) {
@@ -21,12 +23,31 @@ function * onPagesGet({payload}) {
 		'fields.slug': payload.slug
 	};
 
+	yield all([
+		put({
+			type: stateTypes.STATUS_CHANGE,
+			fetch,
+			payload: {
+				loading: true,
+				error: null
+			}
+		})
+	]);
+
 	const res = yield call(getPages, {query});
 
 	return yield all([
 		put({
 			type: pageTypes.PAGES_UPDATE,
 			payload: res
+		}),
+		put({
+			type: stateTypes.STATUS_CHANGE,
+			fetch,
+			payload: {
+				loading: false,
+				error: null
+			}
 		})
 	]);
 }

@@ -13,7 +13,9 @@ export const types = {
 	WINDOW_RESIZE: 'WINDOW_RESIZE',
 	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD',
 	STATUS_CHANGE: 'STATUS_CHANGE',
-	ANGLE_SET: 'ANGLE_SET'
+	ANGLE_SET: 'ANGLE_SET',
+	PAGE_TRANSITION_START: 'PAGE_TRANSITION_START',
+	PAGE_TRANSITION_END: 'PAGE_TRANSITION_END'
 };
 
 export const actions = {
@@ -22,7 +24,9 @@ export const actions = {
 	offmenuHide: name => utils.action(types.OFFMENU_HIDE, {name}),
 	windowResize: payload => utils.action(types.WINDOW_RESIZE, {payload}),
 	addVideoModal: payload => utils.action(types.VIDEO_MODAL_ADD, {payload}),
-	angleSet: payload => utils.action(types.ANGLE_SET, {payload})
+	angleSet: payload => utils.action(types.ANGLE_SET, {payload}),
+	pageTransitionStart: () => utils.action(types.PAGE_TRANSITION_START),
+	pageTransitionEnd: () => utils.action(types.PAGE_TRANSITION_END)
 };
 
 export const initialState = utils.initialState({
@@ -37,6 +41,7 @@ export const initialState = utils.initialState({
 	},
 	angle: 0,
 	status: {},
+	pageTransitioning: true,
 	isCollapsed: window.innerWidth < responsive.collapse,
 	videoModals: []
 });
@@ -86,6 +91,10 @@ export default (state = initialState, action) => {
 
 				return u;
 			});
+		case types.PAGE_TRANSITION_START:
+			return state.set('pageTransitioning', true);
+		case types.PAGE_TRANSITION_END:
+			return state.set('pageTransitioning', false);
 		default:
 			return state;
 	}

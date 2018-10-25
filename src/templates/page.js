@@ -70,10 +70,6 @@ class PageTemplate extends Component {
 		pages: List()
 	};
 
-	static getInitialData() {
-		console.log('getInitialData');
-	}
-
 	componentDidMount() {
 		this.getPage();
 		this.locationChanged();

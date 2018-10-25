@@ -57,13 +57,7 @@ export default class SectionFaq extends Component {
 		return (
 			<div data-section className={CSS.section} data-layout={layout}>
 				<div className={CSS.overlay}/>
-				<Image
-					background
-					className={CSS.background}
-					image={this.props.backgroundImage}
-					width={window.innerWidth * 2}
-					height={window.innerHeight * 2}
-				/>
+				<Image background className={CSS.background} image={this.props.backgroundImage} width={window.innerWidth}/>
 				<div className="container">
 					{heading && heading !== '' ? (
 						<div className={CSS.header}>

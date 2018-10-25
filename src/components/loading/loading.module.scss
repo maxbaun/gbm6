@@ -1,0 +1,28 @@
+@import '../../css/utils/utils.scss';
+
+.loading {
+	background-color: $blueDarkest;
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	position: fixed;
+	right: 0;
+	transition: all 0.15s ease-in-out, visibility 0s 0.15s;
+	visibility: hidden;
+	width: 100%;
+	@include zIndex(loading);
+}
+
+.loadingActive {
+	opacity: 1;
+	transition: all 0.15s ease-in-out;
+	visibility: visible;
+}
+
+.loadingInner {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	width: 100%;
+}

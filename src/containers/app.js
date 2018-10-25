@@ -4,20 +4,22 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import {Route, Switch} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import {List} from 'immutable';
+import {spring} from 'react-motion';
 
 import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages';
 import {selectors as menuSelectors, actions as menuActions} from '../ducks/menus';
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 import {selectors as videoSelectors, actions as videoActions} from '../ducks/videos';
-import {noop, vimeoId} from '../utils/componentHelpers';
+import {noop} from '../utils/componentHelpers';
 import {portfolioBase} from '../constants';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import PageTemplate from '../templates/page';
 import PortfolioTemplate from '../templates/portfolio';
+import AnimatedSwitch from '../components/routing/animatedSwitch';
 import VideoModal from '../components/modals/videoModal';
 import {toDegrees} from '../utils/mathHelpers';
 
@@ -40,6 +42,35 @@ const mapDispatchToProps = dispatch => ({
 		dispatch
 	)
 });
+
+function fadeIn(val) {
+	return spring(val, {
+		stiffness: 75,
+		damping: 40
+	});
+}
+
+function fadeOut(val) {
+	return spring(val, {
+		stiffness: 75,
+		damping: 16
+	});
+}
+
+const pageTransitions = {
+	atEnter: {
+		opacity: 0,
+		absolute: 1
+	},
+	atLeave: {
+		opacity: fadeOut(0),
+		absolute: 1
+	},
+	atActive: {
+		opacity: fadeIn(1),
+		absolute: 0
+	}
+};
 
 class App extends Component {
 	static propTypes = {
@@ -74,21 +105,32 @@ class App extends Component {
 	}
 
 	render() {
-		const {state, menus, actions} = this.props;
-		const props = {state, menus, actions};
+		const {state, menus, actions, history} = this.props;
 
 		return (
 			<Fragment>
-				<Header menus={this.props.menus} actions={this.props.actions} state={this.props.state} history={this.props.history}/>
-				<Switch>
+				<Header menus={menus} actions={actions} state={state} history={history}/>
+				<AnimatedSwitch
+					{...pageTransitions}
+					runOnMount
+					actions={actions}
+					mapStyles={styles => ({
+						opacity: styles.opacity,
+						position: styles.absolute ? 'absolute' : 'relative',
+						left: styles.absolute ? 0 : 'auto',
+						right: styles.absolute ? 0 : 'auto',
+						top: styles.absolute ? 0 : 'auto',
+						bottom: styles.absolute ? 0 : 'auto'
+					})}
+				>
 					<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
 					<Route exact path="/:slug" component={PageTemplate}/>
-					<Route path="*" component={PageTemplate}/>
-				</Switch>
+					<Route path="/" render={PageTemplate}/>
+				</AnimatedSwitch>
 				{this.props.state.get('videoModals').map(video => {
 					return <VideoModal key={video} url={video} state={state} actions={actions}/>;
 				})}
-				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
+				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved." state={state}/>
 			</Fragment>
 		);
 	}

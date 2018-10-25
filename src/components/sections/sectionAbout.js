@@ -14,14 +14,7 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 
 	return (
 		<div data-section id={id} className={CSS.section}>
-			<Image
-				background
-				className={CSS.background}
-				style={imageCss}
-				image={image}
-				width={window.innerWidth * 2}
-				height={window.innerHeight * 2}
-			/>
+			<Image background className={CSS.background} style={imageCss} image={image} width={window.innerWidth}/>
 			<div className={CSS.overlay}/>
 			<div className={CSS.inner}>
 				<div className="container">
