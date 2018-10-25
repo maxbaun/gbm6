@@ -15,7 +15,7 @@ export default class SectionVideos extends Component {
 		super(props);
 
 		this.state = {
-			activeCategory: 0,
+			activeCategory: -1,
 			page: 1,
 			perGroup: videosPerPage
 		};
@@ -83,6 +83,10 @@ export default class SectionVideos extends Component {
 			return List();
 		}
 
+		if (this.state.activeCategory === -1) {
+			return this.props.videos;
+		}
+
 		const activeCategory = this.props.categories.find((cat, index) => index === this.state.activeCategory);
 
 		return this.props.videos.reduce((list, video) => {
@@ -142,6 +146,14 @@ export default class SectionVideos extends Component {
 					</div>
 					{showCategories ? (
 						<ul className={CSS.categories} data-align={categoryAlign}>
+							<li className={CSS.category}>
+								<div
+									className={this.state.activeCategory === -1 ? CSS.categoryLinkActive : CSS.categoryLink}
+									onClick={click(this.handleCategoryChange, -1)}
+								>
+									All
+								</div>
+							</li>
 							{categories.map((category, index) => {
 								return (
 									<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
