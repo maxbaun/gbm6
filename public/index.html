@@ -3,9 +3,9 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+	<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="theme-color" content="#000000">
+	<meta name="theme-color" content="#000E24">
 	<!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -19,13 +19,52 @@
       Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-	<title>React App</title>
+	-->
+	<title>%REACT_APP_SITE_TITLE%</title>
+
+	<!-- SEO Stuff -->
+	<base href="%REACT_APP_BASE_HREF%">
+
+	<meta name="description" content="%REACT_APP_SITE_DESCRIPTION%">
+
+	<!-- Control the behavior of search engine crawling and indexing -->
+	<meta name="robots" content="index,follow"><!-- All Search Engines -->
+	<meta name="googlebot" content="index,follow"><!-- Google Specific -->
+
+	<!-- Tells Google not to provide a translation for this document -->
+	<meta name="google" content="notranslate">
+
+	<!-- Verify website ownership -->
+	<meta name="google-site-verification" content="%REACT_APP_GOOGLE_VERIFICATION%"><!-- Google Search Console -->
+
+	<!-- Geo tags -->
+	<meta name="ICBM" content="%REACT_APP_ICBM%">
+	<meta name="geo.position" content="%REACT_APP_GEO_POSITION%">
+	<meta name="geo.region" content="%REACT_APP_GEO_REGION%"><!-- Country code (ISO 3166-1): mandatory, state code (ISO 3166-2): optional; eg. content="US" / content="US-NY" -->
+	<meta name="geo.placename" content="%REACT_APP_GEO_PLACENAME%"><!-- eg. content="New York City" -->
+
+	<meta property="fb:app_id" content="%REACT_APP_FACEBOOK_APP_ID%">
+	<meta property="og:url" content="%REACT_APP_OG_URL%">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="%REACT_APP_OG_TITLE%">
+	<meta property="og:image" content="%PUBLIC_URL%/gbm6.jpg">
+	<meta property="og:description" content="%REACT_APP_OG_DESCRIPTION%">
+	<meta property="og:site_name" content="%REACT_APP_OG_SITE_NAME%">
+	<meta property="og:locale" content="en_US">
+	<meta property="article:author" content="">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="%REACT_APP_TWITTER_SITE%">
+	<meta name="twitter:creator" content="%REACT_APP_TWITTER_CREATOR%">
+	<meta name="twitter:url" content="%REACT_APP_TWITTER_URL%">
+	<meta name="twitter:title" content="%REACT_APP_TWITTER_TITLE%">
+	<meta name="twitter:description" content="%REACT_APP_TWITTER_DESCRIPTION%">
+	<meta name="twitter:image" content="%PUBLIC_URL%/gbm6.jpg">
 </head>
 
 <body>
 	<noscript>
-		You need to enable JavaScript to run this app.
+		You need to enable JavaScript to run this website.
 	</noscript>
 	<form name="Contact Form" netlify netlify-honeypot="bot-field" hidden>
 		<input type="text" name="name" />

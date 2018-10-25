@@ -10,8 +10,9 @@
 	}
 
 	@include media-breakpoint-up(lg) {
-		height: 80vh;
-		min-height: 600px;
+		height: 100vh;
+		max-height: 800px;
+		min-height: 700px;
 	}
 }
 

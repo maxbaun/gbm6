@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import * as ImmutabelProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {List, fromJS} from 'immutable';
@@ -15,14 +15,15 @@ import SectionManager from '../components/sectionManager/sectionManager';
 import {unique, ScrollToHelper, noop} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
+
 import SectionHero from '../components/sections/sectionHero';
 import SectionAbout from '../components/sections/sectionAbout';
 import SectionVideos from '../components/sections/sectionVideos';
 import SectionTeam from '../components/sections/sectionTeam';
 import SectionFaq from '../components/sections/sectionFaq';
 import SectionTestimonials from '../components/sections/sectionTestimonials';
-
 import SectionCta from '../components/sections/sectionCta';
+import Head from '../components/common/head';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -247,11 +248,22 @@ class PageTemplate extends Component {
 		const sections = page.getIn(['fields', 'sections']).map(this.getSection);
 		const hasCta = page.getIn(['fields', 'hasCta']);
 
+		console.log(page.getIn(['fields', 'image', 'fields', 'file', 'url']));
+
 		return (
-			<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
-				{sections.toJS()}
-				{hasCta ? <SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/> : null}
-			</SectionManager>
+			<Fragment>
+				<Head
+					title={page.getIn(['fields', 'title'])}
+					description={page.getIn(['fields', 'description'])}
+					image={page.getIn(['fields', 'image', 'fields', 'file', 'url'])}
+					location={this.props.location}
+					url={window.location.href}
+				/>
+				<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
+					{sections.toJS()}
+					{hasCta ? <SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/> : null}
+				</SectionManager>
+			</Fragment>
 		);
 	}
 }
