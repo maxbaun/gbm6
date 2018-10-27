@@ -121,8 +121,10 @@ export default class Masonry extends Component {
 	render() {
 		const {groups} = this.state;
 
+		const columnWidth = window.innerWidth < this.props.columnWidth ? '100%' : this.props.columnWidth;
+
 		const gridStyle = {
-			gridTemplateColumns: `repeat(auto-fill, minmax(${this.props.columnWidth}px, 1fr))`
+			gridTemplateColumns: `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`
 		};
 
 		return (

@@ -38,6 +38,6 @@ export default class RenderInBody extends Component {
 
 	render() {
 		// eslint-disable-next-line react/no-children-prop
-		return <div {...this.props} children={null}/>;
+		return null;
 	}
 }
