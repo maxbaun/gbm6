@@ -1,0 +1,59 @@
+@import '../../css/utils/utils';
+
+.wrap {
+	padding: $headerHeightMobile 0;
+
+	@include media-breakpoint-up (md) {
+		padding: $headerHeight 0;
+	}
+}
+
+.inner {
+	@extend .py-4;
+	@extend .py-md-5;
+
+	margin: 0 auto;
+	max-width: 520px;
+	text-align: center;
+}
+
+.alert {
+	color: $white;
+	font-family: $fontBase;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 3px;
+	margin: 0;
+	padding-left: 6px;
+	position: relative;
+	text-transform: uppercase;
+}
+
+.four {
+	color: $white;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 900;
+	font-size: 175px;
+	letter-spacing: -40px;
+	line-height: 1;
+	margin: -20px 0 0 -30px;
+	text-transform: uppercase;
+
+	@include media-breakpoint-up(md) {
+		font-size: 252px;
+	}
+
+	span {
+		text-shadow: -8px 0 0 $grey;
+	}
+}
+
+.message {
+	color: $white;
+	font-family: $fontBase;
+	font-size: 20px;
+	font-weight: 400;
+	margin-bottom: 25px;
+	margin-top: 0;
+	text-transform: uppercase;
+}

@@ -10,20 +10,15 @@ import {selectors as videoSelectors, actions as videoActions} from '../ducks/vid
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique, ScrollToHelper} from '../utils/componentHelpers';
+import {unique, ScrollToHelper, isLoading} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
 
 import SectionHero from '../components/sections/sectionHero';
-import SectionAbout from '../components/sections/sectionAbout';
-import SectionVideos from '../components/sections/sectionVideos';
-import SectionTeam from '../components/sections/sectionTeam';
-import SectionFaq from '../components/sections/sectionFaq';
-import SectionTestimonials from '../components/sections/sectionTestimonials';
-
 import SectionCta from '../components/sections/sectionCta';
 import SectionPortfolioContent from '../components/sections/sectionPortfolioContent';
 import SectionFeaturedEvents from '../components/sections/sectionFeaturedEvents';
+import NotFound from '../components/404/404';
 
 const mapStateToProps = state => ({
 	videos: videoSelectors.getVideos(state),
@@ -144,6 +139,10 @@ class PortfolioTemplate extends Component {
 
 	render() {
 		const video = this.currentVideo();
+
+		if (!video && !isLoading(this.fetch, this.props.state)) {
+			return <NotFound/>;
+		}
 
 		if (!video) {
 			return null;

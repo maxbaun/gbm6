@@ -31,6 +31,15 @@
 	justify-content: center;
 }
 
+.search,
+.hamburg {
+	width: 33px;
+
+	@include media-breakpoint-up(md) {
+		width: 45px;
+	}
+}
+
 .search {
 	@include fontSize(20, 20);
 	color: $white;

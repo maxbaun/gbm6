@@ -12,7 +12,7 @@ import {selectors as stateSelectors, actions as stateActions} from '../ducks/sta
 import {actions as formActions, selectors as formSelectors} from '../ducks/forms';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique, ScrollToHelper, noop} from '../utils/componentHelpers';
+import {unique, ScrollToHelper, isLoading} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
 
@@ -23,8 +23,9 @@ import SectionTeam from '../components/sections/sectionTeam';
 import SectionFaq from '../components/sections/sectionFaq';
 import SectionTestimonials from '../components/sections/sectionTestimonials';
 import SectionCta from '../components/sections/sectionCta';
-import Head from '../components/common/head';
 import SectionFeatured from '../components/sections/sectionFeatured';
+import Head from '../components/common/head';
+import NotFound from '../components/404/404';
 
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
@@ -255,6 +256,10 @@ class PageTemplate extends Component {
 
 	render() {
 		const page = this.currentPage();
+
+		if (!page && !isLoading(this.fetch, this.props.state)) {
+			return <NotFound/>;
+		}
 
 		if (!page) {
 			return null;
