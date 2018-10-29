@@ -8,6 +8,7 @@ import HeadingBrand from '../headingBrand/headingBrand';
 import {state, unique, isLoading, getError, getSuccess, innerHtml} from '../../utils/componentHelpers';
 import Markdown from '../common/markdown';
 import Button from '../button/button';
+import SectionLines from '../common/sectionLines';
 
 const initialState = {
 	name: '',
@@ -68,16 +69,19 @@ export default class SectionCta extends Component {
 	render() {
 		return (
 			<div data-section id="contact" className={CSS.section}>
-				<div className={CSS.inner}>
-					<div className="container">
-						<div className="row">
-							<div className="col-lg-10 offset-lg-1">
-								<div className={CSS.header}>
-									{this.renderHeader()}
-									{this.renderContact()}
-									{this.renderSocial()}
+				<div data-clip-target>
+					<SectionLines state={this.props.state}/>
+					<div className={CSS.inner}>
+						<div className="container">
+							<div className="row">
+								<div className="col-lg-10 offset-lg-1">
+									<div className={CSS.header}>
+										{this.renderHeader()}
+										{this.renderContact()}
+										{this.renderSocial()}
+									</div>
+									<div className={CSS.content}>{this.renderForm()}</div>
 								</div>
-								<div className={CSS.content}>{this.renderForm()}</div>
 							</div>
 						</div>
 					</div>

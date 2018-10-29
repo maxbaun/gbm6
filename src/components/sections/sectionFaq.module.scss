@@ -10,7 +10,7 @@
 	background-attachment: fixed;
 	background-position: center;
 	opacity: 0.23;
-	z-index: -1;
+	z-index: -3;
 
 	@include media-breakpoint-up(md) {
 		background-attachment: initial;
@@ -20,7 +20,7 @@
 .overlay {
 	@include absoluteFull();
 	background-color: $black;
-	z-index: -1;
+	z-index: -3;
 }
 
 .header {
@@ -166,7 +166,7 @@
 	@extend .mb-3;
 	width: 231px;
 
-	> a {
+	>a {
 		display: block;
 		font-weight: 400;
 		width: 100%;

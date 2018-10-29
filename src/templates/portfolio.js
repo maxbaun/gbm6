@@ -164,6 +164,7 @@ class PortfolioTemplate extends Component {
 					date={video.getIn(['fields', 'date'])}
 					location={video.getIn(['fields', 'location'])}
 					talent={video.getIn(['fields', 'talent'])}
+					state={this.props.state}
 				/>
 				<SectionFeaturedEvents
 					title="More Legendary Events"

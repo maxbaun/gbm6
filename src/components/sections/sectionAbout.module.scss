@@ -9,13 +9,13 @@
 	@include absoluteFull();
 	background-size: cover;
 	background-position: center top;
-	z-index: -2;
+	z-index: -3;
 }
 
 .overlay {
 	@include absoluteFull();
 	background-color: rgba(0, 0, 0, 0.45);
-	z-index: -1;
+	z-index: -3;
 }
 
 .inner {

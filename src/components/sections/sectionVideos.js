@@ -9,6 +9,7 @@ import HeadingBrand from '../headingBrand/headingBrand';
 import {click} from '../../utils/componentHelpers';
 import VideoGrid from '../videoGrid/videoGrid';
 import {videosPerPage} from '../../constants';
+import SectionLines from '../common/sectionLines';
 
 export default class SectionVideos extends Component {
 	constructor(props) {
@@ -113,75 +114,79 @@ export default class SectionVideos extends Component {
 	}
 
 	render() {
-		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories} = this.props;
+		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories, state} = this.props;
 
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
 
 		return (
 			<div data-section id={id} className={CSS.section}>
-				<div data-lines>
-					<div data-line/>
-					<div data-line/>
-				</div>
-				<div className={CSS.inner}>
-					<div className="container">
-						<div className={CSS.content}>
-							<div className="row align-items-end">
-								{heading && heading !== '' ? (
-									<div className="col-md-6 col-lg-6">
-										<div className={CSS.heading}>
-											<HeadingBrand heading={this.props.heading} headingClass={CSS.videoHeading}/>
+				<div data-clip-target>
+					<SectionLines chevron={false} state={state}/>
+					<div className={CSS.inner}>
+						<div className="container">
+							<div className={CSS.content}>
+								<div className="row align-items-end">
+									{heading && heading !== '' ? (
+										<div className="col-md-6 col-lg-6">
+											<div className={CSS.heading}>
+												<HeadingBrand heading={this.props.heading} headingClass={CSS.videoHeading}/>
+											</div>
 										</div>
-									</div>
-								) : null}
+									) : null}
 
-								{allVideosLink ? (
-									<div className="col-md-5 col-lg-5 offset-lg-1">
-										<Link to={allVideosLink} className={CSS.allVideosLink}>
-											{allVideosText}
-										</Link>
-									</div>
-								) : null}
-							</div>
-						</div>
-					</div>
-					{showCategories ? (
-						<ul className={CSS.categories} data-align={categoryAlign}>
-							<li className={CSS.category}>
-								<div
-									className={this.state.activeCategory === -1 ? CSS.categoryLinkActive : CSS.categoryLink}
-									onClick={click(this.handleCategoryChange, -1)}
-								>
-									{this.props.allCategoriesText}
-								</div>
-							</li>
-							{categories.map((category, index) => {
-								return (
-									<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
-										<div
-											className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
-											onClick={click(this.handleCategoryChange, index)}
-										>
-											{category.getIn(['fields', 'title'])}
+									{allVideosLink ? (
+										<div className="col-md-5 col-lg-5 offset-lg-1">
+											<Link to={allVideosLink} className={CSS.allVideosLink}>
+												{allVideosText}
+											</Link>
 										</div>
-									</li>
-								);
-							})}
-						</ul>
-					) : null}
-					<div className={CSS.videos}>
-						<VideoGrid videos={paginatedVideos} perGroup={this.state.perGroup} state={this.props.state} actions={this.props.actions}/>
-					</div>
-					{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
-						<div className={CSS.loadMoreBtn}>
-							<div className={CSS.btn}>
-								<button type="button" className="btn btn-outline" onClick={this.handleLoadMore}>
-									Load more videos
-								</button>
+									) : null}
+								</div>
 							</div>
 						</div>
-					) : null}
+						{showCategories ? (
+							<ul className={CSS.categories} data-align={categoryAlign}>
+								<li className={CSS.category}>
+									<div
+										className={this.state.activeCategory === -1 ? CSS.categoryLinkActive : CSS.categoryLink}
+										onClick={click(this.handleCategoryChange, -1)}
+									>
+										{this.props.allCategoriesText}
+									</div>
+								</li>
+								{categories.map((category, index) => {
+									return (
+										<li key={category.getIn(['fields', 'slug'])} className={CSS.category}>
+											<div
+												className={this.state.activeCategory === index ? CSS.categoryLinkActive : CSS.categoryLink}
+												onClick={click(this.handleCategoryChange, index)}
+											>
+												{category.getIn(['fields', 'title'])}
+											</div>
+										</li>
+									);
+								})}
+							</ul>
+						) : null}
+						<div className={CSS.videos}>
+							<VideoGrid
+								videos={paginatedVideos}
+								perGroup={this.state.perGroup}
+								state={this.props.state}
+								actions={this.props.actions}
+							/>
+						</div>
+						{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
+							<div className={CSS.loadMoreBtn}>
+								<div className={CSS.btn}>
+									<button type="button" className="btn btn-outline" onClick={this.handleLoadMore}>
+										Load more videos
+									</button>
+								</div>
+							</div>
+						) : null}
+					</div>
 				</div>
 			</div>
 		);

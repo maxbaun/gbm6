@@ -27,5 +27,6 @@ module.exports = {
 		desktopMin: 991,
 		desktop: 992,
 		widescreen: 1200
-	}
+	},
+	angleHeight: 22
 };

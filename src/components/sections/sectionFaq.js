@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import CSS from './sectionFaq.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
 import Image from '../common/image';
+import SectionLines from '../common/sectionLines';
 import Markdown from '../common/markdown';
 import {click} from '../../utils/componentHelpers';
 
@@ -30,7 +31,8 @@ export default class SectionFaq extends Component {
 		layout: PropTypes.oneOf(['normal', 'accordion']),
 		ctaContent: PropTypes.string,
 		ctaLinkUrl: PropTypes.string,
-		ctaLinkText: PropTypes.string
+		ctaLinkText: PropTypes.string,
+		state: ImmutableProptypes.map.isRequired
 	};
 
 	static defaultProps = {
@@ -50,66 +52,69 @@ export default class SectionFaq extends Component {
 	}
 
 	render() {
-		const {heading, layout, allFaqLinkUrl, allFaqLinkText, ctaContent, ctaLinkUrl, ctaLinkText} = this.props;
+		const {heading, layout, allFaqLinkUrl, allFaqLinkText, ctaContent, ctaLinkUrl, ctaLinkText, state} = this.props;
 
 		const renderAccordion = layout === 'accordion';
 
 		return (
 			<div data-section className={CSS.section} data-layout={layout}>
-				<div className={CSS.overlay}/>
-				<Image background className={CSS.background} image={this.props.backgroundImage} width={window.innerWidth}/>
-				<div className="container">
-					{heading && heading !== '' ? (
-						<div className={CSS.header}>
-							<div className="row align-items-end">
-								<div className="col-md-6 col-lg-5 offset-lg-1">
-									<div className={CSS.heading}>
-										<HeadingBrand heading={heading}/>
+				<div data-clip-target>
+					<div className={CSS.overlay}/>
+					<SectionLines state={state}/>
+					<Image background className={CSS.background} image={this.props.backgroundImage}/>
+					<div className="container">
+						{heading && heading !== '' ? (
+							<div className={CSS.header}>
+								<div className="row align-items-end">
+									<div className="col-md-6 col-lg-5 offset-lg-1">
+										<div className={CSS.heading}>
+											<HeadingBrand heading={heading}/>
+										</div>
+									</div>
+									<div className="col-md-6 col-lg-5 offset-lg-1 d-sm-none d-md-block">
+										<div className={CSS.allFaqLink}>
+											<Link to={allFaqLinkUrl} className={CSS.allLink}>
+												{allFaqLinkText}
+											</Link>
+										</div>
 									</div>
 								</div>
-								<div className="col-md-6 col-lg-5 offset-lg-1 d-sm-none d-md-block">
+							</div>
+						) : null}
+						{renderAccordion ? (
+							this.renderAccordionTabs()
+						) : (
+							<Fragment>
+								<div className="d-sm-none d-md-block">{this.renderVerticalTabs()}</div>
+								<div className="d-none d-sm-block d-md-none">
+									{this.renderAccordionTabs()}
 									<div className={CSS.allFaqLink}>
 										<Link to={allFaqLinkUrl} className={CSS.allLink}>
 											{allFaqLinkText}
 										</Link>
 									</div>
 								</div>
-							</div>
-						</div>
-					) : null}
-					{renderAccordion ? (
-						this.renderAccordionTabs()
-					) : (
-						<Fragment>
-							<div className="d-sm-none d-md-block">{this.renderVerticalTabs()}</div>
-							<div className="d-none d-sm-block d-md-none">
-								{this.renderAccordionTabs()}
-								<div className={CSS.allFaqLink}>
-									<Link to={allFaqLinkUrl} className={CSS.allLink}>
-										{allFaqLinkText}
-									</Link>
-								</div>
-							</div>
-						</Fragment>
-					)}
-					{ctaContent ? (
-						<div className="row">
-							<div className="col-md-10 offset-md-1">
-								<div className={CSS.cta}>
-									<div className={CSS.ctaInner}>
-										<div className={CSS.ctaContent}>
-											<Markdown content={ctaContent}/>
-										</div>
-										<div className={CSS.ctaButton}>
-											<Link to={ctaLinkUrl} className="btn btn-primary">
-												{ctaLinkText}
-											</Link>
+							</Fragment>
+						)}
+						{ctaContent ? (
+							<div className="row">
+								<div className="col-md-10 offset-md-1">
+									<div className={CSS.cta}>
+										<div className={CSS.ctaInner}>
+											<div className={CSS.ctaContent}>
+												<Markdown content={ctaContent}/>
+											</div>
+											<div className={CSS.ctaButton}>
+												<Link to={ctaLinkUrl} className="btn btn-primary">
+													{ctaLinkText}
+												</Link>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					) : null}
+						) : null}
+					</div>
 				</div>
 			</div>
 		);

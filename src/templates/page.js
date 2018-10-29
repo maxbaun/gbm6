@@ -239,16 +239,17 @@ class PageTemplate extends Component {
 					ctaLinkText={fields.get('ctaLinkText')}
 					faqs={fields.get('questions')}
 					layout={fields.get('layout')}
+					state={this.props.state}
 				/>
 			);
 		}
 
 		if (sectionType === 'sectionFeatured') {
-			return <SectionFeatured key={index} heading={fields.get('heading')} images={fields.get('images')}/>;
+			return <SectionFeatured key={index} heading={fields.get('heading')} images={fields.get('images')} state={this.props.state}/>;
 		}
 
 		if (sectionType === 'sectionTestimonials') {
-			return <SectionTestimonials key={index} testimonials={fields.get('testimonials')}/>;
+			return <SectionTestimonials key={index} testimonials={fields.get('testimonials')} state={this.props.state}/>;
 		}
 
 		return null;

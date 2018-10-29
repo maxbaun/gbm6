@@ -20,7 +20,8 @@ export default class Image extends Component {
 		width: PropTypes.number,
 		height: PropTypes.number,
 		f: PropTypes.string, // The focus are for cropping,
-		fit: PropTypes.string
+		fit: PropTypes.string,
+		clipTarget: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -31,7 +32,8 @@ export default class Image extends Component {
 		width: 0,
 		height: 0,
 		f: null,
-		fit: null
+		fit: null,
+		clipTarget: false
 	};
 
 	getUrl() {
@@ -64,7 +66,7 @@ export default class Image extends Component {
 	}
 
 	render() {
-		const {image, background, className, style} = this.props;
+		const {image, background, className, style, clipTarget} = this.props;
 
 		const url = this.getUrl();
 
@@ -73,7 +75,7 @@ export default class Image extends Component {
 		}
 
 		if (background) {
-			return <div className={className} style={{...style, backgroundImage: `url(${url})`}}/>;
+			return <div data-clip-target={clipTarget} className={className} style={{...style, backgroundImage: `url(${url})`}}/>;
 		}
 
 		return <img src={url} alt={image.getIn(['fields', 'title'])}/>;

@@ -12,8 +12,8 @@ import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages
 import {selectors as menuSelectors, actions as menuActions} from '../ducks/menus';
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 import {selectors as videoSelectors, actions as videoActions} from '../ducks/videos';
-import {noop} from '../utils/componentHelpers';
-import {portfolioBase} from '../constants';
+import {noop, debounce} from '../utils/componentHelpers';
+import {portfolioBase, angleHeight} from '../constants';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
@@ -73,6 +73,12 @@ const pageTransitions = {
 };
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.handleResize = debounce(this.handleResize.bind(this), 150);
+	}
+
 	static propTypes = {
 		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
@@ -88,20 +94,35 @@ class App extends Component {
 	};
 
 	componentDidMount() {
+		window.addEventListener('resize', this.handleResize);
+		this.handleResize();
 		this.setAngle();
 
 		this.props.actions.videosInit({});
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
+
+	handleResize() {
+		this.props.actions.windowResize({
+			width: window.innerWidth,
+			height: window.innerHeight
+		});
 	}
 
 	setAngle() {
 		const windowWidth = window.innerWidth;
 		const halfWindow = windowWidth / 2;
 
-		const height = (windowWidth / 100) * 18;
+		const height = (windowWidth / 100) * angleHeight;
 
 		const angle = toDegrees(Math.atan(height / halfWindow));
+		const fullAngle = toDegrees(Math.atan(height / windowWidth));
 
 		this.props.actions.angleSet(angle);
+		this.props.actions.fullAngleSet(fullAngle);
 	}
 
 	render() {

@@ -1,11 +1,12 @@
 @import '../../css/utils/utils';
 
-$angleHeight: 18vw;
-$sectionPadding: 18vw;
+$angleHeight: 22vw;
+$sectionPadding: 22vw;
 
 $transform: 21.80140948635181deg;
 
 @mixin allSections() {
+
 	&[data-even='true'],
 	&[data-odd='true'] {
 		@content;
@@ -56,17 +57,35 @@ $transform: 21.80140948635181deg;
 
 @mixin defaultStyles() {
 	[data-section]:not(:last-child) {
-		padding-bottom: $sectionPadding;
+		[data-clip-target] {
+			padding-bottom: $sectionPadding;
+		}
 	}
 
 	[data-section]:not(:first-child) {
 		margin-top: $angleHeight * -1;
-		padding-top: $sectionPadding;
+
+		[data-clip-target] {
+			padding-top: $sectionPadding;
+		}
 	}
 
 	[data-section]:first-child {
 		clip-path: none;
 	}
+
+	[data-line] {
+		@include line();
+	}
+}
+
+@mixin line() {
+	background: rgba(#C8C9CB, 0.54);
+	display: none;
+	height: 3px;
+	position: absolute;
+	width: 200%;
+	z-index: -2;
 }
 
 .sectionManager {
@@ -74,20 +93,54 @@ $transform: 21.80140948635181deg;
 		@include hassOddLength() {
 			@include evenSections() {
 				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				&:not(:last-child) {
+					[data-line-bottomlefttoright] {
+						display: block !important;
+					}
+				}
+
+				&:not(:last-child):not(:nth-child(2)) {
+					[data-line-toprighttoleft] {
+						display: block !important;
+					}
+				}
 			}
 
 			@include oddSections() {
 				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+
+				[data-line-toplefttoright],
+				[data-line-bottomrighttoleft] {
+					display: block !important;
+				}
 			}
 		}
 
 		@include hasEvenLength() {
 			@include evenSections() {
 				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+
+				&:not(:last-child) {
+					[data-line-bottomrighttoleft] {
+						display: block !important;
+					}
+				}
+
+				&:not(:last-child):not(:nth-child(2)) {
+					[data-line-toplefttoright] {
+						display: block !important;
+					}
+				}
 			}
 
 			@include oddSections() {
 				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				[data-line-toprighttoleft],
+				[data-line-bottomlefttoright] {
+					display: block !important;
+				}
 			}
 		}
 
@@ -96,109 +149,151 @@ $transform: 21.80140948635181deg;
 
 			@include targetChild(2) {
 				clip-path: polygon(0 0, 50% #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
-				position: relative;
+
+				[data-line-chevron] {
+					display: block !important;
+				}
+			}
+
+			@include firstChild() {
+				[data-line] {
+					display: none !important;
+				}
+			}
+
+			@include lastChild() {
+				[data-line-toprighttoleft] {
+					display: block !important;
+				}
+
+				[data-line-chevron],
+				[data-line-bottomlefttoright],
+				[data-line-bottomrighttoleft] {
+					display: none !important;
+				}
 			}
 		}
 	}
 
 	&[data-template='angle'] {
-		@include allSections() {
-			@include defaultStyles();
 
+		@include hasEvenLength() {
 			@include evenSections() {
 				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+
+				[data-line-toplefttoright],
+				[data-line-bottomrighttoleft] {
+					display: block !important;
+				}
 			}
 
 			@include oddSections() {
 				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				[data-line-toprighttoleft],
+				[data-line-bottomlefttoright] {
+					display: block !important;
+				}
 			}
+		}
+
+		@include hassOddLength() {
+			@include evenSections() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				[data-line-toprighttoleft],
+				[data-line-bottomlefttoright] {
+					display: block !important;
+				}
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+
+				[data-line-toplefttoright],
+				[data-line-bottomrighttoleft] {
+					display: block !important;
+				}
+			}
+		}
+
+		@include allSections() {
+			@include defaultStyles();
 
 			@include lastChild() {
 				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				[data-line-toprighttoleft] {
+					display: block !important;
+				}
+
+				[data-line-chevron],
+				[data-line-bottomlefttoright],
+				[data-line-bottomrighttoleft],
+				[data-line-toplefttoright] {
+					display: none !important;
+				}
 			}
 
 			@include firstChild() {
 				clip-path: none;
+
+				[data-line-bottomlefttoright] {
+					display: block !important;
+					z-index: 1;
+				}
 			}
 		}
 	}
 
 	&[data-template='project'] {
-		$projectAngle: 50 - $angleHeight;
-		@include hassOddLength() {
-			@include evenSections() {
-				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+		@include evenSections() {
+			clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+			&:not(:last-child) {
+				[data-line-bottomlefttoright] {
+					display: block !important;
+				}
 			}
 
-			@include oddSections() {
-				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+			&:not(:nth-child(2)) {
+				[data-line-toprighttoleft] {
+					display: block !important;
+				}
 			}
 		}
 
-		@include hasEvenLength() {
-			@include evenSections() {
-				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
-			}
+		@include oddSections() {
+			clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
 
-			@include oddSections() {
-				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+			[data-line-toplefttoright],
+			[data-line-bottomrighttoleft] {
+				display: block !important;
 			}
 		}
 
 		@include allSections() {
 			@include defaultStyles();
+		}
 
-			@include firstChild() {
-				[data-clip] {
-					clip-path: polygon(0 0, 50% #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
-					height: $angleHeight;
-					margin-top: $angleHeight * -1;
-				}
-			}
-
-			@include targetChild(2) {
-				clip-path: none;
-				margin-top: 0;
-				padding-top: 0;
+		@include firstChild() {
+			[data-clip] {
+				clip-path: polygon(0 0, 50% #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+				height: $angleHeight;
+				margin-top: $angleHeight * -1;
 			}
 		}
-	}
-}
 
-.lineWrap {
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	@include zIndex(sectionLines);
-}
+		@include targetChild(2) {
+			margin-top: $angleHeight * -1;
 
-.lines {
-	@include zIndex(sectionLines);
-}
+			[data-clip-target] {
+				clip-path: none;
+			}
 
-.line {
-	background-color: $grey;
-	height: 2px;
-	position: absolute;
-	width: 200vw;
-	transform-origin: 0;
-	@include zIndex(sectionLines);
-}
-
-*[data-line='true'] {
-	background-color: $grey;
-	height: 1px;
-	position: absolute;
-	width: 0;
-	transform-origin: 0;
-	@include zIndex(sectionLines);
-}
-
-.lineWrap[data-layout='chevron'] {
-	.lines:nth-child(2) {
-		.line {
-			transform-origin: 100%;
+			[data-line-chevron] {
+				display: block !important;
+			}
 		}
 	}
 }

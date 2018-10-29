@@ -5,20 +5,26 @@ import {List} from 'immutable';
 
 import CSS from './sectionFeaturedEvents.module.scss';
 import VideoGrid from '../videoGrid/videoGrid';
+import SectionLines from '../common/sectionLines';
 
 const SectionFeaturedEvents = ({title, videos, state, actions}) => {
 	return (
 		<div data-section className={CSS.section}>
-			<div className={CSS.inner}>
-				<div className="row">
-					<div className="col-sm-8 offset-sm-2">
-						<h3 className={CSS.title}>{title}</h3>
+			<SectionLines state={state}/>
+			<div data-clip-target>
+				<div className={CSS.inner}>
+					<div className="container">
+						<div className="row">
+							<div className="col-sm-8 offset-sm-2">
+								<h3 className={CSS.title}>{title}</h3>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div className="row">
-					<div className="col">
-						<div className={CSS.videos}>
-							<VideoGrid videos={videos} perGroup={4} state={state} actions={actions}/>
+					<div className="row">
+						<div className="col">
+							<div className={CSS.videos}>
+								<VideoGrid videos={videos} perGroup={4} state={state} actions={actions}/>
+							</div>
 						</div>
 					</div>
 				</div>

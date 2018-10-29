@@ -1,5 +1,9 @@
 @import '../../css/utils/utils';
 
+.section {
+	position: relative;
+}
+
 .title {
 	@include fontSize(35, 52);
 	@include titleUnderline(75%, 232px, $spacingUnitXs);

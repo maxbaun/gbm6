@@ -18,17 +18,18 @@ export default class SectionManager extends Component {
 	};
 
 	render() {
-		const {hasCta, children, template} = this.props;
+		const {children, template} = this.props;
 
-		const offSet = hasCta ? 1 : 0;
+		const c = children[0].length ? children[0] : children;
+
 		return (
 			<Fragment>
 				<div
 					ref={ref.call(this, 'wrap')}
 					className={CSS.sectionManager}
 					data-template={template}
-					data-odd={(children.length - offSet) % 2 === 1}
-					data-even={(children.length - offSet) % 2 === 0}
+					data-odd={c.length % 2 === 1}
+					data-even={c.length % 2 === 0}
 				>
 					{children}
 				</div>

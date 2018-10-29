@@ -11,6 +11,7 @@ import Image from '../common/image';
 import SliderNav from '../sliderNav/sliderNav';
 import {ref, click, vimeoId} from '../../utils/componentHelpers';
 import PlayBtn from '../playBtn/playBtn';
+import SectionLines from '../common/sectionLines';
 
 export default class SectionHero extends Component {
 	constructor(props) {
@@ -92,6 +93,7 @@ export default class SectionHero extends Component {
 
 		return (
 			<div data-section className={heroCss.join(' ')}>
+				<SectionLines state={state}/>
 				{this.shouldRenderCarousel() ? (
 					this.renderCarousel()
 				) : (

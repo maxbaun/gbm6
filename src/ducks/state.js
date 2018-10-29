@@ -14,6 +14,7 @@ export const types = {
 	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD',
 	STATUS_CHANGE: 'STATUS_CHANGE',
 	ANGLE_SET: 'ANGLE_SET',
+	FULL_ANGLE_SET: 'FULL_ANGLE_SET',
 	PAGE_TRANSITION_START: 'PAGE_TRANSITION_START',
 	PAGE_TRANSITION_END: 'PAGE_TRANSITION_END'
 };
@@ -25,6 +26,7 @@ export const actions = {
 	windowResize: payload => utils.action(types.WINDOW_RESIZE, {payload}),
 	addVideoModal: payload => utils.action(types.VIDEO_MODAL_ADD, {payload}),
 	angleSet: payload => utils.action(types.ANGLE_SET, {payload}),
+	fullAngleSet: payload => utils.action(types.FULL_ANGLE_SET, {payload}),
 	pageTransitionStart: () => utils.action(types.PAGE_TRANSITION_START),
 	pageTransitionEnd: () => utils.action(types.PAGE_TRANSITION_END)
 };
@@ -40,6 +42,7 @@ export const initialState = utils.initialState({
 		height: window.innerHeight
 	},
 	angle: 0,
+	fullAngle: 0,
 	status: {},
 	pageTransitioning: false,
 	isCollapsed: window.innerWidth < responsive.collapse,
@@ -81,6 +84,8 @@ export default (state = initialState, action) => {
 			});
 		case types.ANGLE_SET:
 			return state.set('angle', fromJS(action.payload));
+		case types.FULL_ANGLE_SET:
+			return state.set('fullAngle', fromJS(action.payload));
 		case types.VIDEO_MODAL_ADD:
 			return state.update('videoModals', u => {
 				action.payload.forEach(video => {

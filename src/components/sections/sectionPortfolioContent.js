@@ -6,35 +6,39 @@ import {fromJS} from 'immutable';
 import CSS from './sectionPortfolioContent.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
 import Markdown from '../common/markdown';
+import SectionLines from '../common/sectionLines';
 
-const SectionPortfolioContent = ({title, content, date, location, talent}) => {
+const SectionPortfolioContent = ({title, content, date, location, talent, state}) => {
 	const meta = fromJS([{title: 'Date', text: date}, {title: 'Location', text: location}, {title: 'Talent', text: talent}]);
 
 	return (
 		<div data-section className={CSS.section}>
-			<div className="container">
-				<div className={CSS.inner}>
-					<div className={CSS.header}>
-						<div className="row">
-							<div className="col-sm-5 offset-sm-1">
-								<div className={CSS.heading}>
-									<HeadingBrand heading={`# ${title}`}/>
+			<div data-clip-target>
+				<SectionLines state={state}/>
+				<div className="container">
+					<div className={CSS.inner}>
+						<div className={CSS.header}>
+							<div className="row">
+								<div className="col-sm-5 offset-sm-1">
+									<div className={CSS.heading}>
+										<HeadingBrand heading={`# ${title}`}/>
+									</div>
 								</div>
-							</div>
-							<div className="col-sm-6 col-md-5 offset-md-1 ">
-								<div className={CSS.meta}>
-									<ul className={CSS.metaList}>{meta.map(renderMeta)}</ul>
+								<div className="col-sm-6 col-md-5 offset-md-1 ">
+									<div className={CSS.meta}>
+										<ul className={CSS.metaList}>{meta.map(renderMeta)}</ul>
+									</div>
 								</div>
 							</div>
 						</div>
+						{content && content !== '' ? (
+							<div className="row">
+								<div className="col-sm-8 col-md-8 col-lg-6 offset-sm-2 offset-md-2 offset-lg-3">
+									<Markdown className={CSS.content} content={content}/>
+								</div>
+							</div>
+						) : null}
 					</div>
-					{content && content !== '' ? (
-						<div className="row">
-							<div className="col-sm-8 col-md-8 col-lg-6 offset-sm-2 offset-md-2 offset-lg-3">
-								<Markdown className={CSS.content} content={content}/>
-							</div>
-						</div>
-					) : null}
 				</div>
 			</div>
 		</div>
@@ -61,7 +65,8 @@ SectionPortfolioContent.propTypes = {
 	content: PropTypes.string,
 	date: PropTypes.string,
 	location: PropTypes.string,
-	talent: PropTypes.string
+	talent: PropTypes.string,
+	state: ImmutablePropTypes.map.isRequired
 };
 
 SectionPortfolioContent.defaultProps = {
