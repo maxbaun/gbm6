@@ -49,10 +49,6 @@ export default class SectionCta extends Component {
 		return initialState;
 	}
 
-	componentWillUnmount() {
-		console.log('cta unmount');
-	}
-
 	handleSubmit(e) {
 		e.preventDefault();
 

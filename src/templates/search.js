@@ -92,8 +92,6 @@ class SearchTemplate extends Component {
 	render() {
 		const loading = isLoading(this.fetch, this.props.state);
 
-		console.log(loading);
-
 		if (typeof loading === 'undefined' || loading) {
 			return null;
 		}

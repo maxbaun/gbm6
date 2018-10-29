@@ -85,8 +85,8 @@ export default class SectionFaq extends Component {
 							this.renderAccordionTabs()
 						) : (
 							<Fragment>
-								<div className="d-sm-none d-md-block">{this.renderVerticalTabs()}</div>
-								<div className="d-none d-sm-block d-md-none">
+								<div className="d-none d-md-block">{this.renderVerticalTabs()}</div>
+								<div className="d-md-none">
 									{this.renderAccordionTabs()}
 									<div className={CSS.allFaqLink}>
 										<Link to={allFaqLinkUrl} className={CSS.allLink}>
