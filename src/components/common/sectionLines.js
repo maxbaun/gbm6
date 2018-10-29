@@ -23,7 +23,7 @@ export default class SectionLines extends Component {
 			}
 		};
 
-		this.handleResize = debounce(this.handleResize.bind(this), 100);
+		this.handleResize = debounce(this.handleResize.bind(this), 150);
 	}
 
 	static propTypes = {
@@ -51,7 +51,7 @@ export default class SectionLines extends Component {
 		const {state} = this.props;
 		const width = window.innerWidth / Math.sin(toRadians(90 - state.get('angle')));
 
-		const aHeight = (state.getIn(['windowSize', 'width']) * angleHeight) / 100;
+		const aHeight = (window.innerWidth * angleHeight) / 100;
 
 		const commonStyles = {width};
 
