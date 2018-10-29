@@ -13,6 +13,7 @@ import SectionManager from '../components/sectionManager/sectionManager';
 import {unique, ScrollToHelper, isLoading} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
+import {analytics} from '../utils/trackingHelpers';
 
 import SectionHero from '../components/sections/sectionHero';
 import SectionCta from '../components/sections/sectionCta';
@@ -60,6 +61,7 @@ class PortfolioTemplate extends Component {
 	componentDidMount() {
 		this.getVideo();
 		this.locationChanged();
+		this.handleAnalytics();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -67,9 +69,14 @@ class PortfolioTemplate extends Component {
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
 			this.getVideo();
 			this.locationChanged();
+			this.handleAnalytics();
 		} else if (prevProps.location.hash !== this.props.location.hash) {
 			this.locationChanged();
 		}
+	}
+
+	handleAnalytics() {
+		analytics('page', this.props.location.pathname);
 	}
 
 	locationChanged() {

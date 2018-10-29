@@ -7,9 +7,11 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import qhistory from 'qhistory';
 import {parse, stringify} from 'qs';
 
+import {analytics} from './utils/trackingHelpers';
 import * as serviceWorker from './services/serviceWorker';
 import store from './store';
 import App from './containers/app';
+import {googleAnalytics} from './constants';
 
 import './css/index.scss';
 
@@ -28,6 +30,9 @@ class Index extends React.Component {
 		);
 	}
 }
+
+// Initialize Google Analytics
+analytics('initialize', googleAnalytics);
 
 ReactDOM.render(<Index/>, document.getElementById('root'));
 

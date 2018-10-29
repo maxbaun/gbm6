@@ -11,10 +11,9 @@ import {selectors as stateSelectors, actions as stateActions} from '../ducks/sta
 
 import {unique, isLoading} from '../utils/componentHelpers';
 import {SiteSettings} from '../data/siteSettings';
-
+import {analytics} from '../utils/trackingHelpers';
 import SectionCta from '../components/sections/sectionCta';
 import SectionSearch from '../components/sections/sectionSearch';
-import NoResults from '../components/noResults/noResults';
 import PageWrapper from '../components/pageWrapper/pageWrapper';
 import Head from '../components/common/head';
 
@@ -57,6 +56,7 @@ class SearchTemplate extends Component {
 	componentDidMount() {
 		this.getSearch();
 		this.locationChanged();
+		this.handleAnalytics();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -64,7 +64,12 @@ class SearchTemplate extends Component {
 		if (prevProps.match.params.search !== this.props.match.params.search) {
 			this.getSearch();
 			this.locationChanged();
+			this.handleAnalytics();
 		}
+	}
+
+	handleAnalytics() {
+		analytics('page', this.props.location.pathname);
 	}
 
 	locationChanged() {
@@ -87,14 +92,22 @@ class SearchTemplate extends Component {
 	render() {
 		const loading = isLoading(this.fetch, this.props.state);
 
-		if (loading) {
+		console.log(loading);
+
+		if (typeof loading === 'undefined' || loading) {
 			return null;
 		}
 
 		return (
 			<PageWrapper>
 				<Head title={`Search For ${this.getSearchQuery()}`} location={this.props.location} url={window.location.href}/>
-				<SectionSearch search={this.props.search} query={this.getSearchQuery()} actions={this.props.actions} state={this.props.state}/>
+				<SectionSearch
+					search={this.props.search}
+					query={this.getSearchQuery()}
+					actions={this.props.actions}
+					state={this.props.state}
+					loading={loading || false}
+				/>
 				<SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/>
 			</PageWrapper>
 		);

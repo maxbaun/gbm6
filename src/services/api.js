@@ -69,10 +69,6 @@ export async function search({query}) {
 			...query.text
 		});
 
-		console.log(titleRes);
-		console.log(descriptionRes);
-		console.log(textRes);
-
 		const res = [...titleRes.items, ...descriptionRes.items, ...textRes.items];
 
 		// @TODO: Cache portfolio items here

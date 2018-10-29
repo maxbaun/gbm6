@@ -28,5 +28,6 @@ module.exports = {
 		desktop: 992,
 		widescreen: 1200
 	},
-	angleHeight: 20
+	angleHeight: 20,
+	googleAnalytics: process.env.REACT_APP_GOOGLE_ANALYTICS
 };

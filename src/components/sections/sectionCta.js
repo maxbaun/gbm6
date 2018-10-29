@@ -31,7 +31,8 @@ export default class SectionCta extends Component {
 
 	static propTypes = {
 		siteSettings: ImmutableProptypes.map,
-		actions: PropTypes.objectOf(PropTypes.func).isRequired
+		actions: PropTypes.objectOf(PropTypes.func).isRequired,
+		state: ImmutableProptypes.map.isRequired
 	};
 
 	static defaultProps = {
@@ -46,6 +47,10 @@ export default class SectionCta extends Component {
 		}
 
 		return initialState;
+	}
+
+	componentWillUnmount() {
+		console.log('cta unmount');
 	}
 
 	handleSubmit(e) {

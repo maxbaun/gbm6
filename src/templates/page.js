@@ -15,6 +15,7 @@ import SectionManager from '../components/sectionManager/sectionManager';
 import {unique, ScrollToHelper, isLoading} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
+import {analytics} from '../utils/trackingHelpers';
 
 import SectionHero from '../components/sections/sectionHero';
 import SectionAbout from '../components/sections/sectionAbout';
@@ -74,6 +75,7 @@ class PageTemplate extends Component {
 	componentDidMount() {
 		this.getPage();
 		this.locationChanged();
+		this.handleAnalytics();
 	}
 
 	componentDidUpdate(prevProps) {
@@ -81,9 +83,14 @@ class PageTemplate extends Component {
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
 			this.getPage();
 			this.locationChanged();
+			this.handleAnalytics();
 		} else if (prevProps.location.hash !== this.props.location.hash) {
 			this.locationChanged();
 		}
+	}
+
+	handleAnalytics() {
+		analytics('page', this.props.location.pathname);
 	}
 
 	getPage() {
