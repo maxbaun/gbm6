@@ -20,7 +20,7 @@ const VideoPreview = ({video, onVideoOpen}) => {
 					<div className={CSS.contentInner}>
 						{video.getIn(['fields', 'video']) ? (
 							<div className={CSS.iconVideo} onClick={onVideoOpen}>
-								<span className="far fa-play-circle"/>
+								<span className="icon icon-play-btn"/>
 							</div>
 						) : (
 							<div className={CSS.iconPhoto}>
