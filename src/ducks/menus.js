@@ -1,4 +1,4 @@
-import {fromJS, List} from 'immutable';
+import {List} from 'immutable';
 import {createSelector} from 'reselect';
 
 import * as utils from '../utils/duckHelpers';

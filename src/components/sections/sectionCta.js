@@ -1,11 +1,11 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {Map, fromJS} from 'immutable';
 
 import CSS from './sectionCta.module.scss';
 import HeadingBrand from '../headingBrand/headingBrand';
-import {state, unique, isLoading, getError, getSuccess, innerHtml} from '../../utils/componentHelpers';
+import {state, unique, isLoading, getError, getSuccess} from '../../utils/componentHelpers';
 import Markdown from '../common/markdown';
 import Button from '../button/button';
 import SectionLines from '../common/sectionLines';

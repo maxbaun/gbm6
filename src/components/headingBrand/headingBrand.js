@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import FitText from 'react-fittext';
+import {debounce} from 'lodash';
 import Remarkable from 'remarkable';
 
 import CSS from './headingBrand.module.scss';
 import LogoPolygon from '../common/logoPolygon';
-import {innerHtml, ref, debounce} from '../../utils/componentHelpers';
+import {innerHtml, ref} from '../../utils/componentHelpers';
 
 const md = new Remarkable({
 	html: true
@@ -37,7 +37,7 @@ export default class HeadingBrand extends Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
 
-		setTimeout(() => this.setSizing(), 150);
+		this.setSizing();
 	}
 
 	componentWillUnmount() {

@@ -8,6 +8,7 @@
     "contentful": "^7.0.4",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
+    "lodash": "^4.17.11",
     "qhistory": "^1.0.2",
     "qs": "^6.5.2",
     "react": "^16.5.2",

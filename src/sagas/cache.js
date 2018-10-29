@@ -1,5 +1,4 @@
 import {takeEvery, all, call, put, select} from 'redux-saga/effects';
-import {Map, fromJS} from 'immutable';
 
 import {types as cacheTypes} from '../ducks/cache';
 import {selectors as menuSelectors} from '../ducks/menus';

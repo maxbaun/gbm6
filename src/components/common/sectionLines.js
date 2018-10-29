@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
+import {debounce} from 'lodash';
 
 import {toRadians} from '../../utils/mathHelpers';
-import {debounce} from '../../utils/componentHelpers';
 import {angleHeight} from '../../constants';
 
 const separation = 20;
@@ -32,13 +32,8 @@ export default class SectionLines extends Component {
 
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
-		setTimeout(() => {
-			this.handleResize();
-		}, 300);
-
-		setTimeout(() => {
-			this.init();
-		}, 1000);
+		this.handleResize();
+		this.init();
 	}
 
 	componentWillUnmount() {
@@ -50,10 +45,12 @@ export default class SectionLines extends Component {
 	}
 
 	handleResize() {
-		const {state} = this.props;
-		const width = window.innerWidth / Math.sin(toRadians(90 - state.get('angle')));
+		const windowWidth = window.innerWidth;
 
-		const aHeight = (window.innerWidth * angleHeight) / 100;
+		const {state} = this.props;
+		const width = windowWidth / Math.sin(toRadians(90 - state.get('angle')));
+
+		const aHeight = (windowWidth * angleHeight) / 100;
 
 		const commonStyles = {width};
 

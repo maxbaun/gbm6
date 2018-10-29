@@ -86,13 +86,13 @@ const Logo = ({height, width}) => {
 };
 
 Logo.propTypes = {
-	height: PropTypes.number,
-	width: PropTypes.number
+	height: PropTypes.any,
+	width: PropTypes.any
 };
 
 Logo.defaultProps = {
-	height: 70,
-	width: 164
+	height: '100%',
+	width: '100%'
 };
 
 export default Logo;

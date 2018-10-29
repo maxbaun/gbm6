@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {bindActionCreators} from 'redux';
-import {withRouter, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';

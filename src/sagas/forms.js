@@ -35,6 +35,8 @@ function * onFormCreate(action) {
 				}
 			})
 		]);
+
+		return yield res;
 	} catch (error) {
 		yield all([
 			put({

@@ -1,18 +1,16 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
-import {Map, List} from 'immutable';
+import {List} from 'immutable';
 import Swiper from 'swiper';
+import {debounce} from 'lodash';
 
 import CSS from './teamSlider.module.scss';
 import SliderNav from '../sliderNav/sliderNav';
-import {ref, windowWidthChange, click, debounce} from '../../utils/componentHelpers';
-import {responsive} from '../../constants';
+import {ref} from '../../utils/componentHelpers';
 import Image from '../common/image';
 
 const TeamSize = 307;
 const TeamSizeMobile = 159;
-const TeamSpacing = 7;
 
 export default class TeamSlider extends Component {
 	constructor(props) {

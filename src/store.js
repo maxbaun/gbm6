@@ -1,7 +1,6 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {createLogger} from 'redux-logger';
-import {Map, fromJS} from 'immutable';
+import {Map} from 'immutable';
 
 import Ducks from './ducks/root';
 import Sagas from './sagas/root';

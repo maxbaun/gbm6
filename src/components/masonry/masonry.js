@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {StaggeredMotion, spring} from 'react-motion';
 import {List} from 'immutable';
+import {debounce, throttle} from 'lodash';
 
 import CSS from './masonry.module.scss';
-import {ref, debounce, chunkList} from '../../utils/componentHelpers';
+import {ref, chunkList} from '../../utils/componentHelpers';
 
 const startOpacity = 0;
 
@@ -29,7 +30,7 @@ export default class Masonry extends Component {
 
 		this.resizeGridItem = this.resizeGridItem.bind(this);
 		this.debounceResize = this.debounceResize.bind(this);
-		this.debounceResize = debounce(this.debounceResize, 300);
+		this.debounceResize = throttle(debounce(this.debounceResize, 300), 300);
 
 		this.getDefaultStyles = this.getDefaultStyles.bind(this);
 		this.getStyles = this.getStyles.bind(this);
@@ -59,12 +60,8 @@ export default class Masonry extends Component {
 	}
 
 	componentDidMount() {
-		// Delay this so child content is rendered
-		setTimeout(() => {
-			this.resizeAllGridItems();
-		}, 300);
-
 		window.addEventListener('resize', this.debounceResize);
+		this.resizeAllGridItems();
 	}
 
 	componentWillUnmount() {

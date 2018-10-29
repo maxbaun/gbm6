@@ -9,7 +9,6 @@ import Hamburg from '../hamburg/hamburg';
 import MegaMenu from '../menu/megaMenu';
 import Logo from '../logo/logo';
 import {click, chunkList} from '../../utils/componentHelpers';
-import {responsive} from '../../constants';
 import {currentMenu} from '../../utils/contentfulHelpers';
 import {List, fromJS} from 'immutable';
 
@@ -19,7 +18,6 @@ export default class Header extends Component {
 
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleOffmenuClose = this.handleOffmenuClose.bind(this);
-		this.getLogoSize = this.getLogoSize.bind(this);
 		this.getTopLinks = this.getTopLinks.bind(this);
 		this.getMegaMenuLinks = this.getMegaMenuLinks.bind(this);
 	}
@@ -44,29 +42,6 @@ export default class Header extends Component {
 		if (this.props.state.getIn(['offmenu', offmenu])) {
 			this.props.actions.offmenuHide(offmenu);
 		}
-	}
-
-	getLogoSize() {
-		const windowWidth = window.innerWidth;
-
-		if (windowWidth >= responsive.desktop) {
-			return {
-				width: 164,
-				height: 70
-			};
-		}
-
-		if (windowWidth >= responsive.collapse) {
-			return {
-				width: 154,
-				height: 60
-			};
-		}
-
-		return {
-			width: 77,
-			height: 33
-		};
 	}
 
 	currentMenu(location) {
@@ -106,7 +81,6 @@ export default class Header extends Component {
 
 	render() {
 		const megaMenuOpen = this.props.state.getIn(['offmenu', 'megaMenu']);
-		const logoSize = this.getLogoSize();
 
 		return (
 			<header className={CSS.header}>
@@ -117,9 +91,9 @@ export default class Header extends Component {
 					</div>
 					<div className={CSS.menuWrap}>
 						<div className={CSS.menuLeft}>{this.renderTopLinks(0)}</div>
-						<div className={CSS.logo} style={{...logoSize}}>
+						<div className={CSS.logo}>
 							<Link to="/" className={CSS.logoLink}>
-								<Logo width={logoSize.width} height={logoSize.height}/>
+								<Logo/>
 							</Link>
 						</div>
 						<div className={CSS.menuRight}>{this.renderTopLinks(1)}</div>

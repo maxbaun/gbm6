@@ -1,5 +1,4 @@
 import {takeEvery, all, put, select, call} from 'redux-saga/effects';
-import {delay} from 'redux-saga';
 
 import {getPages} from '../services/api';
 import {types as pageTypes, selectors as pageSelectors} from '../ducks/pages';

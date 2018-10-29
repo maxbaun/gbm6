@@ -223,11 +223,11 @@ export function coordinates(location) {
 export function easeInOutQuad(t, b, c, d) {
 	t /= d / 2;
 	if (t < 1) {
-		return (c / 2) * t * t + b;
+		return (c / 2) * t * t + b; // eslint-disable-line no-mixed-operators
 	}
 	t--;
 
-	return (-c / 2) * (t * (t - 2) - 1) + b;
+	return (-c / 2) * (t * (t - 2) - 1) + b; // eslint-disable-line no-mixed-operators
 }
 
 export function innerHtml(html) {
@@ -283,32 +283,6 @@ export function vimeoId(url) {
 	}
 
 	return match[1];
-}
-
-export function debounce(func, wait, immediate) {
-	var timeout;
-
-	return () => {
-		var context = this;
-		var args = arguments;
-
-		var later = () => {
-			timeout = null;
-			if (!immediate) {
-				func.apply(context, args);
-			}
-		};
-
-		var callNow = immediate && !timeout;
-
-		clearTimeout(timeout);
-
-		timeout = setTimeout(later, wait);
-
-		if (callNow) {
-			func.apply(context, args);
-		}
-	};
 }
 
 export function chunkList(list, chunkSize = 1) {
