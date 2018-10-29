@@ -32,7 +32,9 @@ export default class SectionLines extends Component {
 
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
-		this.handleResize();
+		setTimeout(() => {
+			this.handleResize();
+		}, 300);
 
 		setTimeout(() => {
 			this.init();
@@ -60,7 +62,7 @@ export default class SectionLines extends Component {
 			left: 0,
 			transform: `rotate(${state.get('angle')}deg)`,
 			transformOrigin: 0,
-			top: 0
+			top: 2.9
 		};
 
 		const chevron2 = {
@@ -68,7 +70,7 @@ export default class SectionLines extends Component {
 			transform: `rotate(${state.get('angle') * -1}deg)`,
 			transformOrigin: '100%',
 			right: 0,
-			top: 0
+			top: 2.9
 		};
 
 		const topLeftToRight = {
