@@ -118,6 +118,10 @@ class PageTemplate extends Component {
 			return true;
 		}
 
+		if (nextProps.location.hash !== this.props.location.hash) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -146,7 +150,7 @@ class PageTemplate extends Component {
 			if (currentPage && !currentPage.isEmpty()) {
 				this.checkTargetElem();
 			}
-		}, 50);
+		}, 150);
 	}
 
 	checkTargetElem() {
@@ -160,12 +164,13 @@ class PageTemplate extends Component {
 			if (!this.props.location.hash) {
 				this.scrollToHash();
 			}
+
 			const targetElem = document.querySelector(this.props.location.hash);
 
 			if (targetElem) {
 				this.scrollToHash(targetElem);
 			}
-		}, 50);
+		}, 150);
 	}
 
 	scrollToHash(target) {

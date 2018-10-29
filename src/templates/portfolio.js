@@ -106,6 +106,10 @@ class PortfolioTemplate extends Component {
 			return true;
 		}
 
+		if (nextProps.location.hash !== this.props.location.hash) {
+			return true;
+		}
+
 		return false;
 	}
 
