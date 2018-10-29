@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {bindActionCreators} from 'redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
@@ -19,6 +19,7 @@ import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
 import PageTemplate from '../templates/page';
 import PortfolioTemplate from '../templates/portfolio';
+import ResetTemplate from '../templates/reset';
 import AnimatedSwitch from '../components/routing/animatedSwitch';
 import VideoModal from '../components/modals/videoModal';
 import {toDegrees} from '../utils/mathHelpers';
@@ -73,10 +74,6 @@ const pageTransitions = {
 };
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	static propTypes = {
 		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
@@ -129,6 +126,7 @@ class App extends Component {
 						bottom: styles.absolute ? 0 : 'auto'
 					})}
 				>
+					<Route exact path="/reset" component={ResetTemplate}/>
 					<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
 					<Route exact path="/:slug" component={PageTemplate}/>
 					<Route path="/" render={PageTemplate}/>
