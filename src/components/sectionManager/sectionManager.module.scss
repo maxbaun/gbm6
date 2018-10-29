@@ -75,12 +75,16 @@ $transform: 21.80140948635181deg;
 	}
 
 	[data-section] {
-		overflow-x: hidden;
+		overflow: hidden;
 		width: 100%;
 	}
 
 	[data-line] {
 		@include line();
+	}
+
+	[data-line-active='true'] {
+		opacity: 1;
 	}
 }
 
@@ -88,7 +92,9 @@ $transform: 21.80140948635181deg;
 	background: rgba(#C8C9CB, 0.54);
 	display: none;
 	height: 3px;
+	opacity: 0;
 	position: absolute;
+	transition: opacity 0.3s ease-in-out;
 	width: 200%;
 	z-index: -2;
 }
@@ -182,60 +188,32 @@ $transform: 21.80140948635181deg;
 
 	&[data-template='angle'] {
 
-		@include hasEvenLength() {
-			@include evenSections() {
-				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
-
-				[data-line-toplefttoright],
-				[data-line-bottomrighttoleft] {
-					display: block !important;
-				}
-			}
-
-			@include oddSections() {
-				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
-
-				[data-line-toprighttoleft],
-				[data-line-bottomlefttoright] {
-					display: block !important;
-				}
-			}
-		}
-
-		@include hassOddLength() {
-			@include evenSections() {
-				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
-
-				[data-line-toprighttoleft],
-				[data-line-bottomlefttoright] {
-					display: block !important;
-				}
-			}
-
-			@include oddSections() {
-				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
-
-				[data-line-toplefttoright],
-				[data-line-bottomrighttoleft] {
-					display: block !important;
-				}
-			}
-		}
-
 		@include allSections() {
+			@include evenSections() {
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+
+				[data-line-toplefttoright],
+				[data-line-bottomrighttoleft] {
+					display: block !important;
+				}
+			}
+
+			@include oddSections() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				[data-line-toprighttoleft],
+				[data-line-bottomlefttoright] {
+					display: block !important;
+				}
+			}
+
 			@include defaultStyles();
 
 			@include lastChild() {
-				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
-
-				[data-line-toprighttoleft] {
-					display: block !important;
-				}
 
 				[data-line-chevron],
 				[data-line-bottomlefttoright],
-				[data-line-bottomrighttoleft],
-				[data-line-toplefttoright] {
+				[data-line-bottomrighttoleft] {
 					display: none !important;
 				}
 			}
@@ -246,6 +224,14 @@ $transform: 21.80140948635181deg;
 				[data-line-bottomlefttoright] {
 					display: block !important;
 					z-index: 1;
+				}
+			}
+
+			@include targetChild(2) {
+				clip-path: polygon(0 0, 100% #{$angleHeight}, 100% 100%, 0 100%);
+
+				[data-line-bottomrighttoleft] {
+					display: block !important;
 				}
 			}
 		}
