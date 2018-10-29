@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import {fromJS} from 'immutable';
 
 import CSS from './sectionPortfolioContent.module.scss';
@@ -8,13 +7,13 @@ import HeadingBrand from '../headingBrand/headingBrand';
 import Markdown from '../common/markdown';
 import SectionLines from '../common/sectionLines';
 
-const SectionPortfolioContent = ({title, content, date, location, talent, state}) => {
+const SectionPortfolioContent = ({title, content, date, location, talent}) => {
 	const meta = fromJS([{title: 'Date', text: date}, {title: 'Location', text: location}, {title: 'Talent', text: talent}]);
 
 	return (
 		<div data-section className={CSS.section}>
 			<div data-clip-target>
-				<SectionLines state={state}/>
+				<SectionLines/>
 				<div className="container">
 					<div className={CSS.inner}>
 						<div className={CSS.header}>
@@ -65,8 +64,7 @@ SectionPortfolioContent.propTypes = {
 	content: PropTypes.string,
 	date: PropTypes.string,
 	location: PropTypes.string,
-	talent: PropTypes.string,
-	state: ImmutablePropTypes.map.isRequired
+	talent: PropTypes.string
 };
 
 SectionPortfolioContent.defaultProps = {

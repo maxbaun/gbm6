@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import {List, Map} from 'immutable';
 import Swiper from 'swiper';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import CSS from './sectionHero.module.scss';
+import {selectors as stateSelectors, actions as stateActions} from '../../ducks/state';
 import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
 import Image from '../common/image';
@@ -13,7 +16,20 @@ import {ref, click, vimeoId} from '../../utils/componentHelpers';
 import PlayBtn from '../playBtn/playBtn';
 import SectionLines from '../common/sectionLines';
 
-export default class SectionHero extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+	actions: bindActionCreators(
+		{
+			...stateActions
+		},
+		dispatch
+	)
+});
+
+class SectionHero extends Component {
 	constructor(props) {
 		super(props);
 
@@ -99,7 +115,14 @@ export default class SectionHero extends Component {
 					this.renderCarousel()
 				) : (
 					<Fragment>
-						<Image background style={imageCss} className={CSS.image} image={images.first()}/>
+						<Image
+							background
+							style={{
+								...imageCss
+							}}
+							className={CSS.image}
+							image={images.first()}
+						/>
 						{hasOverlay ? <div className={CSS.imageOverlay}/> : null}
 					</Fragment>
 				)}
@@ -139,7 +162,7 @@ export default class SectionHero extends Component {
 				) : null}
 				{this.shouldRenderCarousel() ? null : (
 					<div data-clip>
-						<SectionLines state={state}/>
+						<SectionLines/>
 					</div>
 				)}
 			</div>
@@ -173,3 +196,8 @@ export default class SectionHero extends Component {
 		);
 	}
 }
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SectionHero);

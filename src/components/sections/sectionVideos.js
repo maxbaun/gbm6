@@ -3,15 +3,21 @@ import {Link} from 'react-router-dom';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {Map, List} from 'immutable';
+import {connect} from 'react-redux';
 
 import CSS from './sectionVideos.module.scss';
+import {selectors as videoSelectors} from '../../ducks/videos';
 import HeadingBrand from '../headingBrand/headingBrand';
 import {click} from '../../utils/componentHelpers';
 import VideoGrid from '../videoGrid/videoGrid';
 import {videosPerPage} from '../../constants';
 import SectionLines from '../common/sectionLines';
 
-export default class SectionVideos extends Component {
+const mapStateToProps = state => ({
+	videos: videoSelectors.getVideos(state)
+});
+
+class SectionVideos extends Component {
 	constructor(props) {
 		super(props);
 
@@ -35,7 +41,6 @@ export default class SectionVideos extends Component {
 		allVideosLink: PropTypes.string,
 		allVideosText: PropTypes.string,
 		allCategoriesText: PropTypes.string,
-		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		categoryAlign: PropTypes.oneOf(['left', 'center']),
 		id: PropTypes.string,
 		showCategories: PropTypes.bool
@@ -114,7 +119,7 @@ export default class SectionVideos extends Component {
 	}
 
 	render() {
-		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories, state} = this.props;
+		const {id, heading, categories, allVideosText, allVideosLink, categoryAlign, showCategories} = this.props;
 
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
@@ -122,7 +127,7 @@ export default class SectionVideos extends Component {
 		return (
 			<div data-section id={id} className={CSS.section}>
 				<div data-clip-target>
-					<SectionLines chevron={false} state={state}/>
+					<SectionLines/>
 					<div className={CSS.inner}>
 						<div className="container">
 							<div className={CSS.content}>
@@ -170,12 +175,7 @@ export default class SectionVideos extends Component {
 							</ul>
 						) : null}
 						<div className={CSS.videos}>
-							<VideoGrid
-								videos={paginatedVideos}
-								perGroup={this.state.perGroup}
-								state={this.props.state}
-								actions={this.props.actions}
-							/>
+							<VideoGrid videos={paginatedVideos} perGroup={this.state.perGroup}/>
 						</div>
 						{paginatedVideos && paginatedVideos.count() > 0 && hasMore ? (
 							<div className={CSS.loadMoreBtn}>
@@ -192,3 +192,5 @@ export default class SectionVideos extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps)(SectionVideos);

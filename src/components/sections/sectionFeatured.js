@@ -8,13 +8,13 @@ import Image from '../common/image';
 import {chunkList} from '../../utils/componentHelpers';
 import SectionLines from '../common/sectionLines';
 
-const SectionFeatured = ({images, heading, state}) => {
+const SectionFeatured = ({images, heading}) => {
 	const imageRows = chunkList(images, 2);
 
 	return (
 		<div data-section className={CSS.section}>
 			<div data-clip-target>
-				<SectionLines state={state}/>
+				<SectionLines/>
 				<div className="container">
 					<div className={CSS.inner}>
 						<div className={CSS.row}>
@@ -54,8 +54,7 @@ const SectionFeatured = ({images, heading, state}) => {
 
 SectionFeatured.propTypes = {
 	images: ImmutableProptypes.list.isRequired,
-	heading: PropTypes.string.isRequired,
-	state: ImmutableProptypes.map.isRequired
+	heading: PropTypes.string.isRequired
 };
 
 export default SectionFeatured;

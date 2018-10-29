@@ -6,10 +6,8 @@ import CSS from './sectionSearch.module.scss';
 import SectionFeaturedEvents from './sectionFeaturedEvents';
 import NoResults from '../noResults/noResults';
 
-const SectionSearch = ({query, actions, state, search, loading}) => {
-	let content = (
-		<SectionFeaturedEvents title={`Search Results For: ${query}`} actions={actions} state={state} videos={search} perGroup={search.count()}/>
-	);
+const SectionSearch = ({query, search, loading}) => {
+	let content = <SectionFeaturedEvents title={`Search Results For: ${query}`} videos={search} perGroup={search.count()}/>;
 
 	if ((!search || search.count() === 0) && !loading) {
 		content = <NoResults title={query}/>;
@@ -26,8 +24,6 @@ const SectionSearch = ({query, actions, state, search, loading}) => {
 
 SectionSearch.propTypes = {
 	query: PropTypes.string,
-	actions: PropTypes.objectOf(PropTypes.func).isRequired,
-	state: ImmutableProptypes.map.isRequired,
 	search: ImmutableProptypes.list.isRequired,
 	loading: PropTypes.bool.isRequired
 };

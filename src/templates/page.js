@@ -7,12 +7,10 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages';
-import {selectors as videoSelectors} from '../ducks/videos';
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
-import {actions as formActions, selectors as formSelectors} from '../ducks/forms';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique, ScrollToHelper, isLoading} from '../utils/componentHelpers';
+import {unique, ScrollToHelper, notFound} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
 import {analytics} from '../utils/trackingHelpers';
@@ -28,19 +26,27 @@ import SectionFeatured from '../components/sections/sectionFeatured';
 import Head from '../components/common/head';
 import NotFound from '../components/404/404';
 
+const getSlug = match => {
+	let {slug} = match.params;
+	const isHome = !slug || slug === '';
+
+	if (isHome) {
+		return 'index';
+	}
+
+	return slug;
+};
+
 const mapStateToProps = state => ({
 	pages: pageSelectors.getPages(state),
-	videos: videoSelectors.getVideos(state),
-	state: stateSelectors.getState(state),
-	forms: formSelectors.getForms(state)
+	state: stateSelectors.getState(state)
 });
 
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(
 		{
 			...pageActions,
-			...stateActions,
-			...formActions
+			...stateActions
 		},
 		dispatch
 	)
@@ -49,6 +55,10 @@ const mapDispatchToProps = dispatch => ({
 class PageTemplate extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			page: undefined
+		};
 
 		this.fetch = unique();
 
@@ -60,7 +70,6 @@ class PageTemplate extends Component {
 
 	static propTypes = {
 		state: ImmutabelProptypes.map.isRequired,
-		videos: ImmutabelProptypes.list,
 		match: PropTypes.object.isRequired,
 		location: PropTypes.object.isRequired,
 		pages: ImmutabelProptypes.list,
@@ -68,9 +77,16 @@ class PageTemplate extends Component {
 	};
 
 	static defaultProps = {
-		videos: List(),
 		pages: List()
 	};
+
+	static getDerivedStateFromProps(props) {
+		const page = currentPage(props.pages, getSlug(props.match));
+
+		return {
+			page: page
+		};
+	}
 
 	componentDidMount() {
 		this.getPage();
@@ -89,6 +105,22 @@ class PageTemplate extends Component {
 		}
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		if (!this.state.page && nextState.page) {
+			return true;
+		}
+
+		if (this.state.page && nextState.page && nextState.page.getIn(['sys', 'id']) !== this.state.page.getIn(['sys', 'id'])) {
+			return true;
+		}
+
+		if (notFound(this.fetch, nextProps.state)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	handleAnalytics() {
 		analytics('page', this.props.location.pathname);
 	}
@@ -96,21 +128,10 @@ class PageTemplate extends Component {
 	getPage() {
 		this.props.actions.pagesGet({
 			payload: {
-				slug: this.getSlug()
+				slug: getSlug(this.props.match)
 			},
 			fetch: this.fetch
 		});
-	}
-
-	getSlug() {
-		let {slug} = this.props.match.params;
-		const isHome = !slug || slug === '';
-
-		if (isHome) {
-			return 'index';
-		}
-
-		return slug;
 	}
 
 	locationChanged() {
@@ -161,7 +182,7 @@ class PageTemplate extends Component {
 	}
 
 	currentPage() {
-		return currentPage(this.props.pages, this.getSlug());
+		return currentPage(this.props.pages, getSlug(this.props.match));
 	}
 
 	getSection(section, index) {
@@ -178,8 +199,6 @@ class PageTemplate extends Component {
 					content={fields.get('content')}
 					scrollTo={fields.get('scrollTo')}
 					scrollColor={fields.get('scrollColor')}
-					state={this.props.state}
-					actions={this.props.actions}
 				/>
 			);
 		}
@@ -195,7 +214,6 @@ class PageTemplate extends Component {
 					imageCss={fields.get('imageCss') ? fields.get('imageCss').toJS() : {}}
 					icons={fields.get('icons')}
 					counters={fields.get('counters') || ''}
-					state={this.props.state}
 				/>
 			);
 		}
@@ -211,9 +229,6 @@ class PageTemplate extends Component {
 					showCategories={fields.get('showCategories')}
 					categoryAlign={fields.get('categoryAlign')}
 					categories={fields.get('categories')}
-					state={this.props.state}
-					actions={this.props.actions}
-					videos={this.props.videos}
 				/>
 			);
 		}
@@ -225,8 +240,6 @@ class PageTemplate extends Component {
 					id={fields.get('id')}
 					heading={fields.get('heading')}
 					text={fields.get('text')}
-					actions={this.props.actions}
-					state={this.props.state}
 					team={fields.get('teamMembers')}
 					video={fromJS({videoUrl: fields.get('videoUrl'), videoThumbnail: fields.get('videoThumbnail')})}
 				/>
@@ -247,26 +260,25 @@ class PageTemplate extends Component {
 					ctaLinkText={fields.get('ctaLinkText')}
 					faqs={fields.get('questions')}
 					layout={fields.get('layout')}
-					state={this.props.state}
 				/>
 			);
 		}
 
 		if (sectionType === 'sectionFeatured') {
-			return <SectionFeatured key={index} heading={fields.get('heading')} images={fields.get('images')} state={this.props.state}/>;
+			return <SectionFeatured key={index} heading={fields.get('heading')} images={fields.get('images')}/>;
 		}
 
 		if (sectionType === 'sectionTestimonials') {
-			return <SectionTestimonials key={index} testimonials={fields.get('testimonials')} state={this.props.state}/>;
+			return <SectionTestimonials key={index} testimonials={fields.get('testimonials')}/>;
 		}
 
 		return null;
 	}
 
 	render() {
-		const page = this.currentPage();
+		const {page} = this.state;
 
-		if (!page && !isLoading(this.fetch, this.props.state)) {
+		if (notFound(this.fetch, this.props.state)) {
 			return <NotFound/>;
 		}
 
@@ -288,7 +300,7 @@ class PageTemplate extends Component {
 				/>
 				<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
 					{sections.toJS()}
-					{hasCta ? <SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/> : null}
+					{hasCta ? <SectionCta siteSettings={SiteSettings}/> : null}
 				</SectionManager>
 			</Fragment>
 		);

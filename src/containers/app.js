@@ -48,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
 function fadeIn(val) {
 	return spring(val, {
 		stiffness: 75,
-		damping: 40
+		damping: 20
 	});
 }
 

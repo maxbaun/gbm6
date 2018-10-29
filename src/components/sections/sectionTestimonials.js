@@ -1,17 +1,16 @@
 import React from 'react';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
-import PropTypes from 'prop-types';
 
 import CSS from './sectionTestimonials.module.scss';
 import Markdown from '../common/markdown';
 import SectionLines from '../common/sectionLines';
 import Masonry from '../masonry/masonry';
 
-const SectionTestimonials = ({testimonials, state}) => {
+const SectionTestimonials = ({testimonials}) => {
 	return (
 		<div data-section className={CSS.section}>
 			<div data-clip-target>
-				<SectionLines state={state}/>
+				<SectionLines/>
 				<div className="container">
 					<div className={CSS.contain}>
 						<div className={CSS.quote}>“</div>
@@ -41,9 +40,7 @@ const SectionTestimonials = ({testimonials, state}) => {
 };
 
 SectionTestimonials.propTypes = {
-	testimonials: ImmutableProptypes.list.isRequired,
-	hasAppeared: PropTypes.bool.isRequired,
-	state: ImmutableProptypes.map.isRequired
+	testimonials: ImmutableProptypes.list.isRequired
 };
 
 export default SectionTestimonials;

@@ -99,14 +99,8 @@ class SearchTemplate extends Component {
 		return (
 			<PageWrapper>
 				<Head title={`Search For ${this.getSearchQuery()}`} location={this.props.location} url={window.location.href}/>
-				<SectionSearch
-					search={this.props.search}
-					query={this.getSearchQuery()}
-					actions={this.props.actions}
-					state={this.props.state}
-					loading={loading || false}
-				/>
-				<SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/>
+				<SectionSearch search={this.props.search} query={this.getSearchQuery()} loading={loading || false}/>
+				<SectionCta siteSettings={SiteSettings}/>
 			</PageWrapper>
 		);
 	}

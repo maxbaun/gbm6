@@ -7,10 +7,10 @@ import CSS from './sectionFeaturedEvents.module.scss';
 import VideoGrid from '../videoGrid/videoGrid';
 import SectionLines from '../common/sectionLines';
 
-const SectionFeaturedEvents = ({title, videos, state, actions, perGroup}) => {
+const SectionFeaturedEvents = ({title, videos, perGroup}) => {
 	return (
 		<div data-section className={CSS.section}>
-			<SectionLines state={state}/>
+			<SectionLines/>
 			<div data-clip-target>
 				<div className={CSS.inner}>
 					<div className="container">
@@ -23,7 +23,7 @@ const SectionFeaturedEvents = ({title, videos, state, actions, perGroup}) => {
 					<div className="row">
 						<div className="col">
 							<div className={CSS.videos}>
-								<VideoGrid videos={videos} perGroup={perGroup} state={state} actions={actions}/>
+								<VideoGrid videos={videos} perGroup={perGroup}/>
 							</div>
 						</div>
 					</div>
@@ -36,8 +36,6 @@ const SectionFeaturedEvents = ({title, videos, state, actions, perGroup}) => {
 SectionFeaturedEvents.propTypes = {
 	title: PropTypes.string,
 	videos: ImmutableProptypes.list,
-	state: ImmutableProptypes.map.isRequired,
-	actions: PropTypes.objectOf(PropTypes.func).isRequired,
 	perGroup: PropTypes.number
 };
 

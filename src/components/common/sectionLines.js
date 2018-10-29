@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
+import {connect} from 'react-redux';
 import {debounce} from 'lodash';
 
+import {selectors as stateSelectors} from '../../ducks/state';
 import {toRadians} from '../../utils/mathHelpers';
 import {angleHeight} from '../../constants';
 
 const separation = 20;
 
-export default class SectionLines extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+class SectionLines extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			active: false,
 			styles: {
 				chevron1: {},
 				chevron2: {},
@@ -33,15 +38,10 @@ export default class SectionLines extends Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
-		this.init();
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
-	}
-
-	init() {
-		this.setState({active: true});
 	}
 
 	handleResize() {
@@ -118,7 +118,13 @@ export default class SectionLines extends Component {
 
 	render() {
 		const {chevron1, chevron2, topLeftToRight, topRightToLeft, bottomLeftToRight, bottomRightToLeft} = this.state.styles;
-		const {active} = this.state;
+		const {state} = this.props;
+
+		let active = false;
+
+		if (state.get('pageTransitioning') === false) {
+			active = true;
+		}
 
 		return (
 			<div data-lines>
@@ -132,3 +138,5 @@ export default class SectionLines extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps)(SectionLines);

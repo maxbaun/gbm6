@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import {BrowserRouter} from 'react-router-dom';
-
+import {registerObserver} from 'react-perf-devtool';
 import qhistory from 'qhistory';
 import {parse, stringify} from 'qs';
 
@@ -14,6 +14,8 @@ import App from './containers/app';
 import {googleAnalytics} from './constants';
 
 import './css/index.scss';
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 const history = qhistory(createHistory(), stringify, parse);
 
@@ -33,6 +35,10 @@ class Index extends React.Component {
 
 // Initialize Google Analytics
 analytics('initialize', googleAnalytics);
+
+if (isDev) {
+	registerObserver();
+}
 
 ReactDOM.render(<Index/>, document.getElementById('root'));
 

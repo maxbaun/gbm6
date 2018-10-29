@@ -10,7 +10,7 @@ import {selectors as videoSelectors, actions as videoActions} from '../ducks/vid
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique, ScrollToHelper, isLoading} from '../utils/componentHelpers';
+import {unique, ScrollToHelper, notFound} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
 import {analytics} from '../utils/trackingHelpers';
@@ -21,6 +21,12 @@ import SectionPortfolioContent from '../components/sections/sectionPortfolioCont
 import SectionFeaturedEvents from '../components/sections/sectionFeaturedEvents';
 import NotFound from '../components/404/404';
 import Head from '../components/common/head';
+
+const getSlug = match => {
+	let {slug} = match.params;
+
+	return slug;
+};
 
 const mapStateToProps = state => ({
 	videos: videoSelectors.getVideos(state),
@@ -41,6 +47,10 @@ class PortfolioTemplate extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			video: undefined
+		};
+
 		this.fetch = unique();
 
 		this.currentVideo = this.currentVideo.bind(this);
@@ -58,6 +68,14 @@ class PortfolioTemplate extends Component {
 		videos: List()
 	};
 
+	static getDerivedStateFromProps(props) {
+		const video = currentPage(props.videos, getSlug(props.match));
+
+		return {
+			video: video
+		};
+	}
+
 	componentDidMount() {
 		this.getVideo();
 		this.locationChanged();
@@ -73,6 +91,22 @@ class PortfolioTemplate extends Component {
 		} else if (prevProps.location.hash !== this.props.location.hash) {
 			this.locationChanged();
 		}
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if (!this.state.video && nextState.video) {
+			return true;
+		}
+
+		if (this.state.video && nextState.video && nextState.video.getIn(['sys', 'id']) !== this.state.video.getIn(['sys', 'id'])) {
+			return true;
+		}
+
+		if (notFound(this.fetch, nextProps.state)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	handleAnalytics() {
@@ -129,26 +163,20 @@ class PortfolioTemplate extends Component {
 	getVideo() {
 		this.props.actions.videosGet({
 			payload: {
-				slug: this.getSlug()
+				slug: getSlug(this.props.match)
 			},
 			fetch: this.fetch
 		});
 	}
 
-	getSlug() {
-		let {slug} = this.props.match.params;
-
-		return slug;
-	}
-
 	currentVideo() {
-		return currentPage(this.props.videos, this.getSlug());
+		return currentPage(this.props.videos, getSlug(this.props.match));
 	}
 
 	render() {
-		const video = this.currentVideo();
+		const {video} = this.state;
 
-		if (!video && !isLoading(this.fetch, this.props.state)) {
+		if (!video && notFound(this.fetch, this.props.state)) {
 			return <NotFound/>;
 		}
 
@@ -170,8 +198,6 @@ class PortfolioTemplate extends Component {
 					images={video.getIn(['fields', 'images'])}
 					video={video.getIn(['fields', 'video'])}
 					imageCss={{backgroundSize: 'cover', backgroundPosition: 'top center'}}
-					state={this.props.state}
-					actions={this.props.actions}
 				/>
 				<SectionPortfolioContent
 					title={video.getIn(['fields', 'title'])}
@@ -179,15 +205,12 @@ class PortfolioTemplate extends Component {
 					date={video.getIn(['fields', 'date'])}
 					location={video.getIn(['fields', 'location'])}
 					talent={video.getIn(['fields', 'talent'])}
-					state={this.props.state}
 				/>
 				<SectionFeaturedEvents
 					title="More Legendary Events"
-					actions={this.props.actions}
-					state={this.props.state}
 					videos={this.props.videos.filter(v => v.getIn(['fields', 'slug']) !== this.props.match.params.slug).take(4)}
 				/>
-				<SectionCta siteSettings={SiteSettings} state={this.props.state} actions={this.props.actions}/>
+				<SectionCta siteSettings={SiteSettings}/>
 			</SectionManager>
 		);
 	}

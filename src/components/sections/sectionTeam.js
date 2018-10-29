@@ -2,15 +2,31 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {Map, List} from 'immutable';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import CSS from './sectionTeam.module.scss';
+import {actions as stateActions, selectors as stateSelectors} from '../../ducks/state';
 import Markdown from '../common/markdown';
 import HeadingBrand from '../headingBrand/headingBrand';
 import Video from '../video/video';
 import TeamSlider from '../teamSlider/teamSlider';
 import SectionLines from '../common/sectionLines';
 
-export default class SectionTeam extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+	actions: bindActionCreators(
+		{
+			...stateActions
+		},
+		dispatch
+	)
+});
+
+class SectionTeam extends Component {
 	constructor(props) {
 		super(props);
 
@@ -23,8 +39,7 @@ export default class SectionTeam extends Component {
 		video: ImmutableProptypes.map,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		team: ImmutableProptypes.list,
-		id: PropTypes.string.isRequired,
-		state: ImmutableProptypes.map.isRequired
+		id: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
@@ -42,7 +57,7 @@ export default class SectionTeam extends Component {
 		return (
 			<div data-section id={this.props.id} className={CSS.section}>
 				<div data-clip-target>
-					<SectionLines state={this.props.state}/>
+					<SectionLines/>
 					<div className={CSS.inner}>
 						<div className="container">
 							<div className="row align-items-md-center">
@@ -87,3 +102,8 @@ export default class SectionTeam extends Component {
 		);
 	}
 }
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SectionTeam);

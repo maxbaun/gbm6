@@ -31,8 +31,7 @@ export default class SectionFaq extends Component {
 		layout: PropTypes.oneOf(['normal', 'accordion']),
 		ctaContent: PropTypes.string,
 		ctaLinkUrl: PropTypes.string,
-		ctaLinkText: PropTypes.string,
-		state: ImmutableProptypes.map.isRequired
+		ctaLinkText: PropTypes.string
 	};
 
 	static defaultProps = {
@@ -52,7 +51,7 @@ export default class SectionFaq extends Component {
 	}
 
 	render() {
-		const {heading, layout, allFaqLinkUrl, allFaqLinkText, ctaContent, ctaLinkUrl, ctaLinkText, state} = this.props;
+		const {heading, layout, allFaqLinkUrl, allFaqLinkText, ctaContent, ctaLinkUrl, ctaLinkText} = this.props;
 
 		const renderAccordion = layout === 'accordion';
 
@@ -60,7 +59,7 @@ export default class SectionFaq extends Component {
 			<div data-section className={CSS.section} data-layout={layout}>
 				<div data-clip-target>
 					<div className={CSS.overlay}/>
-					<SectionLines state={state}/>
+					<SectionLines/>
 					<Image background className={CSS.background} image={this.props.backgroundImage}/>
 					<div className="container">
 						{heading && heading !== '' ? (

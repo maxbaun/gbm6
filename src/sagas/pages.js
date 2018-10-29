@@ -4,7 +4,7 @@ import {getPages} from '../services/api';
 import {types as pageTypes, selectors as pageSelectors} from '../ducks/pages';
 import {types as cacheTypes} from '../ducks/cache';
 import {types as stateTypes} from '../ducks/state';
-import {shouldCache} from '../constants';
+import {shouldCache, errors} from '../constants';
 
 export function * watchPages() {
 	yield takeEvery(pageTypes.PAGES_GET, onPagesGet);
@@ -45,7 +45,7 @@ function * onPagesGet({payload, fetch}) {
 			fetch,
 			payload: {
 				loading: false,
-				error: null
+				error: payload.slug && res.length === 0 ? errors.notFound : null
 			}
 		})
 	]);

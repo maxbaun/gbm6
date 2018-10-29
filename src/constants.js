@@ -29,5 +29,8 @@ module.exports = {
 		widescreen: 1200
 	},
 	angleHeight: 20,
-	googleAnalytics: process.env.REACT_APP_GOOGLE_ANALYTICS
+	googleAnalytics: process.env.REACT_APP_GOOGLE_ANALYTICS,
+	errors: {
+		notFound: 'Not Found'
+	}
 };

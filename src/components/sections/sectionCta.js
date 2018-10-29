@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {Map, fromJS} from 'immutable';
 
 import CSS from './sectionCta.module.scss';
+import {selectors as stateSelectors} from '../../ducks/state';
+import {actions as formActions} from '../../ducks/forms';
 import HeadingBrand from '../headingBrand/headingBrand';
 import {state, unique, isLoading, getError, getSuccess} from '../../utils/componentHelpers';
 import Markdown from '../common/markdown';
@@ -19,7 +23,20 @@ const initialState = {
 
 const fetch = unique();
 
-export default class SectionCta extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+	actions: bindActionCreators(
+		{
+			...formActions
+		},
+		dispatch
+	)
+});
+
+class SectionCta extends Component {
 	constructor(props) {
 		super(props);
 
@@ -71,7 +88,7 @@ export default class SectionCta extends Component {
 		return (
 			<div data-section id="contact" className={CSS.section}>
 				<div data-clip-target>
-					<SectionLines state={this.props.state}/>
+					<SectionLines/>
 					<div className={CSS.inner}>
 						<div className="container">
 							<div className="row">
@@ -213,3 +230,8 @@ export default class SectionCta extends Component {
 		);
 	}
 }
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SectionCta);

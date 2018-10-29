@@ -9,14 +9,14 @@ import Image from '../common/image';
 import HeadingBrand from '../headingBrand/headingBrand';
 import SectionLines from '../common/sectionLines';
 
-const SectionAbout = ({heading, text, image, imageCss, icons, id, counters, state}) => {
+const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => {
 	icons = icons.split('\n');
 	counters = counters.split('\n');
 
 	return (
 		<div data-section id={id} className={CSS.section}>
 			<div data-clip-target>
-				<SectionLines state={state}/>
+				<SectionLines/>
 				<Image background className={CSS.background} style={imageCss} image={image}/>
 				<div className={CSS.overlay}/>
 				<div className={CSS.inner}>
@@ -83,7 +83,6 @@ SectionAbout.propTypes = {
 	text: PropTypes.string,
 	image: ImmutablePropTypes.map,
 	icons: PropTypes.string,
-	state: ImmutablePropTypes.map.isRequired,
 	id: PropTypes.string.isRequired,
 	counters: PropTypes.string,
 	imageCss: PropTypes.object

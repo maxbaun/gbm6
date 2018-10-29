@@ -221,6 +221,10 @@ $transform: 21.80140948635181deg;
 			@include firstChild() {
 				clip-path: none;
 
+				[data-line] {
+					display: none !important;
+				}
+
 				[data-line-bottomlefttoright] {
 					display: block !important;
 					z-index: 1;

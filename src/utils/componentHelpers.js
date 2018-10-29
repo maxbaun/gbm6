@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4';
 import {List, Map, fromJS, Range} from 'immutable';
 
-import {responsive} from '../constants';
+import {responsive, errors} from '../constants';
 
 export function unique() {
 	return uuid();
@@ -69,6 +69,10 @@ export function ref(target) {
 
 export function isLoading(fetch, state) {
 	return state.getIn(['status', fetch, 'loading']);
+}
+
+export function notFound(fetch, state) {
+	return state.getIn(['status', fetch, 'error']) === errors.notFound;
 }
 
 export function getError(fetch, state) {
