@@ -19,6 +19,7 @@ import SectionCta from '../components/sections/sectionCta';
 import SectionPortfolioContent from '../components/sections/sectionPortfolioContent';
 import SectionFeaturedEvents from '../components/sections/sectionFeaturedEvents';
 import NotFound from '../components/404/404';
+import Head from '../components/common/head';
 
 const mapStateToProps = state => ({
 	videos: videoSelectors.getVideos(state),
@@ -150,6 +151,13 @@ class PortfolioTemplate extends Component {
 
 		return (
 			<SectionManager hasCta template="project">
+				<Head
+					title={video.getIn(['fields', 'title'])}
+					description={video.getIn(['fields', 'description'])}
+					image={video.getIn(['fields', 'image', '0', 'fields', 'file', 'url'])}
+					location={this.props.location}
+					url={window.location.href}
+				/>
 				<SectionHero
 					className="heroPortfolio"
 					images={video.getIn(['fields', 'images'])}
