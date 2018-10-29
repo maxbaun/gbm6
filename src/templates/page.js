@@ -167,6 +167,7 @@ class PageTemplate extends Component {
 					key={index}
 					images={List([fields.get('image')])}
 					imageCss={fields.get('imageCss') ? fields.get('imageCss').toJS() : {}}
+					hasOverlay={fields.get('hasOverlay')}
 					content={fields.get('content')}
 					scrollTo={fields.get('scrollTo')}
 					scrollColor={fields.get('scrollColor')}

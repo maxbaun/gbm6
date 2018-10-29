@@ -30,7 +30,8 @@ export default class SectionHero extends Component {
 		className: PropTypes.string,
 		video: PropTypes.string,
 		state: ImmutablePropTypes.map,
-		actions: PropTypes.objectOf(PropTypes.func).isRequired
+		actions: PropTypes.objectOf(PropTypes.func).isRequired,
+		hasOverlay: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -41,7 +42,8 @@ export default class SectionHero extends Component {
 		scrollTo: null,
 		className: null,
 		video: null,
-		state: Map()
+		state: Map(),
+		hasOverlay: true
 	};
 
 	componentDidMount() {
@@ -77,7 +79,7 @@ export default class SectionHero extends Component {
 	}
 
 	render() {
-		const {scrollColor, scrollTo, images, imageCss, content, className, video, state, actions} = this.props;
+		const {scrollColor, scrollTo, images, imageCss, content, className, video, state, actions, hasOverlay} = this.props;
 
 		const heroCss = [CSS.hero];
 
@@ -98,7 +100,7 @@ export default class SectionHero extends Component {
 				) : (
 					<Fragment>
 						<Image background style={imageCss} className={CSS.image} image={images.first()}/>
-						{content && content !== '' ? <div className={CSS.imageOverlay}/> : null}
+						{hasOverlay ? <div className={CSS.imageOverlay}/> : null}
 					</Fragment>
 				)}
 				{video && video !== '' ? (

@@ -1,17 +1,16 @@
 @font-face {
 	font-family: 'icomoon';
-	src: url('./fonts/icomoon.eot?unvem2');
-	src:
-		url('./fonts/icomoon.eot?unvem2#iefix') format('embedded-opentype'),
- url('./fonts/icomoon.ttf?unvem2') format('truetype'),
-		url('./fonts/icomoon.woff?unvem2') format('woff'),
- url('./fonts/icomoon.svg?unvem2#icomoon') format('svg');
+	src: url('./fonts/icomoon.eot?l1pybo');
+	src: url('./fonts/icomoon.eot?l1pybo#iefix') format('embedded-opentype'),
+		url('./fonts/icomoon.ttf?l1pybo') format('truetype'),
+		url('./fonts/icomoon.woff?l1pybo') format('woff'),
+		url('./fonts/icomoon.svg?l1pybo#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
 
-[class^='icon-'],
-[class*=' icon-'] {
+[class^="icon-"],
+[class*=" icon-"] {
 	/* use !important to prevent issues with browser extensions that change fonts */
 	font-family: 'icomoon' !important;
 	speak: none;
@@ -26,26 +25,54 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-management-logistics::before {
-	content: '\e905';
+.icon-play-btn:before {
+	content: "\e906";
 }
 
-.icon-vendor-source::before {
-	content: '\e900';
+.icon-flamephones:before {
+	content: "\e900";
 }
 
-.icon-team::before {
-	content: '\e901';
+.icon-brand:before {
+	content: "\e901";
 }
 
-.icon-production-design::before {
-	content: '\e902';
+.icon-dj:before {
+	content: "\e902";
 }
 
-.icon-checklist::before {
-	content: '\e903';
+.icon-visualfx:before {
+	content: "\e903";
 }
 
-.icon-branding-graphics::before {
-	content: '\e904';
+.icon-volunteer:before {
+	content: "\e904";
+}
+
+.icon-package:before {
+	content: "\e905";
+}
+
+.icon-management-logistics:before {
+	content: "\e907";
+}
+
+.icon-branding-graphics:before {
+	content: "\e908";
+}
+
+.icon-checklist:before {
+	content: "\e909";
+}
+
+.icon-production-design:before {
+	content: "\e90a";
+}
+
+.icon-team:before {
+	content: "\e90b";
+}
+
+.icon-vendor-source:before {
+	content: "\e90c";
 }

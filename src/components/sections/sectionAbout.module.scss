@@ -14,7 +14,7 @@
 
 .overlay {
 	@include absoluteFull();
-	background-color: rgba(0, 0, 0, 0.45);
+	background-color: rgba(0, 0, 0, 0.82);
 	z-index: -3;
 }
 
@@ -88,6 +88,8 @@
 	span {
 		@include fontSize(58, 58);
 		color: $blue;
+		display: block;
+		margin-bottom: $spacingUnit / 5;
 	}
 
 	p {
