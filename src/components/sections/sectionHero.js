@@ -93,7 +93,6 @@ export default class SectionHero extends Component {
 
 		return (
 			<div data-section className={heroCss.join(' ')}>
-				<SectionLines state={state}/>
 				{this.shouldRenderCarousel() ? (
 					this.renderCarousel()
 				) : (
@@ -136,7 +135,11 @@ export default class SectionHero extends Component {
 						<Markdown className={CSS.contentInner} content={content}/>
 					</div>
 				) : null}
-				{this.shouldRenderCarousel() ? null : <div data-clip/>}
+				{this.shouldRenderCarousel() ? null : (
+					<div data-clip>
+						<SectionLines state={state}/>
+					</div>
+				)}
 			</div>
 		);
 	}
@@ -158,6 +161,7 @@ export default class SectionHero extends Component {
 						<div className="swiper-pagination"/>
 					</div>
 					<div data-clip>
+						<SectionLines state={this.props.state}/>
 						<div className={CSS.nav}>
 							<SliderNav/>
 						</div>
