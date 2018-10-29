@@ -20,6 +20,7 @@ import Footer from '../components/footer/footer';
 import PageTemplate from '../templates/page';
 import PortfolioTemplate from '../templates/portfolio';
 import ResetTemplate from '../templates/reset';
+import SearchTemplate from '../templates/search';
 import AnimatedSwitch from '../components/routing/animatedSwitch';
 import VideoModal from '../components/modals/videoModal';
 import {toDegrees} from '../utils/mathHelpers';
@@ -127,6 +128,7 @@ class App extends Component {
 					})}
 				>
 					<Route exact path="/reset" component={ResetTemplate}/>
+					<Route exact path="/search/:search" component={SearchTemplate}/>
 					<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
 					<Route exact path="/:slug" component={PageTemplate}/>
 					<Route path="/" render={PageTemplate}/>

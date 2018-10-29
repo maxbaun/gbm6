@@ -6,7 +6,8 @@ import {watchCache} from './cache';
 import {watchState} from './state';
 import {watchVideos} from './videos';
 import {watchForms} from './forms';
+import {watchSearch} from './search';
 
 export default function * Sagas() {
-	yield all([fork(watchPages), fork(watchMenus), fork(watchCache), fork(watchState), fork(watchVideos), fork(watchForms)]);
+	yield all([fork(watchPages), fork(watchMenus), fork(watchCache), fork(watchState), fork(watchVideos), fork(watchForms), fork(watchSearch)]);
 }

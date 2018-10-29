@@ -33,8 +33,8 @@ export function updateList(root, payload) {
 		const newData = fromJS(payload);
 
 		newData.forEach(item => {
-			const existingItem = root.find(i => i.getIn(['sys', 'id']) === item.getIn(['sys', 'id']));
-			const existingIndex = root.indexOf(existingItem);
+			const existingItem = updated.find(i => i.getIn(['sys', 'id']) === item.getIn(['sys', 'id']));
+			const existingIndex = updated.indexOf(existingItem);
 
 			if (existingIndex > -1) {
 				updated = updated.set(existingIndex, item);

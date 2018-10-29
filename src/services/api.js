@@ -51,3 +51,34 @@ export async function getVideos({query = {}}) {
 		return error;
 	}
 }
+
+export async function search({query}) {
+	try {
+		const titleRes = await ContenfulClient.getEntries({
+			content_type: 'portfolio', // eslint-disable-line camelcase
+			...query.title
+		});
+
+		const descriptionRes = await ContenfulClient.getEntries({
+			content_type: 'portfolio', // eslint-disable-line camelcase
+			...query.description
+		});
+
+		const textRes = await ContenfulClient.getEntries({
+			content_type: 'portfolio', // eslint-disable-line camelcase
+			...query.text
+		});
+
+		console.log(titleRes);
+		console.log(descriptionRes);
+		console.log(textRes);
+
+		const res = [...titleRes.items, ...descriptionRes.items, ...textRes.items];
+
+		// @TODO: Cache portfolio items here
+
+		return res;
+	} catch (error) {
+		return error;
+	}
+}
