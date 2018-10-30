@@ -97,18 +97,32 @@ class SectionVideos extends Component {
 			return List();
 		}
 
+		const allVideos = this.getAllActiveVideos();
+
 		if (this.state.activeCategory === -1) {
-			return this.props.videos;
+			return allVideos;
 		}
 
 		const activeCategory = this.props.categories.find((cat, index) => index === this.state.activeCategory);
 
-		return this.props.videos.reduce((list, video) => {
+		return allVideos.reduce((list, video) => {
 			if (this.videoHasCategory(video, activeCategory)) {
 				return list.push(video);
 			}
 
 			return list;
+		}, List());
+	}
+
+	getAllActiveVideos() {
+		if (this.props.categories.count() === 0 || this.props.videos.count() === 0) {
+			return List();
+		}
+
+		return this.props.videos.reduce((list, video) => {
+			return this.props.categories.reduce((innerList, category) => {
+				return this.videoHasCategory(video, category) ? innerList.push(video) : innerList;
+			}, list);
 		}, List());
 	}
 
