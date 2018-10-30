@@ -42,7 +42,7 @@ export default class MegaMenu extends Component {
 							}
 
 							return (
-								<li key={linkParts.get(1)}>
+								<li key={link.get('key')}>
 									<Link
 										to={linkParts.get(0)}
 										className={linkCss.join(' ')}

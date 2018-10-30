@@ -84,18 +84,39 @@ class Header extends Component {
 	}
 
 	getMegaMenuLinks() {
-		const menu = this.currentMenu('Mega');
+		let mega = this.currentMenu('Mega');
+		let mobile = this.currentMenu('Mobile');
 
-		const topLinks = this.getTopLinks();
+		let desktopLinks = List();
+		let mobileLinks = List();
 
-		let mainLinks = List();
-
-		if (menu && menu.getIn(['sys', 'id'])) {
-			const linkStr = menu.getIn(['fields', 'links']);
-			mainLinks = fromJS(this.splitMenuLinks(linkStr));
+		if (mega && mega.getIn(['sys', 'id'])) {
+			const linkStr = mega.getIn(['fields', 'links']);
+			desktopLinks = fromJS(this.splitMenuLinks(linkStr));
 		}
 
-		return fromJS([...mainLinks.map(link => ({link})), ...topLinks.map(link => ({link, className: 'mobileOnly'}))]);
+		if (mobile && mobile.getIn(['sys', 'id'])) {
+			const linkStr = mobile.getIn(['fields', 'links']);
+			mobileLinks = fromJS(this.splitMenuLinks(linkStr));
+		}
+
+		desktopLinks = desktopLinks.map(link => {
+			return fromJS({
+				link,
+				key: `desktop-${link.get(0)}`,
+				className: 'desktopOnly'
+			});
+		});
+
+		mobileLinks = mobileLinks.map(link => {
+			return fromJS({
+				link,
+				key: `mobile-${link.get(0)}`,
+				className: 'mobileOnly'
+			});
+		});
+
+		return fromJS([...desktopLinks.toJS(), ...mobileLinks.toJS()]);
 	}
 
 	render() {

@@ -5,7 +5,8 @@
 	height: 100%;
 	overflow: hidden;
 	overflow-y: auto;
-	padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+	padding-right: 17px;
+	/* Increase/decrease this value for cross-browser compatibility */
 	width: 100%;
 }
 
@@ -41,5 +42,13 @@
 
 	@include media-breakpoint-up(md) {
 		display: none;
+	}
+}
+
+.desktopOnly {
+	display: none;
+
+	@include media-breakpoint-up(md) {
+		display: block;
 	}
 }

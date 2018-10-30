@@ -144,8 +144,6 @@ class SectionVideos extends Component {
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
 
-		console.log(this.props.categories.toJS());
-
 		return (
 			<div data-section id={id} className={CSS.section}>
 				<div data-clip-target>
