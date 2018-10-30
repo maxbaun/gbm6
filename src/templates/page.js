@@ -90,18 +90,12 @@ class PageTemplate extends Component {
 
 	componentDidMount() {
 		this.getPage();
-		this.locationChanged();
-		this.handleAnalytics();
 	}
 
 	componentDidUpdate(prevProps) {
 		// If the slug has changed, get the new page
 		if (prevProps.match.params.slug !== this.props.match.params.slug) {
 			this.getPage();
-			this.locationChanged();
-			this.handleAnalytics();
-		} else if (prevProps.location.hash !== this.props.location.hash) {
-			this.locationChanged();
 		}
 	}
 
@@ -118,15 +112,7 @@ class PageTemplate extends Component {
 			return true;
 		}
 
-		if (nextProps.location.hash !== this.props.location.hash) {
-			return true;
-		}
-
 		return false;
-	}
-
-	handleAnalytics() {
-		analytics('page', this.props.location.pathname);
 	}
 
 	getPage() {
@@ -136,58 +122,6 @@ class PageTemplate extends Component {
 			},
 			fetch: this.fetch
 		});
-	}
-
-	locationChanged() {
-		if (!this.props.location.hash || this.props.location.hash === '') {
-			window.scrollTo(0, 0);
-			return;
-		}
-
-		this.scrollChecker = setInterval(() => {
-			const currentPage = this.currentPage();
-
-			if (currentPage && !currentPage.isEmpty()) {
-				this.checkTargetElem();
-			}
-		}, 150);
-	}
-
-	checkTargetElem() {
-		clearInterval(this.scrollChecker);
-
-		if (!this.props.location.hash) {
-			return;
-		}
-
-		this.scrollChecker = setInterval(() => {
-			if (!this.props.location.hash) {
-				this.scrollToHash();
-			}
-
-			const targetElem = document.querySelector(this.props.location.hash);
-
-			if (targetElem) {
-				this.scrollToHash(targetElem);
-			}
-		}, 150);
-	}
-
-	scrollToHash(target) {
-		clearInterval(this.scrollChecker);
-
-		if (!target) {
-			return;
-		}
-
-		this.scrollRef = new ScrollToHelper(target, {
-			duration: 500,
-			container: window
-		});
-	}
-
-	currentPage() {
-		return currentPage(this.props.pages, getSlug(this.props.match));
 	}
 
 	getSection(section, index) {

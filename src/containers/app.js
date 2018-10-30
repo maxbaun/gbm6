@@ -23,6 +23,7 @@ import ResetTemplate from '../templates/reset';
 import SearchTemplate from '../templates/search';
 import AnimatedSwitch from '../components/routing/animatedSwitch';
 import VideoModal from '../components/modals/videoModal';
+import HashScroller from '../components/common/hashScroller';
 import {toDegrees} from '../utils/mathHelpers';
 
 const mapStateToProps = state => ({
@@ -109,30 +110,32 @@ class App extends Component {
 	}
 
 	render() {
-		const {state, menus, actions, history} = this.props;
+		const {state, menus, actions, history, location} = this.props;
 
 		return (
 			<Fragment>
 				<Header menus={menus} actions={actions} state={state} history={history}/>
-				<AnimatedSwitch
-					{...pageTransitions}
-					runOnMount
-					actions={actions}
-					mapStyles={styles => ({
-						opacity: styles.opacity,
-						position: styles.absolute ? 'absolute' : 'relative',
-						left: styles.absolute ? 0 : 'auto',
-						right: styles.absolute ? 0 : 'auto',
-						top: styles.absolute ? 0 : 'auto',
-						bottom: styles.absolute ? 0 : 'auto'
-					})}
-				>
-					<Route exact path="/reset" component={ResetTemplate}/>
-					<Route exact path="/search/:search" component={SearchTemplate}/>
-					<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
-					<Route exact path="/:slug" component={PageTemplate}/>
-					<Route path="/" render={PageTemplate}/>
-				</AnimatedSwitch>
+				<HashScroller location={location}>
+					<AnimatedSwitch
+						{...pageTransitions}
+						runOnMount
+						actions={actions}
+						mapStyles={styles => ({
+							opacity: styles.opacity,
+							position: styles.absolute ? 'absolute' : 'relative',
+							left: styles.absolute ? 0 : 'auto',
+							right: styles.absolute ? 0 : 'auto',
+							top: styles.absolute ? 0 : 'auto',
+							bottom: styles.absolute ? 0 : 'auto'
+						})}
+					>
+						<Route exact path="/reset" component={ResetTemplate}/>
+						<Route exact path="/search/:search" component={SearchTemplate}/>
+						<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
+						<Route exact path="/:slug" component={PageTemplate}/>
+						<Route path="/" render={PageTemplate}/>
+					</AnimatedSwitch>
+				</HashScroller>
 				{this.props.state.get('videoModals').map(video => {
 					return <VideoModal key={video} url={video} state={state} actions={actions}/>;
 				})}
