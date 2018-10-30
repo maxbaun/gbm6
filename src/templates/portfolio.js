@@ -93,6 +93,10 @@ class PortfolioTemplate extends Component {
 			return true;
 		}
 
+		if (nextProps.videos.count() !== this.props.videos.count()) {
+			return true;
+		}
+
 		if (notFound(this.fetch, nextProps.state)) {
 			return true;
 		}

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {StaggeredMotion, spring} from 'react-motion';
 import {List} from 'immutable';
-import {debounce, throttle} from 'lodash';
+import {connect} from 'react-redux';
 
 import CSS from './masonry.module.scss';
+import {selectors as stateSelectors} from '../../ducks/state';
 import {ref, chunkList} from '../../utils/componentHelpers';
 
 const startOpacity = 0;
@@ -20,7 +21,11 @@ const initialDamping = 60;
 const finalStiffness = 400;
 const finalDamping = 60;
 
-export default class Masonry extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+class Masonry extends Component {
 	constructor(props) {
 		super(props);
 
@@ -29,8 +34,6 @@ export default class Masonry extends Component {
 		};
 
 		this.resizeGridItem = this.resizeGridItem.bind(this);
-		this.debounceResize = this.debounceResize.bind(this);
-		this.debounceResize = throttle(debounce(this.debounceResize, 300), 300);
 
 		this.getDefaultStyles = this.getDefaultStyles.bind(this);
 		this.getStyles = this.getStyles.bind(this);
@@ -43,7 +46,8 @@ export default class Masonry extends Component {
 		autoRows: PropTypes.number,
 		gridGap: PropTypes.number,
 		items: ImmutableProptypes.list.isRequired,
-		perGroup: PropTypes.number
+		perGroup: PropTypes.number,
+		state: ImmutableProptypes.map.isRequired
 	};
 
 	static defaultProps = {
@@ -60,22 +64,17 @@ export default class Masonry extends Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('resize', this.debounceResize);
 		this.resizeAllGridItems();
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.debounceResize);
 	}
 
 	componentDidUpdate(prevProps) {
 		if (!this.props.items.equals(prevProps.items)) {
 			this.resizeAllGridItems();
 		}
-	}
 
-	debounceResize() {
-		this.resizeAllGridItems();
+		if (prevProps.state.getIn(['windowSize', 'width']) !== this.props.state.getIn(['windowSize', 'width'])) {
+			this.resizeAllGridItems();
+		}
 	}
 
 	resizeAllGridItems() {
@@ -87,11 +86,10 @@ export default class Masonry extends Component {
 	}
 
 	resizeGridItem(item) {
-		const computedStyle = window.getComputedStyle(this.grid);
-		const rowHeight = parseInt(computedStyle.getPropertyValue('grid-auto-rows'), 10);
-		const rowGap = parseInt(computedStyle.getPropertyValue('grid-row-gap'), 10);
+		const rowHeight = 1;
+		const rowGap = 9;
 		const inner = item.querySelector(`.${CSS.itemInner}`);
-		const rowSpan = Math.ceil((inner.getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
+		const rowSpan = Math.ceil((inner.offsetHeight + rowGap) / (rowHeight + rowGap));
 		item.style.gridRowEnd = 'span ' + rowSpan;
 	}
 
@@ -116,9 +114,10 @@ export default class Masonry extends Component {
 	}
 
 	render() {
+		const {state} = this.props;
 		const {groups} = this.state;
 
-		const columnWidth = window.innerWidth < this.props.columnWidth ? '100%' : this.props.columnWidth;
+		const columnWidth = state.getIn(['windowSize', 'width']) < this.props.columnWidth ? '100%' : this.props.columnWidth;
 
 		const gridStyle = {
 			gridTemplateColumns: `repeat(auto-fill, minmax(${columnWidth}px, 1fr))`
@@ -157,3 +156,5 @@ export default class Masonry extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps)(Masonry);

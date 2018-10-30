@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {connect} from 'react-redux';
-import {debounce} from 'lodash';
 
 import {selectors as stateSelectors} from '../../ducks/state';
 import {toRadians} from '../../utils/mathHelpers';
@@ -27,8 +26,6 @@ class SectionLines extends Component {
 				bottomRightToLeft: {}
 			}
 		};
-
-		this.handleResize = debounce(this.handleResize.bind(this), 150);
 	}
 
 	static propTypes = {
@@ -36,16 +33,17 @@ class SectionLines extends Component {
 	};
 
 	componentDidMount() {
-		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
 	}
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
+	componentDidUpdate(prevProps) {
+		if (prevProps.state.getIn(['windowSize', 'width']) !== this.props.state.getIn(['windowSize', 'width'])) {
+			this.handleResize();
+		}
 	}
 
 	handleResize() {
-		const windowWidth = window.innerWidth;
+		const windowWidth = this.props.state.getIn(['windowSize', 'width']);
 
 		const {state} = this.props;
 		const width = windowWidth / Math.sin(toRadians(90 - state.get('angle')));

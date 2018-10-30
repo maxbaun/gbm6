@@ -3,8 +3,10 @@ import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {List} from 'immutable';
 import Swiper from 'swiper';
 import {debounce} from 'lodash';
+import {connect} from 'react-redux';
 
 import CSS from './teamSlider.module.scss';
+import {selectors as stateSelectors} from '../../ducks/state';
 import SliderNav from '../sliderNav/sliderNav';
 import {ref} from '../../utils/componentHelpers';
 import Image from '../common/image';
@@ -12,7 +14,11 @@ import Image from '../common/image';
 const TeamSize = 307;
 const TeamSizeMobile = 159;
 
-export default class TeamSlider extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+class TeamSlider extends Component {
 	constructor(props) {
 		super(props);
 
@@ -23,7 +29,8 @@ export default class TeamSlider extends Component {
 	}
 
 	static propTypes = {
-		team: ImmutableProptypes.list
+		team: ImmutableProptypes.list,
+		state: ImmutableProptypes.map.isRequired
 	};
 
 	static defaultProps = {
@@ -32,27 +39,32 @@ export default class TeamSlider extends Component {
 
 	componentDidMount() {
 		this.initSwiper();
-
-		window.addEventListener('resize', this.updateSlider);
 	}
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.updateSlider);
+	componentDidUpdate(prevProps) {
+		if (prevProps.state.getIn(['windowSize', 'width']) !== this.props.state.getIn(['windowSize', 'width'])) {
+			this.updateSlider();
+		}
 	}
 
 	updateSlider() {
+		if (this.swiper) {
+			this.swiper.destroy();
+		}
+
 		this.initSwiper();
 	}
 
 	initSwiper() {
 		const container = this.wrap.querySelector('.swiper-container');
-		const slideSize = window.innerWidth < 768 ? TeamSizeMobile : TeamSize;
+		const windowWidth = this.props.state.getIn(['windowSize', 'width']);
+		const slideSize = windowWidth < 768 ? TeamSizeMobile : TeamSize;
 
 		const options = {
 			loop: false,
 			direction: 'horizontal',
 			spaceBetween: 7,
-			slidesPerView: this.wrap.offsetWidth / slideSize,
+			slidesPerView: windowWidth / slideSize,
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev'
@@ -93,3 +105,5 @@ export default class TeamSlider extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps)(TeamSlider);

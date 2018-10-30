@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {Route} from 'react-router-dom';
 import {spring} from 'react-motion';
@@ -10,7 +9,7 @@ import {spring} from 'react-motion';
 import {actions as stateActions} from '../ducks/state';
 import {actions as videoActions} from '../ducks/videos';
 import {noop} from '../utils/componentHelpers';
-import {portfolioBase, angleHeight} from '../constants';
+import {portfolioBase} from '../constants';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
@@ -21,7 +20,6 @@ import SearchTemplate from '../templates/search';
 import AnimatedSwitch from '../components/routing/animatedSwitch';
 import VideoModals from '../components/modals/videoModals';
 import HashScroller from '../components/common/hashScroller';
-import {toDegrees} from '../utils/mathHelpers';
 
 const mapStateToProps = state => ({...state});
 
@@ -76,22 +74,7 @@ class App extends Component {
 	};
 
 	componentDidMount() {
-		this.setAngle();
-
 		this.props.actions.videosInit({});
-	}
-
-	setAngle() {
-		const windowWidth = window.innerWidth;
-		const halfWindow = windowWidth / 2;
-
-		const height = (windowWidth / 100) * angleHeight;
-
-		const angle = toDegrees(Math.atan(height / halfWindow));
-		const fullAngle = toDegrees(Math.atan(height / windowWidth));
-
-		this.props.actions.angleSet(angle);
-		this.props.actions.fullAngleSet(fullAngle);
 	}
 
 	render() {

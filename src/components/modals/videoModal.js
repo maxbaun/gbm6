@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import ReactPlayer from 'react-player';
-import {debounce} from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -24,6 +23,32 @@ const mapDispatchToProps = dispatch => ({
 	)
 });
 
+const getModalSize = state => {
+	const {height: windowHeight, width: windowWidth} = state.get('windowSize').toJS();
+
+	let modalHeight = 0;
+	let modalWidth = 0;
+
+	let widthTall = windowWidth * 0.8; // 80% of screen
+	let heightTall = widthTall * 0.5625; // 1280 x 720
+
+	let heightWide = windowHeight * 0.8;
+	let widthWide = heightWide / 0.5625;
+
+	if (windowHeight < windowWidth && widthWide <= windowWidth) {
+		modalWidth = widthWide;
+		modalHeight = heightWide;
+	} else {
+		modalWidth = widthTall;
+		modalHeight = heightTall;
+	}
+
+	return {
+		modalHeight,
+		modalWidth
+	};
+};
+
 class VideoModal extends Component {
 	constructor(props) {
 		super(props);
@@ -32,8 +57,6 @@ class VideoModal extends Component {
 			modalHeight: 0,
 			modalWidth: 0
 		};
-
-		this.handleResize = debounce(this.handleResize.bind(this), 150);
 	}
 
 	static propTypes = {
@@ -46,39 +69,13 @@ class VideoModal extends Component {
 		url: null
 	};
 
-	componentDidMount() {
-		window.addEventListener('resize', this.handleResize);
-		this.handleResize();
-	}
+	static getDerivedStateFromProps(props, state) {
+		const modalSize = getModalSize(props.state);
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	}
-
-	handleResize() {
-		const {innerHeight: windowHeight, innerWidth: windowWidth} = window;
-
-		let modalHeight = 0;
-		let modalWidth = 0;
-
-		let widthTall = windowWidth * 0.8; // 80% of screen
-		let heightTall = widthTall * 0.5625; // 1280 x 720
-
-		let heightWide = windowHeight * 0.8;
-		let widthWide = heightWide / 0.5625;
-
-		if (windowHeight < windowWidth && widthWide <= windowWidth) {
-			modalWidth = widthWide;
-			modalHeight = heightWide;
-		} else {
-			modalWidth = widthTall;
-			modalHeight = heightTall;
-		}
-
-		this.setState({
-			modalHeight,
-			modalWidth
-		});
+		return {
+			...state,
+			...modalSize
+		};
 	}
 
 	render() {
@@ -99,16 +96,18 @@ class VideoModal extends Component {
 				onClose={click(actions.offmenuHide, videoId)}
 			>
 				<div className={CSS.playerWrap}>
-					<ReactPlayer
-						className={CSS.player}
-						playing={isOpen}
-						url={url}
-						width="100%"
-						height="100%"
-						style={{
-							margin: '0 auto'
-						}}
-					/>
+					{isOpen ? (
+						<ReactPlayer
+							className={CSS.player}
+							playing={isOpen}
+							url={url}
+							width="100%"
+							height="100%"
+							style={{
+								margin: '0 auto'
+							}}
+						/>
+					) : null}
 				</div>
 			</Modal>
 		);

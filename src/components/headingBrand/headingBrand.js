@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import {debounce} from 'lodash';
 import Remarkable from 'remarkable';
+import {connect} from 'react-redux';
 
 import CSS from './headingBrand.module.scss';
+import {selectors as stateSelectors} from '../../ducks/state';
 import LogoPolygon from '../common/logoPolygon';
 import {innerHtml, ref} from '../../utils/componentHelpers';
 
@@ -11,7 +13,11 @@ const md = new Remarkable({
 	html: true
 });
 
-export default class HeadingBrand extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+class HeadingBrand extends Component {
 	constructor(props) {
 		super(props);
 
@@ -20,11 +26,10 @@ export default class HeadingBrand extends Component {
 		};
 
 		this.heading = null;
-
-		this.handleResize = debounce(this.handleResize.bind(this), 100);
 	}
 
 	static propTypes = {
+		state: ImmutableProptypes.map.isRequired,
 		heading: PropTypes.string,
 		headingClass: PropTypes.string
 	};
@@ -35,17 +40,13 @@ export default class HeadingBrand extends Component {
 	};
 
 	componentDidMount() {
-		window.addEventListener('resize', this.handleResize);
-
 		this.setSizing();
 	}
 
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	}
-
-	handleResize() {
-		this.setSizing();
+	componentDidUpdate(prevProps) {
+		if (prevProps.state.getIn(['windowSize', 'width']) !== this.props.state.getIn(['windowSize', 'width'])) {
+			this.setSizing();
+		}
 	}
 
 	setSizing() {
@@ -90,3 +91,5 @@ export default class HeadingBrand extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps)(HeadingBrand);

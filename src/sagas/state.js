@@ -1,5 +1,8 @@
-import {select, takeLatest} from 'redux-saga/effects';
+import {select, takeLatest, put, all} from 'redux-saga/effects';
+
 import {types as stateTypes, selectors as stateSelectors} from '../ducks/state';
+import {toDegrees} from '../utils/mathHelpers';
+import {angleHeight} from '../constants';
 
 export function * watchState() {
 	yield takeLatest(stateTypes.OFFMENU_SHOW, onOffmenuChange);
@@ -21,5 +24,25 @@ export function * onOffmenuReset() {
 }
 
 export function * onWindowResize({payload}) {
+	const windowWidth = payload.width;
+
+	const halfWindow = windowWidth / 2;
+
+	const height = (windowWidth / 100) * angleHeight;
+
+	const angle = toDegrees(Math.atan(height / halfWindow));
+	const fullAngle = toDegrees(Math.atan(height / windowWidth));
+
+	yield all([
+		put({
+			type: stateTypes.ANGLE_SET,
+			payload: angle
+		}),
+		put({
+			type: stateTypes.FULL_ANGLE_SET,
+			payload: fullAngle
+		})
+	]);
+
 	return yield payload;
 }
