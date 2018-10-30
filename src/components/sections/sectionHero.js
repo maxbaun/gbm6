@@ -56,7 +56,9 @@ class SectionHero extends Component {
 		video: PropTypes.string,
 		state: ImmutablePropTypes.map,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
-		hasOverlay: PropTypes.bool
+		hasOverlay: PropTypes.bool,
+		overlayColor: PropTypes.string,
+		overlayOpacity: PropTypes.number
 	};
 
 	static defaultProps = {
@@ -68,7 +70,9 @@ class SectionHero extends Component {
 		className: null,
 		video: null,
 		state: Map(),
-		hasOverlay: true
+		hasOverlay: true,
+		overlayColor: 'transparent',
+		overlayOpacity: 0
 	};
 
 	componentDidMount() {
@@ -117,7 +121,20 @@ class SectionHero extends Component {
 	}
 
 	render() {
-		const {scrollColor, scrollTo, images, imageCss, content, className, video, state, actions, hasOverlay} = this.props;
+		const {
+			scrollColor,
+			scrollTo,
+			images,
+			imageCss,
+			content,
+			className,
+			video,
+			state,
+			actions,
+			hasOverlay,
+			overlayColor,
+			overlayOpacity
+		} = this.props;
 
 		const heroCss = [CSS.hero];
 
@@ -146,7 +163,7 @@ class SectionHero extends Component {
 							image={images.first()}
 							onClick={hasOverlay ? click(this.handleLightBoxOpen, 1) : noop}
 						/>
-						{hasOverlay ? <div className={CSS.imageOverlay}/> : null}
+						{hasOverlay ? <div className={CSS.imageOverlay} style={{backgroundColor: overlayColor, opacity: overlayOpacity}}/> : null}
 					</Fragment>
 				)}
 				{video && video !== '' ? (
