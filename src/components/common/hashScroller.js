@@ -47,12 +47,12 @@ export default class HashScroller extends Component {
 	}
 
 	pathChanged() {
+		window.scrollTo(0, 0);
 		analytics('page', this.props.location.pathname);
 	}
 
 	locationChanged() {
 		if (!this.props.location.hash || this.props.location.hash === '') {
-			window.scrollTo(0, 0);
 			return;
 		}
 

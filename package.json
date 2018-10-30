@@ -13,6 +13,7 @@
     "qs": "^6.5.2",
     "react": "^16.5.2",
     "react-click-outside": "^3.0.1",
+    "react-countup": "^4.0.0",
     "react-dom": "^16.5.2",
     "react-fittext": "^1.0.0",
     "react-ga": "^2.5.3",

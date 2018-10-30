@@ -8,10 +8,10 @@ import Markdown from '../common/markdown';
 import Image from '../common/image';
 import HeadingBrand from '../headingBrand/headingBrand';
 import SectionLines from '../common/sectionLines';
+import Counters from '../counters/counters';
 
 const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => {
 	icons = icons.split('\n');
-	counters = counters.split('\n');
 
 	return (
 		<div data-section id={id} className={CSS.section}>
@@ -52,23 +52,7 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 						) : null}
 						{counters && counters.length && counters[0] !== '' ? (
 							<div className={CSS.counters}>
-								<ul className={CSS.counterBlocks}>
-									{counters.map(counter => {
-										const parts = counter.split(':');
-
-										return (
-											<li key={parts[0] + parts[2]} className={CSS.counterBlock}>
-												<div className={CSS.counter}>
-													<h3>
-														{parts[0]}
-														{parts[1]}
-													</h3>
-													<p>{parts[2]}</p>
-												</div>
-											</li>
-										);
-									})}
-								</ul>
+								<Counters counters={counters}/>
 							</div>
 						) : null}
 					</div>
