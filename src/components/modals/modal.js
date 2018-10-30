@@ -97,7 +97,7 @@ export default class Modal extends Component {
 
 		return (
 			<RenderInBody>
-				<div className={wrapClass.join(' ')} style={{visibility}}>
+				<div className={wrapClass.join(' ')} style={{visibility}} data-size={size}>
 					<Motion
 						defaultStyle={{
 							opacity: 0,
@@ -141,13 +141,15 @@ export default class Modal extends Component {
 
 							return (
 								<Fragment>
-									{showClose ? (
-										<span style={{opacity: styles.opacity > 0 ? styles.opacity : 0}} className={CSS.close}>
-											<Close backgroundColor="#FAFAFA" size={40} onClick={this.handleClose}/>
-										</span>
-									) : null}
 									<div className={modalClass.join(' ')} style={modalStyle}>
-										{children}
+										<div className={CSS.modalInner}>
+											{showClose ? (
+												<span style={{opacity: styles.opacity > 0 ? styles.opacity : 0}} className={CSS.close}>
+													<Close backgroundColor="#FAFAFA" onClick={this.handleClose}/>
+												</span>
+											) : null}
+											<div className={CSS.modalScroll}>{children}</div>
+										</div>
 									</div>
 								</Fragment>
 							);
