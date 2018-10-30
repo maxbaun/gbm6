@@ -31,6 +31,7 @@
 .question {
 	cursor: pointer;
 	@extend .mb-md-3;
+	transition: all 0.2s ease-in-out;
 
 	span {
 		@include fontSize(18, 26);
@@ -89,6 +90,7 @@
 	.answer {
 		overflow: hidden;
 		max-height: 0;
+		transition: all 0.2s ease-in-out, visibility 0.2s 0.2s;
 		visibility: hidden;
 	}
 }
@@ -96,6 +98,7 @@
 .accordionItemActive {
 	.answer {
 		max-height: 1000px;
+		transition: all 0.2s ease-in-out;
 		visibility: visible;
 	}
 }

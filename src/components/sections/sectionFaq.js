@@ -19,6 +19,7 @@ export default class SectionFaq extends Component {
 			activeIndex: 0
 		};
 
+		this.toggleFaq = this.toggleFaq.bind(this);
 		this.handleFaqChange = this.handleFaqChange.bind(this);
 	}
 
@@ -45,6 +46,14 @@ export default class SectionFaq extends Component {
 		ctaLinkUrl: null,
 		ctaLinkText: null
 	};
+
+	toggleFaq(activeIndex) {
+		if (this.state.activeIndex === activeIndex) {
+			activeIndex = -1;
+		}
+
+		this.handleFaqChange(activeIndex);
+	}
 
 	handleFaqChange(activeIndex) {
 		this.setState({activeIndex});
@@ -134,7 +143,7 @@ export default class SectionFaq extends Component {
 
 						return (
 							<li key={faq.getIn(['fields', 'question'])} className={itemCss.join(' ')}>
-								<div className={questionCss.join(' ')} onClick={click(this.handleFaqChange, index)}>
+								<div className={questionCss.join(' ')} onClick={click(this.toggleFaq, index)}>
 									<span>{faq.getIn(['fields', 'question'])}</span>
 								</div>
 								<div className={CSS.answer}>
