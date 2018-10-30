@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import CSS from './header.module.scss';
+import {selectors as menuSelectors, actions as menuActions} from '../../ducks/menus';
+import {selectors as stateSelectors, actions as stateActions} from '../../ducks/state';
 import SearchTakeover from '../searchTakeover/searchTakeover';
 import Hamburg from '../hamburg/hamburg';
 import MegaMenu from '../menu/megaMenu';
@@ -12,7 +16,22 @@ import {click, chunkList} from '../../utils/componentHelpers';
 import {currentMenu} from '../../utils/contentfulHelpers';
 import {List, fromJS} from 'immutable';
 
-export default class Header extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state),
+	menus: menuSelectors.getMenus(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+	actions: bindActionCreators(
+		{
+			...stateActions,
+			...menuActions
+		},
+		dispatch
+	)
+});
+
+class Header extends Component {
 	constructor(props) {
 		super(props);
 
@@ -131,3 +150,8 @@ export default class Header extends Component {
 		);
 	}
 }
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Header);

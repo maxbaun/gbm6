@@ -5,13 +5,10 @@ import {connect} from 'react-redux';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import {Route} from 'react-router-dom';
-import {List} from 'immutable';
 import {spring} from 'react-motion';
 
-import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages';
-import {selectors as menuSelectors, actions as menuActions} from '../ducks/menus';
-import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
-import {selectors as videoSelectors, actions as videoActions} from '../ducks/videos';
+import {actions as stateActions} from '../ducks/state';
+import {actions as videoActions} from '../ducks/videos';
 import {noop} from '../utils/componentHelpers';
 import {portfolioBase, angleHeight} from '../constants';
 
@@ -22,23 +19,15 @@ import PortfolioTemplate from '../templates/portfolio';
 import ResetTemplate from '../templates/reset';
 import SearchTemplate from '../templates/search';
 import AnimatedSwitch from '../components/routing/animatedSwitch';
-import VideoModal from '../components/modals/videoModal';
+import VideoModals from '../components/modals/videoModals';
 import HashScroller from '../components/common/hashScroller';
 import {toDegrees} from '../utils/mathHelpers';
 
-const mapStateToProps = state => ({
-	pages: pageSelectors.getPages(state),
-	menus: menuSelectors.getMenus(state),
-	state: stateSelectors.getState(state),
-	videos: videoSelectors.getVideos(state),
-	errors: stateSelectors.getErrors(state)
-});
+const mapStateToProps = state => ({...state});
 
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(
 		{
-			...pageActions,
-			...menuActions,
 			...stateActions,
 			...videoActions
 		},
@@ -77,17 +66,13 @@ const pageTransitions = {
 
 class App extends Component {
 	static propTypes = {
-		menus: ImmutableProptypes.list.isRequired,
 		actions: PropTypes.objectOf(PropTypes.func),
-		state: ImmutableProptypes.map.isRequired,
-		videos: ImmutableProptypes.list,
-		errors: ImmutableProptypes.list
+		history: PropTypes.object.isRequired,
+		location: PropTypes.object.isRequired
 	};
 
 	static defaultProps = {
-		actions: {noop},
-		videos: List(),
-		errors: List()
+		actions: {noop}
 	};
 
 	componentDidMount() {
@@ -110,11 +95,11 @@ class App extends Component {
 	}
 
 	render() {
-		const {state, menus, actions, history, location} = this.props;
+		const {actions, history, location} = this.props;
 
 		return (
 			<Fragment>
-				<Header menus={menus} actions={actions} state={state} history={history}/>
+				<Header history={history}/>
 				<HashScroller location={location}>
 					<AnimatedSwitch
 						{...pageTransitions}
@@ -136,10 +121,8 @@ class App extends Component {
 						<Route path="/" render={PageTemplate}/>
 					</AnimatedSwitch>
 				</HashScroller>
-				{this.props.state.get('videoModals').map(video => {
-					return <VideoModal key={video} url={video} state={state} actions={actions}/>;
-				})}
-				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved." state={state}/>
+				<VideoModals/>
+				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
 			</Fragment>
 		);
 	}

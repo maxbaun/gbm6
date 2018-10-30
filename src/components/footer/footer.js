@@ -2,9 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {Map} from 'immutable';
+import {connect} from 'react-redux';
 
 import CSS from './footer.module.scss';
+import {selectors as stateSelectors} from '../../ducks/state';
 import {innerHtml} from '../../utils/componentHelpers';
+
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
 
 const Footer = ({copyright, state}) => {
 	return (
@@ -29,4 +35,4 @@ Footer.defaultProps = {
 	state: Map()
 };
 
-export default Footer;
+export default connect(mapStateToProps)(Footer);

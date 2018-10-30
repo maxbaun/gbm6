@@ -59,6 +59,12 @@ class SectionVideos extends Component {
 		showCategories: true
 	};
 
+	static getDerivedStateFromProps(props, state) {
+		return {
+			activeCategory: props.showCategories ? state.activeCategory : 0
+		};
+	}
+
 	handleCategoryChange(activeCategory) {
 		this.setState(prevState => {
 			return {
@@ -123,6 +129,8 @@ class SectionVideos extends Component {
 
 		const paginatedVideos = this.getPaginatedVideos();
 		const hasMore = this.hasMore();
+
+		console.log(this.props.categories.toJS());
 
 		return (
 			<div data-section id={id} className={CSS.section}>

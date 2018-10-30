@@ -78,6 +78,6 @@ export default class Image extends Component {
 			return <div data-clip-target={clipTarget} className={className} style={{...style, backgroundImage: `url(${url})`}}/>;
 		}
 
-		return <img src={url} alt={image.getIn(['fields', 'title'])}/>;
+		return <img className={className} src={url} alt={image.getIn(['fields', 'title'])}/>;
 	}
 }

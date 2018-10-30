@@ -3,12 +3,28 @@ import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
 import ReactPlayer from 'react-player';
 import {debounce} from 'lodash';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import CSS from './videoModal.module.scss';
+import {selectors as stateSelectors, actions as stateActions} from '../../ducks/state';
 import Modal from './modal';
 import {click, vimeoId} from '../../utils/componentHelpers';
 
-export default class VideoModal extends Component {
+const mapStateToProps = state => ({
+	state: stateSelectors.getState(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+	actions: bindActionCreators(
+		{
+			...stateActions
+		},
+		dispatch
+	)
+});
+
+class VideoModal extends Component {
 	constructor(props) {
 		super(props);
 
@@ -98,3 +114,8 @@ export default class VideoModal extends Component {
 		);
 	}
 }
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(VideoModal);

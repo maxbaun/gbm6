@@ -12,9 +12,10 @@ import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
 import Image from '../common/image';
 import SliderNav from '../sliderNav/sliderNav';
-import {ref, click, vimeoId} from '../../utils/componentHelpers';
+import {ref, click, vimeoId, noop} from '../../utils/componentHelpers';
 import PlayBtn from '../playBtn/playBtn';
 import SectionLines from '../common/sectionLines';
+import Lightbox from '../modals/lightbox';
 
 const mapStateToProps = state => ({
 	state: stateSelectors.getState(state)
@@ -33,8 +34,16 @@ class SectionHero extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			lightboxOpen: false,
+			lightboxStart: 1
+		};
+
 		this.carousel = null;
 		this.swiper = null;
+
+		this.handleLightBoxOpen = this.handleLightBoxOpen.bind(this);
+		this.handleLightBoxClose = this.handleLightBoxClose.bind(this);
 	}
 
 	static propTypes = {
@@ -94,6 +103,19 @@ class SectionHero extends Component {
 		this.swiper = new Swiper(container, options);
 	}
 
+	handleLightBoxOpen(lightboxStart) {
+		this.setState({
+			lightboxOpen: true,
+			lightboxStart
+		});
+	}
+
+	handleLightBoxClose() {
+		this.setState({
+			lightboxOpen: false
+		});
+	}
+
 	render() {
 		const {scrollColor, scrollTo, images, imageCss, content, className, video, state, actions, hasOverlay} = this.props;
 
@@ -122,6 +144,7 @@ class SectionHero extends Component {
 							}}
 							className={CSS.image}
 							image={images.first()}
+							onClick={hasOverlay ? click(this.handleLightBoxOpen, 1) : noop}
 						/>
 						{hasOverlay ? <div className={CSS.imageOverlay}/> : null}
 					</Fragment>
@@ -165,6 +188,15 @@ class SectionHero extends Component {
 						<SectionLines/>
 					</div>
 				)}
+				{this.shouldRenderCarousel() ? (
+					<Lightbox
+						showClose
+						active={this.state.lightboxOpen}
+						start={this.state.lightboxStart}
+						images={images}
+						onClose={this.handleLightBoxClose}
+					/>
+				) : null}
 			</div>
 		);
 	}
@@ -174,9 +206,9 @@ class SectionHero extends Component {
 			<div ref={ref.call(this, 'carousel')} className={CSS.carousel}>
 				<div className="swiper-container">
 					<div className="swiper-wrapper">
-						{this.props.images.map(image => {
+						{this.props.images.map((image, index) => {
 							return (
-								<div key={image.getIn(['sys', 'id'])} className="swiper-slide">
+								<div key={image.getIn(['sys', 'id'])} className="swiper-slide" onClick={click(this.handleLightBoxOpen, index)}>
 									<Image background style={this.props.imageCss} className={CSS.image} image={image}/>
 								</div>
 							);
