@@ -133,7 +133,7 @@ class PortfolioTemplate extends Component {
 					className="heroPortfolio"
 					images={video.getIn(['fields', 'images'])}
 					video={video.getIn(['fields', 'video'])}
-					imageCss={{backgroundSize: 'cover', backgroundPosition: 'top center'}}
+					imageCss={{backgroundSize: 'cover', backgroundPosition: 'center center'}}
 				/>
 				<SectionPortfolioContent
 					title={video.getIn(['fields', 'title'])}

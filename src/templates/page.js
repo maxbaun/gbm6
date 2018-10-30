@@ -10,10 +10,9 @@ import {selectors as pageSelectors, actions as pageActions} from '../ducks/pages
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 
 import SectionManager from '../components/sectionManager/sectionManager';
-import {unique, ScrollToHelper, notFound} from '../utils/componentHelpers';
+import {unique, notFound} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
 import {SiteSettings} from '../data/siteSettings';
-import {analytics} from '../utils/trackingHelpers';
 
 import SectionHero from '../components/sections/sectionHero';
 import SectionAbout from '../components/sections/sectionAbout';
