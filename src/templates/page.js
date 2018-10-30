@@ -111,6 +111,10 @@ class PageTemplate extends Component {
 			return true;
 		}
 
+		if (nextProps.match.params.slug !== this.props.match.params.slug) {
+			return true;
+		}
+
 		return false;
 	}
 
