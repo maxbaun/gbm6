@@ -121,6 +121,12 @@ class SectionVideos extends Component {
 
 		return this.props.videos.reduce((list, video) => {
 			return this.props.categories.reduce((innerList, category) => {
+				const existingIndex = innerList.findIndex(v => v.getIn(['sys', 'id']) === video.getIn(['sys', 'id']));
+
+				if (existingIndex > -1) {
+					return innerList;
+				}
+
 				return this.videoHasCategory(video, category) ? innerList.push(video) : innerList;
 			}, list);
 		}, List());
