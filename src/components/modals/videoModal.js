@@ -101,6 +101,10 @@ class VideoModal extends Component {
 		const videoId = vimeoId(url);
 		const isOpen = state.getIn(['offmenu', videoId]);
 
+		if (!isOpen) {
+			return null;
+		}
+
 		return (
 			<Modal
 				showClose

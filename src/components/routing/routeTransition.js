@@ -88,7 +88,8 @@ class RouteTransition extends Component {
 	renderRoute = config => {
 		const props = {
 			style: this.props.mapStyles(config.style),
-			key: config.key
+			key: config.key,
+			className: 'page-transition'
 		};
 
 		return this.props.wrapperComponent ? createElement(this.props.wrapperComponent, props, config.data) : cloneElement(config.data, props);

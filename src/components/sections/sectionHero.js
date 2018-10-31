@@ -12,10 +12,9 @@ import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
 import Image from '../common/image';
 import SliderNav from '../sliderNav/sliderNav';
-import {ref, click, vimeoId, noop} from '../../utils/componentHelpers';
+import {ref, click, vimeoId, noop, getLightboxId} from '../../utils/componentHelpers';
 import PlayBtn from '../playBtn/playBtn';
 import SectionLines from '../common/sectionLines';
-import Lightbox from '../modals/lightbox';
 
 const mapStateToProps = state => ({
 	state: stateSelectors.getState(state)
@@ -34,14 +33,10 @@ class SectionHero extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			lightboxStart: 1
-		};
-
 		this.carousel = null;
 		this.swiper = null;
 
-		this.handleLightBoxOpen = this.handleLightBoxOpen.bind(this);
+		this.getClickAction = this.getClickAction.bind(this);
 	}
 
 	static propTypes = {
@@ -56,7 +51,8 @@ class SectionHero extends Component {
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
 		hasOverlay: PropTypes.bool,
 		overlayColor: PropTypes.string,
-		overlayOpacity: PropTypes.number
+		overlayOpacity: PropTypes.number,
+		portfolioItem: ImmutablePropTypes.map
 	};
 
 	static defaultProps = {
@@ -70,7 +66,8 @@ class SectionHero extends Component {
 		state: Map(),
 		hasOverlay: true,
 		overlayColor: 'transparent',
-		overlayOpacity: 0
+		overlayOpacity: 0,
+		portfolioItem: Map()
 	};
 
 	componentDidMount() {
@@ -105,11 +102,19 @@ class SectionHero extends Component {
 		this.swiper = new Swiper(container, options);
 	}
 
-	handleLightBoxOpen(lightboxStart) {
-		this.props.actions.offmenuToggle('heroLightbox');
-		this.setState({
-			lightboxStart
-		});
+	getClickAction(portfolioItem, index) {
+		return () => {
+			if (!portfolioItem.get || !portfolioItem.getIn(['sys', 'id'])) {
+				return noop;
+			}
+
+			return this.props.actions.offmenuToggleWithData({
+				name: getLightboxId(portfolioItem),
+				data: {
+					start: index
+				}
+			});
+		};
 	}
 
 	render() {
@@ -125,7 +130,8 @@ class SectionHero extends Component {
 			actions,
 			hasOverlay,
 			overlayColor,
-			overlayOpacity
+			overlayOpacity,
+			portfolioItem
 		} = this.props;
 
 		const heroCss = [CSS.hero];
@@ -153,7 +159,7 @@ class SectionHero extends Component {
 							}}
 							className={CSS.image}
 							image={images.first()}
-							onClick={hasOverlay ? click(this.handleLightBoxOpen, 1) : noop}
+							onClick={this.getClickAction(portfolioItem, 0)}
 						/>
 						{hasOverlay ? <div className={CSS.imageOverlay} style={{backgroundColor: overlayColor, opacity: overlayOpacity}}/> : null}
 					</Fragment>
@@ -197,27 +203,20 @@ class SectionHero extends Component {
 						<SectionLines/>
 					</div>
 				)}
-				{this.shouldRenderCarousel() ? (
-					<Lightbox
-						showClose
-						active={this.props.state.getIn(['offmenu', 'heroLightbox'])}
-						start={this.state.lightboxStart}
-						images={images}
-						onClose={click(this.props.actions.offmenuHide, 'heroLightbox')}
-					/>
-				) : null}
 			</div>
 		);
 	}
 
 	renderCarousel() {
+		const {portfolioItem} = this.props;
+
 		return (
 			<div ref={ref.call(this, 'carousel')} className={CSS.carousel}>
 				<div className="swiper-container">
 					<div className="swiper-wrapper">
 						{this.props.images.map((image, index) => {
 							return (
-								<div key={image.getIn(['sys', 'id'])} className="swiper-slide" onClick={click(this.handleLightBoxOpen, index)}>
+								<div key={image.getIn(['sys', 'id'])} className="swiper-slide" onClick={this.getClickAction(portfolioItem, index)}>
 									<Image background style={this.props.imageCss} className={CSS.image} image={image}/>
 								</div>
 							);

@@ -7,6 +7,8 @@ import {getLightboxId} from '../utils/componentHelpers';
 
 export const types = {
 	OFFMENU_TOGGLE: 'OFFMENU_TOGGLE',
+	OFFMENU_TOGGLE_WITH_DATA: 'OFFMENU_TOGGLE_WITH_DATA',
+	OFFMENU_DATA_SET: 'OFFMENU_DATA_SET',
 	OFFMENU_SHOW: 'OFFMENU_SHOW',
 	OFFMENU_HIDE: 'OFFMENU_HIDE',
 	REGISTER_PROMO: 'REGISTER_PROMO',
@@ -23,6 +25,7 @@ export const types = {
 
 export const actions = {
 	offmenuToggle: name => utils.action(types.OFFMENU_TOGGLE, {name}),
+	offmenuToggleWithData: payload => utils.action(types.OFFMENU_TOGGLE_WITH_DATA, {payload}),
 	offmenuShow: name => utils.action(types.OFFMENU_SHOW, {name}),
 	offmenuHide: name => utils.action(types.OFFMENU_HIDE, {name}),
 	windowResize: payload => utils.action(types.WINDOW_RESIZE, {payload}),
@@ -39,6 +42,7 @@ export const initialState = utils.initialState({
 		search: false,
 		megaMenu: false
 	},
+	offmenuData: {},
 	windowSize: {
 		width: window.innerWidth,
 		height: window.innerHeight
@@ -63,6 +67,8 @@ export default (state = initialState, action) => {
 
 				s.set('offmenu', initialState.get('offmenu').setIn(parts, !currentState.getIn(parts)));
 			});
+		case types.OFFMENU_DATA_SET:
+			return state.setIn(['offmenuData', action.payload.name], fromJS(action.payload.data));
 		case types.OFFMENU_SHOW:
 			return state.withMutations(s => {
 				let parts = action.name.split('.');
@@ -103,12 +109,17 @@ export default (state = initialState, action) => {
 			return state.update('lightboxes', l => {
 				action.payload.forEach(video => {
 					if (video && video !== '' && l.indexOf(video) === -1) {
-						l = l.push(
-							fromJS({
-								id: getLightboxId(video),
-								images: video.getIn(['fields', 'images'])
-							})
-						);
+						const lightBoxId = getLightboxId(video);
+						const existingIndex = l.findIndex(lb => lb.get('id') === lightBoxId);
+
+						if (existingIndex === -1) {
+							l = l.push(
+								fromJS({
+									id: getLightboxId(video),
+									images: video.getIn(['fields', 'images'])
+								})
+							);
+						}
 					}
 				});
 

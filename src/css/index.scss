@@ -64,6 +64,10 @@ body.offmenu-open {
 	width: 100%;
 }
 
+.page-transition {
+	will-change: opacity;
+}
+
 h1,
 h2,
 h3,

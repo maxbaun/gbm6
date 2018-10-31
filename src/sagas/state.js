@@ -7,6 +7,7 @@ import {angleHeight} from '../constants';
 export function * watchState() {
 	yield takeLatest(stateTypes.OFFMENU_SHOW, onOffmenuChange);
 	yield takeLatest(stateTypes.OFFMENU_TOGGLE, onOffmenuChange);
+	yield takeLatest(stateTypes.OFFMENU_TOGGLE_WITH_DATA, onOffmenuToggleWithData);
 	yield takeLatest(stateTypes.OFFMENU_HIDE, onOffmenuChange);
 	yield takeLatest(stateTypes.OFFMENU_RESET, onOffmenuReset);
 	yield takeLatest(stateTypes.WINDOW_RESIZE, onWindowResize);
@@ -17,6 +18,22 @@ export function * onOffmenuChange({name}) {
 
 	const action = offmenuState ? 'add' : 'remove';
 	document.querySelector('body').classList[action]('offmenu-open');
+}
+
+export function * onOffmenuToggleWithData({payload}) {
+	yield all([
+		put({
+			type: stateTypes.OFFMENU_DATA_SET,
+			payload: {
+				name: payload.name,
+				data: payload.data
+			}
+		}),
+		put({
+			type: stateTypes.OFFMENU_TOGGLE,
+			name: payload.name
+		})
+	]);
 }
 
 export function * onOffmenuReset() {

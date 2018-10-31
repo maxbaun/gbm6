@@ -24,10 +24,17 @@ const mapDispatchToProps = dispatch => ({
 
 const Lightboxes = ({state, actions}) => {
 	return state.get('lightboxes').map(lightbox => {
+		const active = state.getIn(['offmenu', lightbox.get('id')]);
+
+		if (!active) {
+			return null;
+		}
+
 		return (
 			<Lightbox
 				key={lightbox.get('id')}
-				active={state.getIn(['offmenu', lightbox.get('id')])}
+				active={active}
+				start={state.getIn(['offmenuData', lightbox.get('id'), 'start'])}
 				images={lightbox.get('images')}
 				onClose={click(actions.offmenuHide, lightbox.get('id'))}
 			/>
