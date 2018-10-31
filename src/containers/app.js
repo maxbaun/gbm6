@@ -20,6 +20,7 @@ import ResetTemplate from '../templates/reset';
 import SearchTemplate from '../templates/search';
 import AnimatedSwitch from '../components/routing/animatedSwitch';
 import VideoModals from '../components/modals/videoModals';
+import Lightboxes from '../components/modals/lightboxes';
 import HashScroller from '../components/common/hashScroller';
 
 const mapStateToProps = state => ({...state});
@@ -130,6 +131,7 @@ class App extends Component {
 					</AnimatedSwitch>
 				</HashScroller>
 				<VideoModals/>
+				<Lightboxes/>
 				<Footer/>
 			</Fragment>
 		);

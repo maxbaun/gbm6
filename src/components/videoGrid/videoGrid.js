@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux';
 import {actions as stateActions, selectors as stateSelectors} from '../../ducks/state';
 import Masonry from '../masonry/masonry';
 import VideoPreview from '../videoPreview/videoPreview';
-import {click, vimeoId} from '../../utils/componentHelpers';
+import {click, vimeoId, getLightboxId} from '../../utils/componentHelpers';
 
 const mapStateToProps = state => ({
 	state: stateSelectors.getState(state)
@@ -33,6 +33,7 @@ const VideoGrid = ({actions, videos, perGroup}) => {
 							key={video.getIn(['fields', 'title'])}
 							video={video}
 							onVideoOpen={click(actions.offmenuToggle, vimeoId(video.getIn(['fields', 'video'])))}
+							onGalleryOpen={click(actions.offmenuToggle, getLightboxId(video))}
 						/>
 					);
 				})

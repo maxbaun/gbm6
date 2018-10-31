@@ -292,3 +292,7 @@ export function vimeoId(url) {
 export function chunkList(list, chunkSize = 1) {
 	return Range(0, list.count(), chunkSize).map(chunkStart => list.slice(chunkStart, chunkStart + chunkSize));
 }
+
+export function getLightboxId(video) {
+	return `lightbox-${video.getIn(['sys', 'id'])}`;
+}

@@ -3,6 +3,7 @@ import {fromJS, List} from 'immutable';
 
 import * as utils from '../utils/duckHelpers';
 import {responsive} from '../constants';
+import {getLightboxId} from '../utils/componentHelpers';
 
 export const types = {
 	OFFMENU_TOGGLE: 'OFFMENU_TOGGLE',
@@ -12,6 +13,7 @@ export const types = {
 	OFFMENU_RESET: 'OFFMENU_RESET',
 	WINDOW_RESIZE: 'WINDOW_RESIZE',
 	VIDEO_MODAL_ADD: 'VIDEO_MODAL_ADD',
+	LIGHTBOX_ADD: 'LIGHTBOX_ADD',
 	STATUS_CHANGE: 'STATUS_CHANGE',
 	ANGLE_SET: 'ANGLE_SET',
 	FULL_ANGLE_SET: 'FULL_ANGLE_SET',
@@ -46,7 +48,8 @@ export const initialState = utils.initialState({
 	status: {},
 	pageTransitioning: false,
 	isCollapsed: window.innerWidth < responsive.collapse,
-	videoModals: []
+	videoModals: [],
+	lightboxes: []
 });
 
 export default (state = initialState, action) => {
@@ -95,6 +98,21 @@ export default (state = initialState, action) => {
 				});
 
 				return u;
+			});
+		case types.LIGHTBOX_ADD:
+			return state.update('lightboxes', l => {
+				action.payload.forEach(video => {
+					if (video && video !== '' && l.indexOf(video) === -1) {
+						l = l.push(
+							fromJS({
+								id: getLightboxId(video),
+								images: video.getIn(['fields', 'images'])
+							})
+						);
+					}
+				});
+
+				return l;
 			});
 		case types.PAGE_TRANSITION_START:
 			return state.set('pageTransitioning', true);

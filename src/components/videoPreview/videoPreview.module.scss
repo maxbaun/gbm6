@@ -62,19 +62,18 @@
 
 .icon {
 	color: $white;
-}
-
-.iconVideo {
-	@extend .icon;
-	@include fontSize(48, 48);
 	cursor: pointer;
-	margin-bottom: 21px;
-
 	transition: color 0.15s ease-in-out;
 
 	&:hover {
 		color: $green;
 	}
+}
+
+.iconVideo {
+	@extend .icon;
+	@include fontSize(48, 48);
+	margin-bottom: 21px;
 }
 
 .iconPhoto {

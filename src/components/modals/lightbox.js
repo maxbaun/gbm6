@@ -49,7 +49,7 @@ class Lightbox extends Component {
 		onClose: () => {},
 		onShow: () => {},
 		images: List(),
-		start: 1
+		start: 0
 	};
 
 	static getDerivedStateFromProps(props, state) {

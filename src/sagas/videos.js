@@ -5,6 +5,7 @@ import {types as videoTypes, selectors as videoSelectors} from '../ducks/videos'
 import {types as stateTypes} from '../ducks/state';
 import {types as cacheTypes} from '../ducks/cache';
 import {shouldCache} from '../constants';
+import {fromJS} from 'immutable';
 
 export function * watchVideos() {
 	yield takeEvery(videoTypes.VIDEOS_GET, onVideosGet);
@@ -89,6 +90,10 @@ function * onVideosUpdate({payload}) {
 		put({
 			type: stateTypes.VIDEO_MODAL_ADD,
 			payload: payload.map(i => i.fields.video)
+		}),
+		put({
+			type: stateTypes.LIGHTBOX_ADD,
+			payload: fromJS(payload)
 		}),
 		put({
 			type: cacheTypes.CACHE_VIDEOS_SET

@@ -7,7 +7,7 @@ import CSS from './videoPreview.module.scss';
 import {portfolioBase} from '../../constants';
 import Image from '../common/image';
 
-const VideoPreview = ({video, onVideoOpen}) => {
+const VideoPreview = ({video, onVideoOpen, onGalleryOpen}) => {
 	const firstImage = video.getIn(['fields', 'images', 0]);
 
 	return (
@@ -23,7 +23,7 @@ const VideoPreview = ({video, onVideoOpen}) => {
 								<span className="icon icon-play-btn"/>
 							</div>
 						) : (
-							<div className={CSS.iconPhoto}>
+							<div className={CSS.iconPhoto} onClick={onGalleryOpen}>
 								<span className="far fa-images"/>
 							</div>
 						)}
@@ -43,7 +43,8 @@ const VideoPreview = ({video, onVideoOpen}) => {
 
 VideoPreview.propTypes = {
 	video: ImmutableProptypes.map.isRequired,
-	onVideoOpen: PropTypes.func.isRequired
+	onVideoOpen: PropTypes.func.isRequired,
+	onGalleryOpen: PropTypes.func.isRequired
 };
 
 export default VideoPreview;
