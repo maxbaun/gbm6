@@ -23,6 +23,20 @@ export async function getPages({query = {}}) {
 	}
 }
 
+export async function getPlatforms() {
+	try {
+		const res = await ContenfulClient.getEntries({
+			content_type: 'platforms' // eslint-disable-line camelcase,
+		});
+
+		// @TODO: Cache platforms
+
+		return res.items;
+	} catch (error) {
+		return error;
+	}
+}
+
 export async function getMenus() {
 	try {
 		const res = await ContenfulClient.getEntries({
@@ -70,8 +84,6 @@ export async function search({query}) {
 		});
 
 		const res = [...titleRes.items, ...descriptionRes.items, ...textRes.items];
-
-		// @TODO: Cache portfolio items here
 
 		return res;
 	} catch (error) {

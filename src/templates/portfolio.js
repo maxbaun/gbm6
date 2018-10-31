@@ -12,7 +12,6 @@ import {selectors as stateSelectors, actions as stateActions} from '../ducks/sta
 import SectionManager from '../components/sectionManager/sectionManager';
 import {unique, notFound} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
-import {SiteSettings} from '../data/siteSettings';
 
 import SectionHero from '../components/sections/sectionHero';
 import SectionCta from '../components/sections/sectionCta';
@@ -146,11 +145,8 @@ class PortfolioTemplate extends Component {
 					location={video.getIn(['fields', 'location'])}
 					talent={video.getIn(['fields', 'talent'])}
 				/>
-				<SectionFeaturedEvents
-					title="More Legendary Events"
-					videos={this.props.videos.filter(v => v.getIn(['fields', 'slug']) !== this.props.match.params.slug).take(4)}
-				/>
-				<SectionCta siteSettings={SiteSettings}/>
+				<SectionFeaturedEvents videos={this.props.videos.filter(v => v.getIn(['fields', 'slug']) !== this.props.match.params.slug).take(4)}/>
+				<SectionCta/>
 			</SectionManager>
 		);
 	}

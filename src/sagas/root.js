@@ -7,7 +7,17 @@ import {watchState} from './state';
 import {watchVideos} from './videos';
 import {watchForms} from './forms';
 import {watchSearch} from './search';
+import {watchPlatforms} from './platforms';
 
 export default function * Sagas() {
-	yield all([fork(watchPages), fork(watchMenus), fork(watchCache), fork(watchState), fork(watchVideos), fork(watchForms), fork(watchSearch)]);
+	yield all([
+		fork(watchPages),
+		fork(watchMenus),
+		fork(watchCache),
+		fork(watchState),
+		fork(watchVideos),
+		fork(watchForms),
+		fork(watchSearch),
+		fork(watchPlatforms)
+	]);
 }

@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutableProptypes from 'react-immutable-proptypes';
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
+import {connect} from 'react-redux';
 
 import CSS from './sectionFeaturedEvents.module.scss';
+import {selectors as platformSelectors} from '../../ducks/platforms';
 import VideoGrid from '../videoGrid/videoGrid';
 import SectionLines from '../common/sectionLines';
 
-const SectionFeaturedEvents = ({title, videos, perGroup}) => {
+const mapStateToProps = state => ({
+	settings: platformSelectors.getWebsiteSettings(state)
+});
+
+const SectionFeaturedEvents = ({settings, videos, perGroup}) => {
 	return (
 		<div data-section className={CSS.section}>
 			<SectionLines/>
@@ -16,7 +22,7 @@ const SectionFeaturedEvents = ({title, videos, perGroup}) => {
 					<div className="container">
 						<div className="row">
 							<div className="col-sm-8 offset-sm-2">
-								<h3 className={CSS.title}>{title}</h3>
+								<h3 className={CSS.title}>{settings.getIn(['fields', 'moreEventsTitle']) || 'More'}</h3>
 							</div>
 						</div>
 					</div>
@@ -34,15 +40,15 @@ const SectionFeaturedEvents = ({title, videos, perGroup}) => {
 };
 
 SectionFeaturedEvents.propTypes = {
-	title: PropTypes.string,
+	settings: ImmutableProptypes.map,
 	videos: ImmutableProptypes.list,
 	perGroup: PropTypes.number
 };
 
 SectionFeaturedEvents.defaultProps = {
-	title: 'More Legendary Events',
+	settings: Map(),
 	videos: List(),
 	perGroup: 4
 };
 
-export default SectionFeaturedEvents;
+export default connect(mapStateToProps)(SectionFeaturedEvents);

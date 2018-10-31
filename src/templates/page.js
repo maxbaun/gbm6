@@ -12,7 +12,6 @@ import {selectors as stateSelectors, actions as stateActions} from '../ducks/sta
 import SectionManager from '../components/sectionManager/sectionManager';
 import {unique, notFound} from '../utils/componentHelpers';
 import {currentPage} from '../utils/contentfulHelpers';
-import {SiteSettings} from '../data/siteSettings';
 
 import SectionHero from '../components/sections/sectionHero';
 import SectionAbout from '../components/sections/sectionAbout';
@@ -244,7 +243,7 @@ class PageTemplate extends Component {
 				/>
 				<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
 					{sections.toJS()}
-					{hasCta ? <SectionCta siteSettings={SiteSettings}/> : null}
+					{hasCta ? <SectionCta/> : null}
 				</SectionManager>
 			</Fragment>
 		);

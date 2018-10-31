@@ -10,7 +10,6 @@ import {selectors as searchSelectors, actions as searchActions} from '../ducks/s
 import {selectors as stateSelectors, actions as stateActions} from '../ducks/state';
 
 import {unique, isLoading} from '../utils/componentHelpers';
-import {SiteSettings} from '../data/siteSettings';
 import {analytics} from '../utils/trackingHelpers';
 import SectionCta from '../components/sections/sectionCta';
 import SectionSearch from '../components/sections/sectionSearch';
@@ -100,7 +99,7 @@ class SearchTemplate extends Component {
 			<PageWrapper>
 				<Head title={`Search For ${this.getSearchQuery()}`} location={this.props.location} url={window.location.href}/>
 				<SectionSearch search={this.props.search} query={this.getSearchQuery()} loading={loading || false}/>
-				<SectionCta siteSettings={SiteSettings}/>
+				<SectionCta/>
 			</PageWrapper>
 		);
 	}

@@ -8,7 +8,8 @@ import {spring} from 'react-motion';
 
 import {actions as stateActions} from '../ducks/state';
 import {actions as videoActions} from '../ducks/videos';
-import {noop} from '../utils/componentHelpers';
+import {actions as platformActions} from '../ducks/platforms';
+import {noop, unique} from '../utils/componentHelpers';
 import {portfolioBase} from '../constants';
 
 import Header from '../components/header/header';
@@ -27,7 +28,8 @@ const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(
 		{
 			...stateActions,
-			...videoActions
+			...videoActions,
+			...platformActions
 		},
 		dispatch
 	)
@@ -63,6 +65,12 @@ const pageTransitions = {
 };
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.fetch = unique();
+	}
+
 	static propTypes = {
 		actions: PropTypes.objectOf(PropTypes.func),
 		history: PropTypes.object.isRequired,
@@ -75,6 +83,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.props.actions.videosInit({});
+		this.props.actions.platformsGet({fetch: this.fetch});
 	}
 
 	render() {
@@ -105,7 +114,7 @@ class App extends Component {
 					</AnimatedSwitch>
 				</HashScroller>
 				<VideoModals/>
-				<Footer copyright="Copyright 2018 GMB6 &nbsp&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp&nbsp All Rights Reserved."/>
+				<Footer/>
 			</Fragment>
 		);
 	}

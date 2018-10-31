@@ -8,6 +8,7 @@ import {Map, fromJS} from 'immutable';
 import CSS from './sectionCta.module.scss';
 import {selectors as stateSelectors} from '../../ducks/state';
 import {actions as formActions} from '../../ducks/forms';
+import {selectors as platformSelectors} from '../../ducks/platforms';
 import HeadingBrand from '../headingBrand/headingBrand';
 import {state, unique, isLoading, getError, getSuccess} from '../../utils/componentHelpers';
 import Markdown from '../common/markdown';
@@ -24,7 +25,8 @@ const initialState = {
 const fetch = unique();
 
 const mapStateToProps = state => ({
-	state: stateSelectors.getState(state)
+	state: stateSelectors.getState(state),
+	settings: platformSelectors.getWebsiteSettings(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -47,13 +49,13 @@ class SectionCta extends Component {
 	}
 
 	static propTypes = {
-		siteSettings: ImmutableProptypes.map,
 		actions: PropTypes.objectOf(PropTypes.func).isRequired,
-		state: ImmutableProptypes.map.isRequired
+		state: ImmutableProptypes.map.isRequired,
+		settings: ImmutableProptypes.map
 	};
 
 	static defaultProps = {
-		siteSettings: Map()
+		settings: Map()
 	};
 
 	static getDerivedStateFromProps(props, state) {
@@ -109,26 +111,28 @@ class SectionCta extends Component {
 	}
 
 	renderHeader() {
+		const {settings} = this.props;
+
 		return (
 			<div className={CSS.heading}>
-				<HeadingBrand heading={this.props.siteSettings.get('ctaTitle')}/>
+				<HeadingBrand heading={settings.getIn(['fields', 'ctaTitle'])}/>
 			</div>
 		);
 	}
 
 	renderContact() {
-		const {siteSettings} = this.props;
+		const {settings} = this.props;
 
 		return (
 			<div className={CSS.contact}>
 				<ul className={CSS.contactItems}>
 					<li className={CSS.contactItem}>
 						<h3>Phone</h3>
-						<h5>{siteSettings.get('phone')}</h5>
+						<h5>{settings.getIn(['fields', 'phone'])}</h5>
 					</li>
 					<li className={CSS.contactItem}>
 						<h3>Email</h3>
-						<h5>{siteSettings.get('email')}</h5>
+						<h5>{settings.getIn(['fields', 'email'])}</h5>
 					</li>
 				</ul>
 			</div>
@@ -136,32 +140,38 @@ class SectionCta extends Component {
 	}
 
 	renderSocial() {
-		const {siteSettings} = this.props;
+		const {settings} = this.props;
 
 		const icons = fromJS([
 			{
 				property: 'twitter',
-				icon: 'fab fa-twitter'
+				icon: 'fab fa-twitter',
+				url: settings.getIn(['fields', 'twitter'])
 			},
 			{
 				property: 'facebook',
-				icon: 'fab fa-facebook-f'
+				icon: 'fab fa-facebook-f',
+				url: settings.getIn(['fields', 'facebook'])
 			},
 			{
 				property: 'vimeo',
-				icon: 'fab fa-vimeo'
+				icon: 'fab fa-vimeo',
+				url: settings.getIn(['fields', 'vimeo'])
 			},
 			{
 				property: 'soundcloud',
-				icon: 'fab fa-soundcloud'
+				icon: 'fab fa-soundcloud',
+				url: settings.getIn(['fields', 'soundcloud'])
 			},
 			{
 				property: 'instagram',
-				icon: 'fab fa-instagram'
+				icon: 'fab fa-instagram',
+				url: settings.getIn(['fields', 'instagram'])
 			},
 			{
 				property: 'youtube',
-				icon: 'fab fa-youtube'
+				icon: 'fab fa-youtube',
+				url: settings.getIn(['fields', 'youtube'])
 			}
 		]);
 
@@ -172,7 +182,7 @@ class SectionCta extends Component {
 						{icons.map(icon => {
 							return (
 								<li key={icon} className={CSS.socialIcon}>
-									<a href={siteSettings.get(icon.get('property'))}>
+									<a href={icon.get('url')}>
 										<span className={icon.get('icon')}/>
 									</a>
 								</li>
