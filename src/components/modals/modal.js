@@ -94,6 +94,17 @@ export default class Modal extends Component {
 		const wrapClass = [CSS.wrap, classname && classname !== '' ? CSS[classname] : ''];
 		const modalClass = [CSS.modal, size ? CSS[size] : ''];
 
+		let top = -1;
+		let closePosition = {};
+
+		if (height && width) {
+			top = (windowHeight - height) / 2;
+			closePosition = {
+				right: -40,
+				top: top > 40 ? -40 : 0
+			};
+		}
+
 		return (
 			<div className={wrapClass.join(' ')} style={{visibility}} data-size={size}>
 				<Motion
@@ -107,34 +118,28 @@ export default class Modal extends Component {
 						opacity: active ? spring(1, presets.stiff) : spring(0, presets.stiff),
 						x: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
 						y: active ? spring(1, presets.stiff) : spring(0.8, presets.stiff),
-						top: active ? spring(10, presets.stiff) : spring(4, presets.stiff)
+						top: active ? spring(top > -1 ? top : 10, presets.stiff) : spring(4, presets.stiff)
 					}}
 					onRest={this.handleRest}
 				>
 					{styles => {
-						const fullHeight = windowHeight - (windowHeight / styles.top) * 2;
-
 						const modalStyle = {
 							visibility: visibility,
 							display: display,
 							opacity: styles.opacity,
-							top: `${styles.top}%`,
+							top: top > -1 ? styles.top : `${styles.top}%`,
 							backgroundColor: backgroundColor,
 							transform: `scaleX(${styles.x}) scaleY(${styles.y})`
 						};
 
-						if (size === 'full') {
-							modalStyle.height = fullHeight;
-						}
-
 						if (height > 0) {
 							modalStyle.height = height;
-							modalStyle.overflowY = 'hidden';
+							modalStyle.overflow = 'visible';
 						}
 
 						if (width > 0) {
 							modalStyle.width = width;
-							modalStyle.overflowX = 'hidden';
+							modalStyle.overflow = 'visible';
 						}
 
 						return (
@@ -142,7 +147,7 @@ export default class Modal extends Component {
 								<div className={modalClass.join(' ')} style={modalStyle}>
 									<div className={CSS.modalInner}>
 										{showClose ? (
-											<span style={{opacity: styles.opacity > 0 ? styles.opacity : 0}} className={CSS.close}>
+											<span style={{opacity: styles.opacity > 0 ? styles.opacity : 0, ...closePosition}} className={CSS.close}>
 												<Close backgroundColor="#FAFAFA" onClick={this.handleClose}/>
 											</span>
 										) : null}

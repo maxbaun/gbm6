@@ -26,8 +26,8 @@ const s = store(history);
 const windowResize = () => ({
 	type: stateTypes.WINDOW_RESIZE,
 	payload: {
-		width: document.body.clientWidth,
-		height: document.body.clientHeight
+		width: window.innerWidth,
+		height: window.innerHeight
 	}
 });
 

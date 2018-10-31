@@ -38,8 +38,8 @@ export const initialState = utils.initialState({
 		megaMenu: false
 	},
 	windowSize: {
-		width: document.body.clientWidth,
-		height: document.body.clientHeight
+		width: window.innerWidth,
+		height: window.innerHeight
 	},
 	angle: 0,
 	fullAngle: 0,

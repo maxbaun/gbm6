@@ -10,6 +10,8 @@ import {selectors as stateSelectors, actions as stateActions} from '../../ducks/
 import Modal from './modal';
 import {click, vimeoId} from '../../utils/componentHelpers';
 
+const VimeoRatio = 0.5625;
+
 const mapStateToProps = state => ({
 	state: stateSelectors.getState(state)
 });
@@ -24,29 +26,43 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const getModalSize = state => {
-	const {height: windowHeight, width: windowWidth} = state.get('windowSize').toJS();
+	let {height: windowHeight, width: windowWidth} = state.get('windowSize').toJS();
 
-	let modalHeight = 0;
-	let modalWidth = 0;
+	const padding = 80;
 
-	let widthTall = windowWidth * 0.8; // 80% of screen
-	let heightTall = widthTall * 0.5625; // 1280 x 720
+	const maxWidth = windowWidth < 768 ? windowWidth - padding : windowWidth * 0.8;
+	const maxHeight = windowHeight - 80;
 
-	let heightWide = windowHeight * 0.8;
-	let widthWide = heightWide / 0.5625;
+	let modalWidth = maxWidth;
+	let modalHeight = modalWidth * VimeoRatio; // 1280 x 720
 
-	if (windowHeight < windowWidth && widthWide <= windowWidth) {
-		modalWidth = widthWide;
-		modalHeight = heightWide;
-	} else {
-		modalWidth = widthTall;
-		modalHeight = heightTall;
+	if (modalHeight > windowHeight) {
+		const size = fitVideoToMaxHeight(modalHeight, modalWidth, maxHeight);
+
+		modalWidth = size.width;
+		modalHeight = size.height;
 	}
 
 	return {
 		modalHeight,
 		modalWidth
 	};
+};
+
+const fitVideoToMaxHeight = (videoHeight, videoWidth, maxHeight) => {
+	while (videoHeight > maxHeight) {
+		videoWidth -= 1;
+		videoHeight = calcVideoHeight(videoWidth);
+	}
+
+	return {
+		width: videoWidth,
+		height: videoHeight
+	};
+};
+
+const calcVideoHeight = width => {
+	return width * 0.5626;
 };
 
 class VideoModal extends Component {
@@ -80,6 +96,7 @@ class VideoModal extends Component {
 
 	render() {
 		const {url, state, actions} = this.props;
+		const {modalHeight, modalWidth} = this.state;
 
 		const videoId = vimeoId(url);
 		const isOpen = state.getIn(['offmenu', videoId]);
@@ -90,12 +107,12 @@ class VideoModal extends Component {
 				active={isOpen}
 				backgroundColor="transparent"
 				size="full"
-				height={this.state.modalHeight}
-				width={this.state.modalWidth}
-				windowHeight={window.innerHeight}
+				height={modalHeight}
+				width={modalWidth}
+				windowHeight={state.getIn(['windowSize', 'height'])}
 				onClose={click(actions.offmenuHide, videoId)}
 			>
-				<div className={CSS.playerWrap}>
+				<div className={CSS.playerWrap} style={{height: modalHeight, width: modalWidth}}>
 					{isOpen ? (
 						<ReactPlayer
 							className={CSS.player}
