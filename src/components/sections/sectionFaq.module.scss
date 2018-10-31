@@ -11,10 +11,6 @@
 	background-position: center;
 	opacity: 0.23;
 	z-index: -3;
-
-	@include media-breakpoint-up(md) {
-		background-attachment: initial;
-	}
 }
 
 .overlay {
