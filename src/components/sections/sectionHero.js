@@ -35,7 +35,6 @@ class SectionHero extends Component {
 		super(props);
 
 		this.state = {
-			lightboxOpen: false,
 			lightboxStart: 1
 		};
 
@@ -43,7 +42,6 @@ class SectionHero extends Component {
 		this.swiper = null;
 
 		this.handleLightBoxOpen = this.handleLightBoxOpen.bind(this);
-		this.handleLightBoxClose = this.handleLightBoxClose.bind(this);
 	}
 
 	static propTypes = {
@@ -108,15 +106,9 @@ class SectionHero extends Component {
 	}
 
 	handleLightBoxOpen(lightboxStart) {
+		this.props.actions.offmenuToggle('heroLightbox');
 		this.setState({
-			lightboxOpen: true,
 			lightboxStart
-		});
-	}
-
-	handleLightBoxClose() {
-		this.setState({
-			lightboxOpen: false
 		});
 	}
 
@@ -208,10 +200,10 @@ class SectionHero extends Component {
 				{this.shouldRenderCarousel() ? (
 					<Lightbox
 						showClose
-						active={this.state.lightboxOpen}
+						active={this.props.state.getIn(['offmenu', 'heroLightbox'])}
 						start={this.state.lightboxStart}
 						images={images}
-						onClose={this.handleLightBoxClose}
+						onClose={click(this.props.actions.offmenuHide, 'heroLightbox')}
 					/>
 				) : null}
 			</div>

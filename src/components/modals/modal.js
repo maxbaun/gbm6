@@ -49,24 +49,13 @@ export default class Modal extends Component {
 		backgroundColor: '#FAFAFA'
 	};
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.active) {
-			this.setState({
-				visibility: 'visible',
-				display: 'block',
-				active: true
-			});
-
-			document.querySelector('body').classList.add('modal-open');
-		}
-
-		if (nextProps.active === false) {
-			this.setState({
-				active: false
-			});
-
-			document.querySelector('body').classList.remove('modal-open');
-		}
+	static getDerivedStateFromProps(props, state) {
+		return {
+			...state,
+			active: props.active,
+			visibility: props.active ? 'visible' : state.visibility,
+			display: props.active ? 'block' : state.display
+		};
 	}
 
 	handleRest() {

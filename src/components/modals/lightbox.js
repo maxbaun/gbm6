@@ -64,14 +64,6 @@ class Lightbox extends Component {
 		};
 	}
 
-	componentDidUpdate() {
-		if (this.state.active) {
-			document.body.classList.add('modal-open');
-		} else {
-			document.body.classList.remove('modal-open');
-		}
-	}
-
 	initSlider() {
 		const container = this.carousel.querySelector('.swiper-container');
 		const options = {
@@ -117,7 +109,6 @@ class Lightbox extends Component {
 	}
 
 	handleClose() {
-		document.querySelector('body').style.overflow = null;
 		this.props.onClose();
 	}
 
