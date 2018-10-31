@@ -69,6 +69,8 @@ class App extends Component {
 		super(props);
 
 		this.fetch = unique();
+
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 	}
 
 	static propTypes = {
@@ -84,6 +86,20 @@ class App extends Component {
 	componentDidMount() {
 		this.props.actions.videosInit({});
 		this.props.actions.platformsGet({fetch: this.fetch});
+
+		window.addEventListener('keydown', this.handleKeyDown);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handleKeyDown);
+	}
+
+	handleKeyDown(e) {
+		// Shift + Meta + F
+		if (e.metaKey && e.shiftKey && e.keyCode === 70) {
+			this.props.actions.offmenuToggle('search');
+			e.preventDefault();
+		}
 	}
 
 	render() {
