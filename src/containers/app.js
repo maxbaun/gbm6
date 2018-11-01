@@ -1,16 +1,16 @@
-import React, {Component, Fragment} from 'react';
-import {bindActionCreators} from 'redux';
-import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, { Component, Fragment } from 'react';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Route} from 'react-router-dom';
-import {spring} from 'react-motion';
+import { Route } from 'react-router-dom';
+import { spring } from 'react-motion';
 
-import {actions as stateActions} from '../ducks/state';
-import {actions as videoActions} from '../ducks/videos';
-import {actions as platformActions} from '../ducks/platforms';
-import {noop, unique} from '../utils/componentHelpers';
-import {portfolioBase} from '../constants';
+import { actions as stateActions } from '../ducks/state';
+import { actions as videoActions } from '../ducks/videos';
+import { actions as platformActions } from '../ducks/platforms';
+import { noop, unique } from '../utils/componentHelpers';
+import { portfolioBase } from '../constants';
 
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
@@ -23,7 +23,7 @@ import VideoModals from '../components/modals/videoModals';
 import Lightboxes from '../components/modals/lightboxes';
 import HashScroller from '../components/common/hashScroller';
 
-const mapStateToProps = state => ({...state});
+const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(
@@ -81,12 +81,16 @@ class App extends Component {
 	};
 
 	static defaultProps = {
-		actions: {noop}
+		actions: { noop }
 	};
 
 	componentDidMount() {
+		if (this.props.location.pathname === '/reset') {
+			return;
+		}
+
 		this.props.actions.videosInit({});
-		this.props.actions.platformsGet({fetch: this.fetch});
+		this.props.actions.platformsGet({ fetch: this.fetch });
 
 		window.addEventListener('keydown', this.handleKeyDown);
 	}
@@ -104,11 +108,11 @@ class App extends Component {
 	}
 
 	render() {
-		const {actions, history, location} = this.props;
+		const { actions, history, location } = this.props;
 
 		return (
 			<Fragment>
-				<Header history={history}/>
+				<Header history={history} />
 				<HashScroller location={location}>
 					<AnimatedSwitch
 						{...pageTransitions}
@@ -123,16 +127,16 @@ class App extends Component {
 							bottom: styles.absolute ? 0 : 'auto'
 						})}
 					>
-						<Route exact path="/reset" component={ResetTemplate}/>
-						<Route exact path="/search/:search" component={SearchTemplate}/>
-						<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate}/>
-						<Route exact path="/:slug" component={PageTemplate}/>
-						<Route path="/" render={PageTemplate}/>
+						<Route exact path="/reset" component={ResetTemplate} />
+						<Route exact path="/search/:search" component={SearchTemplate} />
+						<Route exact path={`/${portfolioBase}/:slug`} component={PortfolioTemplate} />
+						<Route exact path="/:slug" component={PageTemplate} />
+						<Route path="/" render={PageTemplate} />
 					</AnimatedSwitch>
 				</HashScroller>
-				<VideoModals/>
-				<Lightboxes/>
-				<Footer/>
+				<VideoModals />
+				<Lightboxes />
+				<Footer />
 			</Fragment>
 		);
 	}
