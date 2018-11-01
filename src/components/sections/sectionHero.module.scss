@@ -25,6 +25,7 @@
 
 .image {
 	@include heroHeight();
+	background-attachment: fixed;
 	background-position: top center;
 	background-size: cover;
 	cursor: pointer;
