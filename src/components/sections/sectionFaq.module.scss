@@ -7,7 +7,6 @@
 .background {
 	@include absoluteFull();
 	background-size: cover;
-	background-attachment: fixed;
 	background-position: center;
 	opacity: 0.23;
 	z-index: -3;

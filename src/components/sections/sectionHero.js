@@ -1,18 +1,18 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
-import {List, Map} from 'immutable';
+import { List, Map } from 'immutable';
 import Swiper from 'swiper';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import CSS from './sectionHero.module.scss';
-import {selectors as stateSelectors, actions as stateActions} from '../../ducks/state';
+import { selectors as stateSelectors, actions as stateActions } from '../../ducks/state';
 import Markdown from '../common/markdown';
 import ScrollTo from '../common/scrollTo';
 import Image from '../common/image';
 import SliderNav from '../sliderNav/sliderNav';
-import {ref, click, vimeoId, noop, getLightboxId} from '../../utils/componentHelpers';
+import { ref, click, vimeoId, noop, getLightboxId } from '../../utils/componentHelpers';
 import PlayBtn from '../playBtn/playBtn';
 import SectionLines from '../common/sectionLines';
 
@@ -151,23 +151,24 @@ class SectionHero extends Component {
 				{this.shouldRenderCarousel() ? (
 					this.renderCarousel()
 				) : (
-					<Fragment>
-						<Image
-							background
-							style={{
-								...imageCss
-							}}
-							className={CSS.image}
-							image={images.first()}
-							onClick={this.getClickAction(portfolioItem, 0)}
-						/>
-						{hasOverlay ? <div className={CSS.imageOverlay} style={{backgroundColor: overlayColor, opacity: overlayOpacity}}/> : null}
-					</Fragment>
-				)}
+						<Fragment>
+							<Image
+								background
+								baFixed
+								style={{
+									...imageCss
+								}}
+								className={CSS.image}
+								image={images.first()}
+								onClick={this.getClickAction(portfolioItem, 0)}
+							/>
+							{hasOverlay ? <div className={CSS.imageOverlay} style={{ backgroundColor: overlayColor, opacity: overlayOpacity }} /> : null}
+						</Fragment>
+					)}
 				{video && video !== '' ? (
 					<Fragment>
 						<div className={CSS.playOverlay}>
-							<PlayBtn size={119} onClick={click(actions.offmenuToggle, vimeoId(video))}/>
+							<PlayBtn size={119} onClick={click(actions.offmenuToggle, vimeoId(video))} />
 						</div>
 					</Fragment>
 				) : null}
@@ -195,12 +196,12 @@ class SectionHero extends Component {
 				) : null}
 				{content && content !== '' ? (
 					<div className={contentCss.join(' ')}>
-						<Markdown className={CSS.contentInner} content={content}/>
+						<Markdown className={CSS.contentInner} content={content} />
 					</div>
 				) : null}
 				{this.shouldRenderCarousel() ? null : (
 					<div data-clip>
-						<SectionLines/>
+						<SectionLines />
 					</div>
 				)}
 			</div>
@@ -208,7 +209,7 @@ class SectionHero extends Component {
 	}
 
 	renderCarousel() {
-		const {portfolioItem} = this.props;
+		const { portfolioItem } = this.props;
 
 		return (
 			<div ref={ref.call(this, 'carousel')} className={CSS.carousel}>
@@ -217,18 +218,18 @@ class SectionHero extends Component {
 						{this.props.images.map((image, index) => {
 							return (
 								<div key={image.getIn(['sys', 'id'])} className="swiper-slide" onClick={this.getClickAction(portfolioItem, index)}>
-									<Image background style={this.props.imageCss} className={CSS.image} image={image}/>
+									<Image background style={this.props.imageCss} className={CSS.image} image={image} />
 								</div>
 							);
 						})}
 					</div>
 					<div className={CSS.pagination}>
-						<div className="swiper-pagination"/>
+						<div className="swiper-pagination" />
 					</div>
 					<div data-clip>
-						<SectionLines state={this.props.state}/>
+						<SectionLines state={this.props.state} />
 						<div className={CSS.nav}>
-							<SliderNav/>
+							<SliderNav />
 						</div>
 					</div>
 				</div>

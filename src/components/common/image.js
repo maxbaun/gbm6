@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as ImmutablePropTypes from 'react-immutable-proptypes';
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 
 export default class Image extends Component {
 	constructor(props) {
@@ -21,7 +21,8 @@ export default class Image extends Component {
 		height: PropTypes.number,
 		f: PropTypes.string, // The focus are for cropping,
 		fit: PropTypes.string,
-		clipTarget: PropTypes.bool
+		clipTarget: PropTypes.bool,
+		baFixed: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -33,11 +34,12 @@ export default class Image extends Component {
 		height: 0,
 		f: null,
 		fit: null,
-		clipTarget: false
+		clipTarget: false,
+		baFixed: false
 	};
 
 	getUrl() {
-		const {width, height, image, f, fit} = this.props;
+		const { width, height, image, f, fit } = this.props;
 		const baseUrl = image.getIn(['fields', 'file', 'url']);
 
 		if (!baseUrl) {
@@ -66,7 +68,7 @@ export default class Image extends Component {
 	}
 
 	render() {
-		const {image, background, className, style, clipTarget} = this.props;
+		const { image, background, className, style, clipTarget, baFixed } = this.props;
 
 		const url = this.getUrl();
 
@@ -75,9 +77,9 @@ export default class Image extends Component {
 		}
 
 		if (background) {
-			return <div data-clip-target={clipTarget} className={className} style={{...style, backgroundImage: `url(${url})`}}/>;
+			return <div data-clip-target={clipTarget} data-ba-fixed={baFixed} className={className} style={{ ...style, backgroundImage: `url(${url})` }} />;
 		}
 
-		return <img className={className} src={url} alt={image.getIn(['fields', 'title'])}/>;
+		return <img className={className} src={url} alt={image.getIn(['fields', 'title'])} />;
 	}
 }

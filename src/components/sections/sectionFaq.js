@@ -69,7 +69,7 @@ export default class SectionFaq extends Component {
 				<div data-clip-target>
 					<div className={CSS.overlay}/>
 					<SectionLines/>
-					<Image background className={CSS.background} image={this.props.backgroundImage}/>
+					<Image background baFixed className={CSS.background} image={this.props.backgroundImage}/>
 					<div className="container">
 						{heading && heading !== '' ? (
 							<div className={CSS.header}>

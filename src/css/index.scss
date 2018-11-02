@@ -49,6 +49,13 @@ body {
 	}
 }
 
+
+body.has-background-attachment {
+	[data-ba-fixed='true'] {
+		background-attachment: fixed;
+	}
+}
+
 body.offmenu-open {
 	overflow: hidden;
 }

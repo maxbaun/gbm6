@@ -57,6 +57,12 @@ if (isDev) {
 	registerObserver();
 }
 
+const style = document.body.style;
+
+if ('backgroundAttachment' in style) {
+	document.body.classList.add('has-background-attachment');
+}
+
 ReactDOM.render(<Index/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

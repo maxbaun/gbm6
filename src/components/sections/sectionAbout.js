@@ -17,7 +17,7 @@ const SectionAbout = ({heading, text, image, imageCss, icons, id, counters}) => 
 		<div data-section id={id} className={CSS.section}>
 			<div data-clip-target>
 				<SectionLines/>
-				<Image background className={CSS.background} style={imageCss} image={image}/>
+				<Image background baFixed className={CSS.background} style={imageCss} image={image}/>
 				<div className={CSS.overlay}/>
 				<div className={CSS.inner}>
 					<div className="container">

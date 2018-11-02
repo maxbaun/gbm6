@@ -17,7 +17,7 @@ const Counters = ({counters, hasAppeared}) => {
 					<li key={parts[0] + parts[2]} className={CSS.counterBlock}>
 						<div className={CSS.counter}>
 							<h3>
-								{hasAppeared ? <CountUp start={0} end={parts[0]} duration={5} delay={1}/> : 0}
+								{hasAppeared ? <CountUp start={0} end={parts[0]} duration={5} delay={0.2}/> : 0}
 								{parts[1]}
 							</h3>
 							<p>{parts[2]}</p>

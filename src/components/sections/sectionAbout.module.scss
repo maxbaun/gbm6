@@ -7,7 +7,6 @@
 
 .background {
 	@include absoluteFull();
-	background-attachment: fixed;
 	background-size: cover;
 	background-position: center top;
 	z-index: -3;
@@ -103,5 +102,5 @@
 .counters {
 	margin: 0;
 	@extend .mt-sm-5;
-	@extend .mt-lg-8;
+	@extend .mt-lg-6;
 }
