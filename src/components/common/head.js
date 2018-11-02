@@ -25,8 +25,8 @@ function getDerivedProps(props) {
 			if (key === 'image') {
 				return map.merge(
 					fromJS({
-						'og:image': isSet ? prop : `${site.publicUrl}/gbm6.jpb`,
-						'twitter:image': isSet ? prop : `${site.publicUrl}/gbm6.jpb`
+						'og:image': isSet ? prop : `${site.publicUrl}/gbm6.jpg`,
+						'twitter:image': isSet ? prop : `${site.publicUrl}/gbm6.jpg`
 					})
 				);
 			}
@@ -59,7 +59,7 @@ function getDerivedProps(props) {
 			return list.push(
 				fromJS({
 					content: prop,
-					name: key
+					property: key
 				})
 			);
 		}, List());
@@ -74,7 +74,15 @@ const Head = props => {
 					return prop;
 				}
 
-				return <meta key={prop.get('name')} name={prop.get('name')} content={prop.get('content')}/>;
+				const props = prop.get('property').includes('og:') ?
+					{
+						property: prop.get('property')
+					  } :
+					{
+						name: prop.get('property')
+					  };
+
+				return <meta key={prop.get('name')} {...props} content={prop.get('content')}/>;
 			})}
 		</Helmet>
 	);
