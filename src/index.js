@@ -57,9 +57,9 @@ if (isDev) {
 	registerObserver();
 }
 
-const style = document.body.style;
+const deviceAgent = navigator.userAgent.toLowerCase();
 
-if ('backgroundAttachment' in style) {
+if (!deviceAgent.match(/(iphone|ipod|ipad)/)) {
 	document.body.classList.add('has-background-attachment');
 }
 

@@ -69,7 +69,7 @@ const Head = props => {
 	const derivedProps = getDerivedProps(fromJS(props));
 	return (
 		<Helmet>
-			{derivedProps.map(prop => {
+			{derivedProps.map((prop, index) => {
 				if (!prop.get) {
 					return prop;
 				}
@@ -77,12 +77,13 @@ const Head = props => {
 				const props = prop.get('property').includes('og:') ?
 					{
 						property: prop.get('property')
-					  } :
+					} :
 					{
 						name: prop.get('property')
-					  };
+					};
 
-				return <meta key={prop.get('name')} {...props} content={prop.get('content')}/>;
+				// eslint-disable-next-line react/no-array-index-key
+				return <meta key={index} {...props} content={prop.get('content')}/>;
 			})}
 		</Helmet>
 	);

@@ -9,7 +9,12 @@
 	background-size: cover;
 	background-position: center;
 	opacity: 0.23;
+	position: fixed;
 	z-index: -3;
+
+	@include media-breakpoint-up(md) {
+		position: absolute;
+	}
 }
 
 .overlay {
@@ -164,7 +169,7 @@
 	@extend .mb-3;
 	width: 231px;
 
-	>a {
+	> a {
 		display: block;
 		font-weight: 400;
 		width: 100%;
