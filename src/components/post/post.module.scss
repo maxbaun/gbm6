@@ -1,0 +1,72 @@
+@import '../../css/utils/utils';
+
+.post {
+	position: relative;
+}
+
+.hero {
+	height: 325px;
+	position: relative;
+	width: 100%;
+
+	@include media-breakpoint-up(md) {
+		height: 400px;
+	}
+
+	@include media-breakpoint-up(lg) {
+		height: 445px;
+	}
+}
+
+.image {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+
+	img {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.heroContent {
+	@include pagePadding();
+	background-color: rgba($black, 0.4);
+	height: 100%;
+}
+
+.title {
+	margin: rem(46) 0 0;
+	width: 80%;
+
+	@include media-breakpoint-up(md) {
+		width: 50%;
+	}
+}
+
+.body {
+	padding: rem(40) 0;
+
+	@include media-breakpoint-up(md) {
+		padding: rem(61) 0;
+	}
+}
+
+.content {
+	@include fontSize(18, 28);
+
+	p {
+		@include fontSize(18, 28);
+	}
+
+	a:not([class*="btn"]) {
+		color: $blue;
+		transition: all 0.15s ease-in-out;
+
+		&:hover {
+			color: darken($blue, 5%);
+		}
+	}
+}

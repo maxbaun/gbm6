@@ -83,6 +83,32 @@ h5,
 h6 {
 	font-family: $fontHeading;
 	font-weight: 700;
+	text-transform: uppercase;
+}
+
+h1 {
+	@include fontSize(70, 80);
+	margin: rem(12) 0 rem(24);
+}
+
+h2 {
+	@include fontSize(40, 45);
+	margin: rem(12) 0 rem(24);
+}
+
+h3 {
+	@include fontSize(30, 35);
+	margin: rem(12) 0 rem(24);
+}
+
+h4 {
+	@include fontSize(24, 29);
+	margin: rem(12) 0 rem(24);
+}
+
+h5 {
+	@include fontSize(19, 24);
+	margin: rem(12) 0 rem(24);
 }
 
 a {

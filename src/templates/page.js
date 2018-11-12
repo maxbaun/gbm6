@@ -23,6 +23,7 @@ import SectionCta from '../components/sections/sectionCta';
 import SectionFeatured from '../components/sections/sectionFeatured';
 import Head from '../components/common/head';
 import NotFound from '../components/404/404';
+import Post from '../components/post/post';
 
 const getSlug = match => {
 	let {slug} = match.params;
@@ -229,9 +230,6 @@ class PageTemplate extends Component {
 			return null;
 		}
 
-		const sections = page.getIn(['fields', 'sections']).map(this.getSection);
-		const hasCta = page.getIn(['fields', 'hasCta']);
-
 		return (
 			<Fragment>
 				<Head
@@ -241,9 +239,52 @@ class PageTemplate extends Component {
 					location={this.props.location}
 					url={window.location.href}
 				/>
-				<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
-					{sections.toJS()}
-					{hasCta ? <SectionCta/> : null}
+				{this.renderContent()}
+			</Fragment>
+		);
+	}
+
+	renderContent() {
+		const {page} = this.state;
+		const contentType = page.getIn(['sys', 'contentType', 'sys', 'id']);
+		let content = null;
+
+		switch (contentType) {
+			case 'post':
+				content = this.renderPost();
+				break;
+			default:
+				content = this.renderSections();
+				break;
+		}
+
+		return content;
+	}
+
+	renderSections() {
+		const {page} = this.state;
+		const sections = page.getIn(['fields', 'sections']).map(this.getSection);
+		const hasCta = page.getIn(['fields', 'hasCta']);
+
+		return (
+			<SectionManager hasCta={hasCta} template={page.getIn(['fields', 'pageLayout'])}>
+				{sections.toJS()}
+				{hasCta ? <SectionCta/> : null}
+			</SectionManager>
+		);
+	}
+
+	renderPost() {
+		const {page} = this.state;
+		return (
+			<Fragment>
+				<SectionManager hasCta template="post">
+					<Post
+						title={page.getIn(['fields', 'title'])}
+						content={page.getIn(['fields', 'content'])}
+						image={page.getIn(['fields', 'image'])}
+					/>
+					<SectionCta/>
 				</SectionManager>
 			</Fragment>
 		);

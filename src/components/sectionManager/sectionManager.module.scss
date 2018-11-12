@@ -210,7 +210,6 @@ $transform: 21.80140948635181deg;
 			@include defaultStyles();
 
 			@include lastChild() {
-
 				[data-line-chevron],
 				[data-line-bottomlefttoright],
 				[data-line-bottomrighttoleft] {
@@ -297,6 +296,32 @@ $transform: 21.80140948635181deg;
 
 			[data-line-chevron] {
 				display: block !important;
+			}
+		}
+	}
+
+	&[data-template="post"] {
+		@include allSections() {
+			@include defaultStyles();
+
+			@include firstChild() {
+				[data-line-bottomrighttoleft] {
+					display: block !important;
+				}
+			}
+
+			@include lastChild() {
+				clip-path: polygon(0 #{$angleHeight}, 100% 0, 100% 100%, 0 100%);
+
+				[data-line-toprighttoleft] {
+					display: block !important;
+				}
+
+				[data-line-chevron],
+				[data-line-bottomlefttoright],
+				[data-line-bottomrighttoleft] {
+					display: none !important;
+				}
 			}
 		}
 	}

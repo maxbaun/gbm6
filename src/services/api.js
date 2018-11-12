@@ -9,13 +9,22 @@ const ContenfulClient = contentful.createClient({
 
 export async function getPages({query = {}}) {
 	try {
-		const res = await ContenfulClient.getEntries({
+		let res = await ContenfulClient.getEntries({
 			content_type: 'page', // eslint-disable-line camelcase,
 			include: 10,
 			...query
 		});
 
 		// @TODO: Cache pages
+
+		// if trying to get a page and it is not found, try to get the post by slug
+		if (query['fields.slug'] && res.items.length === 0) {
+			res = await ContenfulClient.getEntries({
+				content_type: 'post', // eslint-disable-line camelcase,
+				include: 10,
+				...query
+			});
+		}
 
 		return res.items;
 	} catch (error) {
