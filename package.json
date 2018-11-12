@@ -18,6 +18,7 @@
     "react-dom": "^16.5.2",
     "react-fittext": "^1.0.0",
     "react-ga": "^2.5.3",
+    "react-google-recaptcha": "^1.0.4",
     "react-helmet": "^5.2.0",
     "react-immutable-proptypes": "^2.1.0",
     "react-motion": "^0.5.2",

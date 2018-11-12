@@ -4,9 +4,10 @@ import * as ImmutableProptypes from 'react-immutable-proptypes';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Map, fromJS} from 'immutable';
+import Recaptcha from 'react-google-recaptcha';
 
 import CSS from './sectionCta.module.scss';
-import {selectors as stateSelectors} from '../../ducks/state';
+import {selectors as stateSelectors, actions as stateActions} from '../../ducks/state';
 import {actions as formActions} from '../../ducks/forms';
 import {selectors as platformSelectors} from '../../ducks/platforms';
 import HeadingBrand from '../headingBrand/headingBrand';
@@ -32,7 +33,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	actions: bindActionCreators(
 		{
-			...formActions
+			...formActions,
+			...stateActions
 		},
 		dispatch
 	)
@@ -68,14 +70,55 @@ class SectionCta extends Component {
 		return initialState;
 	}
 
+	validateForm() {
+		let valid = true;
+
+		if (!this.state.recaptcha) {
+			this.props.actions.statusChange({
+				fetch: fetch,
+				payload: {
+					error: 'Please check the recaptcha.',
+					success: false
+				}
+			});
+
+			valid = false;
+		}
+
+		if (!this.state.name || this.state.name === '' || !this.state.email || this.state.email === '' || !this.state.message || this.state.message === '') {
+			this.showError('Please fill out all the fields.')
+
+			valid = false;
+		}
+
+		return valid;
+	}
+
+	showError(error) {
+		this.props.actions.statusChange({
+			fetch: fetch,
+			payload: {
+				error: error,
+				success: false
+			}
+		});
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
+
+		if (!this.validateForm()) {
+			return;
+		}
+
+		const data = {...this.state};
+		delete data.recaptcha;
 
 		this.props.actions.formCreate({
 			fetch: fetch,
 			payload: {
 				key: 'contact',
-				data: this.state,
+				data,
 				formName: 'Contact Form',
 				success: 'Thank you for contacting us! We will be in touch shortly!'
 			}
@@ -84,6 +127,10 @@ class SectionCta extends Component {
 
 	handleChange(state) {
 		this.setState(state);
+	}
+
+	handleRecaptcha = () => {
+		this.setState({recaptcha: true});
 	}
 
 	render() {
@@ -225,7 +272,12 @@ class SectionCta extends Component {
 							<label htmlFor="message">Your Message</label>
 							<textarea name="message" value={this.state.message} onChange={state(this.handleChange, 'message')}/>
 						</li>
-						<div data-netlify-recaptcha/>
+						<li>
+							<Recaptcha
+								sitekey='6LcwPnoUAAAAADUL7nRiz3oRo5LGl6eBlp482GHX'
+								onChange={this.handleRecaptcha}
+							/>
+						</li>
 						<li className={CSS.full}>
 							<div className={CSS.notifications}>
 								{error ? <Markdown content={error} className={CSS.error}/> : null}

@@ -33,7 +33,8 @@ export const actions = {
 	angleSet: payload => utils.action(types.ANGLE_SET, {payload}),
 	fullAngleSet: payload => utils.action(types.FULL_ANGLE_SET, {payload}),
 	pageTransitionStart: () => utils.action(types.PAGE_TRANSITION_START),
-	pageTransitionEnd: () => utils.action(types.PAGE_TRANSITION_END)
+	pageTransitionEnd: () => utils.action(types.PAGE_TRANSITION_END),
+	statusChange: obj => utils.action(types.STATUS_CHANGE, obj)
 };
 
 export const initialState = utils.initialState({
