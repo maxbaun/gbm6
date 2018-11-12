@@ -221,6 +221,7 @@ class SectionCta extends Component {
 								onChange={state(this.handleChange, 'organization')}
 							/>
 						</li>
+						<div data-netlify-recaptcha/>
 						<li className={CSS.full}>
 							<label htmlFor="message">Your Message</label>
 							<textarea name="message" value={this.state.message} onChange={state(this.handleChange, 'message')}/>
