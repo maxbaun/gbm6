@@ -25,6 +25,8 @@ const initialState = {
 
 const fetch = unique();
 
+const RecaptchaKey = 'g-recaptcha-response';
+
 const mapStateToProps = state => ({
 	state: stateSelectors.getState(state),
 	settings: platformSelectors.getWebsiteSettings(state)
@@ -73,17 +75,17 @@ class SectionCta extends Component {
 	validateForm() {
 		let valid = true;
 
-		if (!this.state.recaptcha) {
-			this.props.actions.statusChange({
-				fetch: fetch,
-				payload: {
-					error: 'Please check the recaptcha.',
-					success: false
-				}
-			});
+		// if (!this.state[RecaptchaKey]) {
+		// 	this.props.actions.statusChange({
+		// 		fetch: fetch,
+		// 		payload: {
+		// 			error: 'Please check the recaptcha.',
+		// 			success: false
+		// 		}
+		// 	});
 
-			valid = false;
-		}
+		// 	valid = false;
+		// }
 
 		if (!this.state.name || this.state.name === '' || !this.state.email || this.state.email === '' || !this.state.message || this.state.message === '') {
 			this.showError('Please fill out all the fields.')
@@ -111,14 +113,11 @@ class SectionCta extends Component {
 			return;
 		}
 
-		const data = {...this.state};
-		delete data.recaptcha;
-
 		this.props.actions.formCreate({
 			fetch: fetch,
 			payload: {
 				key: 'contact',
-				data,
+				data: this.state,
 				formName: 'Contact Form',
 				success: 'Thank you for contacting us! We will be in touch shortly!'
 			}
@@ -129,8 +128,8 @@ class SectionCta extends Component {
 		this.setState(state);
 	}
 
-	handleRecaptcha = () => {
-		this.setState({recaptcha: true});
+	handleRecaptcha = r => {
+		this.setState({[RecaptchaKey]: r});
 	}
 
 	render() {
@@ -274,7 +273,7 @@ class SectionCta extends Component {
 						</li>
 						<li>
 							<Recaptcha
-								sitekey='6LcwPnoUAAAAADUL7nRiz3oRo5LGl6eBlp482GHX'
+								sitekey="6LcwPnoUAAAAADUL7nRiz3oRo5LGl6eBlp482GHX"
 								onChange={this.handleRecaptcha}
 							/>
 						</li>
