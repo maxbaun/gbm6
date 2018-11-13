@@ -277,6 +277,9 @@ class SectionCta extends Component {
 								onChange={this.handleRecaptcha}
 							/>
 						</li>
+						<li style={{display: 'none'}}>
+							<input type="hidden" name="nbf"/>
+						</li>
 						<li className={CSS.full}>
 							<div className={CSS.notifications}>
 								{error ? <Markdown content={error} className={CSS.error}/> : null}

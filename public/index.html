@@ -65,10 +65,11 @@
 	<noscript>
 		You need to enable JavaScript to run this website.
 	</noscript>
-	<form name="Contact Form" netlify netlify-recaptcha hidden>
+	<form name="Contact Form" netlify netlify-recaptcha hidden netlify-honeypot="nbf">
 		<input type="text" name="name" />
 		<input type="email" name="email" />
 		<input type="text" name="organization" />
+		<input type="text" name="nbf"/>
 		<textarea name="message"></textarea>
 		<div netlify-recaptcha></div>
 	</form>
