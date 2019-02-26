@@ -135,6 +135,10 @@ class SectionVideos extends Component {
 	videoHasCategory(video, category) {
 		let hasCategory = false;
 
+		if (!video.getIn(['fields', 'categories'])) {
+			return false;
+		}
+
 		video.getIn(['fields', 'categories']).forEach(cat => {
 			if (cat.getIn(['fields', 'slug']) === category.getIn(['fields', 'slug'])) {
 				hasCategory = true;
