@@ -30,14 +30,14 @@
 	@extend .mb-sm-4;
 	width: 100%;
 
-	@extend .mb-lg-6;
+	@extend .mb-xl-6;
 
 	@include media-breakpoint-up(sm) {
 		margin-right: 50%;
 		width: 50%;
 	}
 
-	@include media-breakpoint-up(md) {
+	@include media-breakpoint-up(xl) {
 		order: 3;
 		margin-left: 10%;
 		margin-right: 0;
@@ -55,12 +55,12 @@
 	@extend .mb-lg-6;
 
 	@include media-breakpoint-up(sm) {
-		width: calc(100% / 3);
+		width: 50%;
 	}
 
-	@include media-breakpoint-up(md) {
+	@include media-breakpoint-up(xl) {
 		order: 2;
-		width: 13%;
+		width: 22%;
 	}
 }
 
@@ -73,12 +73,12 @@
 	@extend .mb-lg-6;
 
 	@include media-breakpoint-up(sm) {
-		width: calc(100% / 3 * 2);
+		width: 50%;
 	}
 
-	@include media-breakpoint-up(md) {
+	@include media-breakpoint-up(xl) {
 		order: 1;
-		width: 34%;
+		width: 25%;
 	}
 }
 
