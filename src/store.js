@@ -15,10 +15,11 @@ const store = () => {
 
 	if (
 		process.env.NODE_ENV === 'production' && // eslint-disable-line
-		window.__REACT_DEVTOOLS_GLOBAL_HOOK__ &&
-		Object.keys(window.__REACT_DEVTOOLS_GLOBAL_HOOK__._renderers).length
+		window.__REACT_DEVTOOLS_GLOBAL_HOOK__
 	) {
-		window.__REACT_DEVTOOLS_GLOBAL_HOOK__._renderers = {};
+		Object.keys(window.__REACT_DEVTOOLS_GLOBAL_HOOK__).forEach(prop => {
+			window.__REACT_DEVTOOLS_GLOBAL_HOOK__[prop] = typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__[prop] === 'function' ? () => {} : null;
+		});
 	}
 
 	if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
