@@ -1,0 +1,40 @@
+version: "2"
+
+services: 
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: gbm6
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 3000:3000
+      - 35729:35729
+    environment: 
+      - REACT_APP_CONTENTFUL_SPACE_ID=fjim08cxylhm
+      - REACT_APP_CONTENTFUL_ACCESS_TOKEN=8ef291369cb11a132801a1f3ae6c233b3fc177943172ab5e54da9029bfd3cdab
+      - REACT_APP_VIDEOS_PER_PAGE=2
+      - REACT_APP_PORTFOLIO_BASE=projects
+      - REACT_APP_SITE_TITLE_FORMAT=%title% - GBM6
+      - REACT_APP_SITE_TITLE=GBM6
+      - REACT_APP_SITE_DESCRIPTION=This is the site description
+      - REACT_APP_SITE_URL=http://localhost:3000/
+      - REACT_APP_BASE_HREF=http://localhost:3000/
+      - REACT_APP_GOOGLE_VERIFICATION=google_verification_code
+      - REACT_APP_GOOGLE_ANALYTICS=UA-000000-01
+      - REACT_APP_ICBM=42.500277, -71.129719
+      - REACT_APP_GEO_POSITION=42.500277;-71.129719
+      - REACT_APP_GEO_REGION=US-MA
+      - REACT_APP_GEO_PLACENAME=Woburn
+      - REACT_APP_FACEBOOK_APP_ID=facebook_id
+      - REACT_APP_OG_URL=http://localhost:3000/
+      - REACT_APP_OG_TITLE=GBM6
+      - REACT_APP_OG_DESCRIPTION=This is the FACEBOOK description
+      - REACT_APP_OG_SITE_NAME=GBM6
+      - REACT_APP_TWITTER_SITE=http://localhost:3000/
+      - REACT_APP_TWITTER_CREATOR=@grooveboston
+      - REACT_APP_TWITTER_URL=https://gbm6.com
+      - REACT_APP_TWITTER_TITLE=GBM6
+      - REACT_APP_TWITTER_DESCRIPTION=This is the FACEBOOK description
+      - CHOKIDAR_USEPOLLING=true
