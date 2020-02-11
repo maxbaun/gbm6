@@ -1,8 +1,8 @@
-version: "2"
+version: '2'
 
-services: 
+services:
   app:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     container_name: gbm6
@@ -11,7 +11,7 @@ services:
     ports:
       - 3000:3000
       - 35729:35729
-    environment: 
+    environment:
       - REACT_APP_CONTENTFUL_SPACE_ID=fjim08cxylhm
       - REACT_APP_CONTENTFUL_ACCESS_TOKEN=8ef291369cb11a132801a1f3ae6c233b3fc177943172ab5e54da9029bfd3cdab
       - REACT_APP_VIDEOS_PER_PAGE=2
