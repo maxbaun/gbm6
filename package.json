@@ -34,7 +34,7 @@
     "remarkable": "^1.7.1",
     "reselect": "^4.0.0",
     "reset-css": "^4.0.1",
-    "swiper": "^4.4.1",
+    "swiper": "^6.5.1",
     "uuid": "^3.3.2"
   },
   "scripts": {
