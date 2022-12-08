@@ -11,7 +11,7 @@
     "lodash": "^4.17.11",
     "particles.js": "^2.0.0",
     "qhistory": "^1.0.2",
-    "qs": "^6.5.2",
+    "qs": "^6.5.3",
     "react": "^16.5.2",
     "react-click-outside": "^3.0.1",
     "react-countup": "^4.0.0",
