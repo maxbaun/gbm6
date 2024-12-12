@@ -8,7 +8,7 @@
     "contentful": "^7.0.4",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "particles.js": "^2.0.0",
     "qhistory": "^1.0.2",
     "qs": "^6.5.2",
