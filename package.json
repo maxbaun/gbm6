@@ -25,7 +25,7 @@
     "react-player": "^1.6.6",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.5",
+    "react-scripts": "5.0.1",
     "react-spinners": "^0.4.7",
     "react-visibility-sensor": "^5.0.1",
     "redux": "^4.0.1",
@@ -52,16 +52,20 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "resolutions": {
+    "@babel/core": "^7.26.0"
+  },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint-config-xo": "^0.25.0",
     "eslint-config-xo-react": "^0.17.0",
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.25.0",
     "eslint-plugin-react": "^7.11.1",
-    "node-sass": "^4.13.0",
     "react-perf-devtool": "^3.1.8",
     "redux-logger": "^3.0.6",
+    "sass": "^1.77.0",
     "stylelint": "^9.6.0"
   }
 }
