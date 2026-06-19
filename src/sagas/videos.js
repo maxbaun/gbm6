@@ -27,12 +27,12 @@ function* onVideosInit({ payload = {} }) {
   const res = yield call(getVideos, { query });
 
   // If there are more videos, get the next set of videos
-  if (res.skip + res.limit < res.total) {
+  if (res.total > res.skip + res.items.length) {
     yield all([
       put({
         type: videoTypes.VIDEOS_INIT,
         payload: {
-          skip: (payload.skip || 0) + perPage
+          skip: res.skip + res.items.length
         }
       })
     ]);
