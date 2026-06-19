@@ -32,7 +32,7 @@ function* onVideosInit({ payload = {} }) {
       put({
         type: videoTypes.VIDEOS_INIT,
         payload: {
-          skip: payload.skip || 0 + perPage
+          skip: (payload.skip || 0) + perPage
         }
       })
     ]);
