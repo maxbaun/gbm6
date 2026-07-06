@@ -59,12 +59,21 @@
 	<meta name="twitter:title" content="%REACT_APP_TWITTER_TITLE%">
 	<meta name="twitter:description" content="%REACT_APP_TWITTER_DESCRIPTION%">
 	<meta name="twitter:image" content="%REACT_APP_BASE_HREF%gbm6.jpg">
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-E7P840YZ0B"></script>
 </head>
 
 <body>
 	<noscript>
 		You need to enable JavaScript to run this website.
 	</noscript>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+	
+		gtag('config', 'G-E7P840YZ0B');
+	</script>	
 	<form name="Contact Form" netlify netlify-recaptcha hidden netlify-honeypot="nbf">
 		<input type="text" name="name" />
 		<input type="email" name="email" />
