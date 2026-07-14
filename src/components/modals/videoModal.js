@@ -121,6 +121,7 @@ class VideoModal extends Component {
 						<ReactPlayer
 							className={CSS.player}
 							playing={isOpen}
+							controls={true}
 							url={url}
 							width="100%"
 							height="100%"
